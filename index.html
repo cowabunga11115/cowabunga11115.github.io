@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Michelle Chang</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,400,700" rel="stylesheet">
+  <!-- <link href="https://fonts.googleapis.com/css?family=Fredericka+the+Great|Josefin+Sans:300|Open+Sans+Condensed:300" rel="stylesheet"> -->
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="assets/css/normalize.css">
+  <link rel="stylesheet" href="assets/css/skeleton.css">
+  <link rel="stylesheet" href="assets/css/mimilei.css">
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+
+</head>
+<body>
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <!-- <div class="container"> -->
+  <div class="nav_wrapper">
+    <div class="navigation">
+      <ul class="navigation">
+        <div class="row" id="nav_buttons">
+          <!-- <div class="nav_button_content"> -->
+            <li class="nav_item">
+              <a href="index.html"><img id="home" src="assets/img/home.png"></a>
+              <div class="nav_label" id="home">home</div>
+            </li>
+            <li class="nav_item">
+              <div class="nav_button_img">
+                <a href="about.html"><img src="assets/img/nav_icon_1.png"></a>
+                <div class="nav_label">about</div>
+              </div>
+              </li> <!-- about -->
+            <li class="nav_item">
+              <div class="nav_button_img">
+                <a href="#"><img src="assets/img/nav_icon_2_b.png"></a>
+                <div class="nav_label">code</div>
+              </div>
+            </li> <!-- code -->
+            <li class="nav_item">
+              <div class="nav_button_img">
+                <a href="#"><img src="assets/img/nav_icon_5_b.png"></a>
+                <div class="nav_label">design</div>
+              </div>
+            </li> <!-- design -->
+            <li class="nav_item">
+              <div class="nav_button_img">
+                <a href="#"><img src="assets/img/nav_icon_4_b.png"></a>
+                <div class="nav_label">creative</div>
+              </div>
+            </li> <!-- creative -->
+          <!-- </div> -->
+        </div>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="small_nav"></div>
+  <div class="home_content">
+    <div class="row" id="home_row_left">
+      <h1 class="fancy"><strong>michelle chang</strong></h1>
+      <p class="home_text">is an engineering resident at <strong>Google</strong>.</p>
+    </div>
+
+    <div class="row" id="home_row_right">
+      <p class="home_text">She loves interdisciplinary projects, illustration, and hardware hacking. </p>
+    </div>
+
+    <div class="row" id="home_row_left">
+      <p class="home_text">She graduated from <strong>UC Berkeley</strong> in May with a degree in <strong>EECS</strong>.</p>
+    </div>
+
+    <div class="row" id="home_row_right">
+      <p class="home_text">Last summer, she did software engineering and interface design at <strong>Twitch</strong>. Before that, she wrote code for <strong>Twitter</strong>. </p>
+    </div>
+  </div>
+  <!-- </div> -->
+
+  <!-- <div class="container">
+    <div class="row">
+      <p>
+        Thanks to advancements in camera technology, it is now possible to take a vast number of pictures from slightly different positions all at once! (Note that all these images will be on the same orthogonal plane with respect to some optical axis on the subject.) The resulting grid of images allows photographers a degree of control over their images previously unimaginable. This project explores two such forms of control (focusing and aperture) and how we can achieve different effects with simple shifting and averaging.
+      </p>
+    </div>
+    <div class="row">
+      <h6><strong>I. DEPTH REFOCUSING</strong></h6>
+    </div>
+    <div class="row">
+      <p>
+        As you have probably experienced first-hand, objects in your field of vision seem to move around more drastically in proportion to their proximity from you. Thus, if you open your eyes, close them, and then take a step to your right, a tree one foot away will seem to have moved quite a fair distance in comparison to, say, a waterfall in the horizon. We can take advantage of this phenomenon as a conceptual tool for refocusing captured images! Normally, when you set out to take a photo, you decide what parts of the chosen view will be in focus, and what parts will be out of focus. Your camera settings will then be adjusted according to these decisions. With light field data and some simple image processing, however, we can grant ourselves the freedom to focus anywhere in the captured view during post-production!
+      </p>
+      <p>
+        To accomplish this, we can take light field data from <a href=“http://lightfield.stanford.edu/lfs.html”>Stanford’s Light Field Archive</a>,
+        which provides images taken in a 17x17 grid pattern for a selection of objects. By shifting around these individual images, we can create a composite with any point of focus of our choosing. For this implementation, I chose the centermost image (grid position: row 8, col 8) as my point of reference. By shifting all the images in the grid by a constant C with respect to their relative positions (u,v) from (8,8), we can control how much the image set converges or diverges from the center. (We shift images C * u along the row axis and C * v along the column axis. The actual direction of the shift depends on how the images in the dataset were taken.) Thus, a larger C means refocusing closer to the physical focus (whatever the focus was when the center image was taken) and a smaller or even negative C means refocusing farther (the image will be blurrier overall). The final image is produced by adding up all the shifted images and taking the average. In the displayed examples, the frame rate is 0.1 sec per image.
+      </p>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <p style="text-align:center;"><strong>Original center image at (8,8)</strong></p>
+      </div>
+      <div class="six columns">
+        <p style="text-align:center;"><strong>Refocused images with C range (-3, 3) in steps of 0.2</strong></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img class="display_img" src="img/tarot/out_08_08.png">
+      </div>
+      <div class="six columns">
+        <img class="display_img" src="img/tarot/tarot_refocus.gif">
+      </div>
+    </div>
+    <div class="row" style="margin-top:3%;">
+      <div class="three columns">
+        <img class="display_img" src="img/tarot/tarot_c-3.0.jpg">
+        <p class="img_info" style="color:black;"><strong>C = -3</strong></p>
+      </div>
+      <div class="three columns">
+        <img class="display_img" src="img/tarot/tarot_c-1.0.jpg">
+        <p class="img_info" style="color:black;"><strong>C = -1</strong></p>
+      </div>
+      <div class="three columns">
+        <img class="display_img" src="img/tarot/tarot_c1.0.jpg">
+        <p class="img_info" style="color:black;"><strong>C = 1</strong></p>
+      </div>
+      <div class="three columns">
+        <img class="display_img" src="img/tarot/tarot_c3.0.jpg">
+        <p class="img_info" style="color:black;"><strong>C = 3</strong></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <p style="text-align:center;"><strong>Original center image at (8,8)</strong></p>
+      </div>
+      <div class="six columns">
+        <p style="text-align:center;"><strong>Refocused images with C range (-3, 3) in steps of 0.2</strong></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img class="display_img" src="img/chess/out_08_08_-818.578247_-3313.998047_.png">
+      </div>
+      <div class="six columns">
+        <img class="display_img" src="img/chess/chess_refocus.gif">
+      </div>
+    </div>
+    <div class="row" style="margin-top:3%;">
+      <div class="three columns">
+        <img class="display_img" src="img/chess/chess_c0.4.jpg">
+        <p class="img_info">C = 0.4</p>
+      </div>
+      <div class="three columns">
+        <img class="display_img" src="img/chess/chess_c0.8.jpg">
+        <p class="img_info">C = 0.8</p>
+      </div>
+      <div class="three columns">
+        <img class="display_img" src="img/chess/chess_c1.2.jpg">
+        <p class="img_info">C = 1.2</p>
+      </div>
+      <div class="three columns">
+        <img class="display_img" src="img/chess/chess_c1.6.jpg">
+        <p class="img_info">C = 1.6</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <h6><strong>II. APERTURE ADJUSTMENT</strong></h6>
+    </div>
+    <div class="row">
+      <p>
+        We can use similar averaging techniques to simulate aperture adjustment. The aperture of a camera refers to the hole in the lens, which controls how much light enters the camera. Thus, the size of the aperture directly impacts the resulting photograph’s depth of field. The larger the aperture, the smaller the area in focus.
+      </p>
+      <p>
+        To create this effect, we simply need to sum and average only a certain subset of the image grid. I used the sum and subsequent average of (unshifted) images within a certain radius of the center (8,8) photograph to create various aperture effects. The larger the radius, the more images in the resulting composite, and thus the larger the simulated aperture.
+      </p>
+      <p>
+        This works because each light field image represents all the light rays at one point, similar to a pinhole. Thus, because images closer to each other are still somewhat similarly aligned, the result image has a larger depth of field. But as we add in images taken farther and farther away from each other (larger radius), the differences in alignment become more drastic and we end up with a photograph with the unaligned portions wildly blurred out, simulating a wider aperture. You'll notice that as the aperture gets larger and larger, only the objects farther away in the image stay in focus because they moved the least (in comparison to closer objects) with respect to the view from which the individual photos were taken. (The frame rate of all examples is 0.1 sec per image.)
+      </p>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <p style="text-align:center;"><strong>Radius 0: Original image at (8,8)</strong></p>
+      </div>
+      <div class="six columns">
+        <p style="text-align:center;"><strong>Aperture adjusted images with radius range (0,10) in steps of 1</strong></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img class="display_img" src="img/tarot/out_08_08.png">
+      </div>
+      <div class="six columns">
+        <img class="display_img" src="img/tarot/tarot_aperture.gif">
+      </div>
+    </div>
+    <div class="row" style="margin-top:2%;">
+      <div class="three columns">
+        <img class="display_img" src="img/tarot/tarot_r2.jpg">
+        <p class="img_info" style="color:black;"><strong>r = 2</strong></p>
+      </div>
+      <div class="three columns">
+        <img class="display_img" src="img/tarot/tarot_r4.jpg">
+        <p class="img_info" style="color:black;"><strong>r = 4</strong></p>
+      </div>
+      <div class="three columns">
+        <img class="display_img" src="img/tarot/tarot_r6.jpg">
+        <p class="img_info" style="color:black;"><strong>r = 6</strong></p>
+      </div>
+      <div class="three columns">
+        <img class="display_img" src="img/tarot/tarot_r8.jpg">
+        <p class="img_info" style="color:black;"><strong>r = 8</strong></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <p style="text-align:center;"><strong>Radius 0: Original image at (8,8)</strong></p>
+      </div>
+      <div class="six columns">
+        <p style="text-align:center;"><strong>Aperture adjusted images with radius range (0,10) in steps of 1</strong></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img class="display_img" src="img/chess/out_08_08_-818.578247_-3313.998047_.png">
+      </div>
+      <div class="six columns">
+        <img class="display_img" src="img/chess/chess_aperture.gif">
+      </div>
+    </div>
+    <div class="row" style="margin-top:2%;">
+      <div class="three columns">
+        <img class="display_img" src="img/chess/chess_r2.jpg">
+        <p class="img_info">r = 2</p>
+      </div>
+      <div class="three columns">
+        <img class="display_img" src="img/chess/chess_r4.jpg">
+        <p class="img_info">r = 4</p>
+      </div>
+      <div class="three columns">
+        <img class="display_img" src="img/chess/chess_r6.jpg">
+        <p class="img_info">r = 6</p>
+      </div>
+      <div class="three columns">
+        <img class="display_img" src="img/chess/chess_r8.jpg">
+        <p class="img_info">r = 8</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <h6><strong>III. TAKEAWAYS</strong></h6>
+    </div>
+    <div class="row">
+      <p>
+        Prior to this project, I was completely unfamiliar with light field technology. I never even knew such a thing was possible. Playing around with light field data has helped me better understand the concept of depth of field and of what it means for a portion of an image to be in focus.
+      </p>
+    </div>
+</div> -->
+
+</body>
+</html>

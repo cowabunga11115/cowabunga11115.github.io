@@ -1,0 +1,489 @@
+$num_nav_items: 5;
+$transition-duration: 0.5s;
+$transition-delay: 0.02s;  
+
+#toggle_nav {
+    display: None;
+}
+
+.toggle_nav_container {
+    display: None;
+}
+
+.small_nav_menu {
+    display: None;
+}
+
+  @media screen and (max-width: 600px) and (orientation: portrait){  
+    div.nav_wrapper {
+        visibility: hidden;
+        display: none;
+    }
+
+    span.small_nav_toggle_button {
+        visibility: visible;
+        // display: block;
+    }
+
+    .nav {
+        display: inline-block;
+        margin: 25px 25px 20px;
+        pointer-events: none;
+        -webkit-transition: 0.5s;
+        transition: 0.5s;
+    }
+
+    // BEGIN SMALL NAV STYLING
+
+    #toggle_nav { // Hide checkbox
+        position: absolute;
+        left: -100%;
+        top: -100%;
+        display: block;
+    }
+
+    .toggle_nav_container {
+        display: block;
+    }
+    
+    .small_nav_menu {
+        display: block;
+    }
+
+    #toggle_nav:focus {
+        & ~ .toggle-container .button-toggle {
+            box-shadow: 0 0 0 8px rgba(0, 0, 0, 0.1), inset 0 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+    }
+
+    // Styles for open state when toggle checkbox is checked
+    #toggle_nav:checked {
+
+        & ~ .home_content {
+            opacity: 0;
+        }
+
+        & ~ .toggle_nav_container .small_nav_toggle_button {
+            // box-shadow: 0 0 0 550px rgba(0, 0, 0, 0.1), inset 0 0 0 20px rgba(0, 0, 0, 0.1);
+
+            &:hover {
+            box-shadow: 0 0 0 550px rgba(0, 0, 0, 0.1), inset 0 0 0 20px rgba(0, 0, 0, 0.1), 0 0 0 8px rgba(0, 0, 0, 0.1), inset 0 0 0 20px rgba(0, 0, 0, 0.1);
+            }
+
+            &:before {
+            transform: translateY(-50%) rotate(45deg) scale(1);
+            }
+
+            &:after {
+            transform: translateY(-50%) rotate(-45deg) scale(1);
+            }
+        }
+
+        &:focus ~ .toggle_nav_container .small_nav_toggle_button {
+            box-shadow: 0 0 0 550px rgba(0, 0, 0, 0.1), inset 0 0 0 20px rgba(0, 0, 0, 0.1), 0 0 0 8px rgba(0, 0, 0, 0.1), inset 0 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        // Open nav
+        & ~ .small_nav_menu {
+            // margin-bottom: 100px;
+            pointer-events: auto;
+            left: 50%;
+            top: 50%;
+            margin: auto;
+            position: absolute;
+            transform: translate(-50%, -50%);
+            // transform: translate(50px, 20vh);
+
+            // Restore navigation items
+            .small_nav_item {
+                color: #000000;
+                letter-spacing: 0;
+                height: 40px;
+                line-height: 40px;
+                margin-top: 2vh;
+                opacity: 1;
+                transform: scaleY(1);
+                transition: $transition-duration, opacity 0.1s;
+                text-decoration: None;
+                display: block;
+                text-align: center;
+                float: unset;
+
+                // Hiding the lines
+                &:before {
+                    opacity: 0;
+                }
+
+                // Setting delays for the nav items in open transition
+                @for $i from 1 through $num_nav_items {
+                    &:nth-child(#{$i}) {
+                        $delay: ($num_nav_items - $i) * $transition-delay;
+                        transition-delay: $delay;
+                        &:before {
+                            transition-delay: $delay;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .small_nav_item {
+        position: relative;
+        // display: inline-block;
+        float: left;
+        clear: both;
+        color: transparent;
+        font-size: 20px;
+        letter-spacing: -6.2px;
+        height: 7px;
+        line-height: 7px;
+        text-transform: uppercase;
+        white-space: nowrap;
+        transform: scaleY(0.2);
+        transition: $transition-duration, opacity 1s;
+
+        // Set delays for nav items in close transition
+        @for $i from 1 through $num_nav_items {
+            &:nth-child(#{$i}) {
+                $delay: ($num_nav_items - $i) * $transition-delay;
+                transition-delay: $delay;
+                &:before {
+                    transition-delay: $delay;
+                }
+            }
+        }
+
+        // Adjusting width for the first line
+        &:nth-child(1) {
+            letter-spacing: -10px;
+        }
+
+        // Adjusting width for the second line
+        &:nth-child(2) {
+            letter-spacing: -11px;
+        }
+
+        // Adjusting width for the third
+        &:nth-child(3) {
+            letter-spacing: -9px;
+        }
+
+        // Adjusting from the fourth element onwards
+        &:nth-child(n + 4) {
+            letter-spacing: -8px;
+            margin-top: -7px;
+            opacity: 0;
+        }
+
+        // Getting the lines for the hamburger menu icon
+        &:before {
+            position: absolute;
+            content: '';
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #000000;
+            transform: translateY(-50%) scaleY(5);
+            transition: $transition-duration;
+        }
+    }
+
+    // Style mobile view hamburger menu toggle button
+    .small_nav_toggle_button {
+        position: absolute;
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        margin: 25px;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        border-radius: 100%;
+        transition: $transition-duration + 0.1;
+      
+        // Shadow on hover
+        &:hover {
+          box-shadow: 0 0 0 8px rgba(0, 0, 0, 0.1), inset 0 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+      
+        // Making the "X" icon using `:before` and `:after` pseudo-elements
+        // Initially hidden because `scale(0)` transformation
+      
+        &:before, &:after {
+          position: absolute;
+          content: '';
+          top: 50%;
+          left: 0;
+          width: 100%;
+          height: 2px;
+          background-color: rgb(0, 0, 0);
+          border-radius: 5px;
+          transition: $transition-duration;
+        }
+      
+        &:before {
+          transform: translateY(-50%) rotate(45deg) scale(0);
+        }
+      
+        &:after {
+          transform: translateY(-50%) rotate(-45deg) scale(0);
+        }
+    }
+
+    .small_nav_menu {
+        display: inline-block;
+        margin: 25px 25px 20px;
+        // Don't want pointer-events as menu is closed
+        pointer-events: none;
+        transition: $transition-duration;
+    }
+
+    // END SMALL NAV STYLING
+
+    .home_content {
+        position:absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transition: $transition-duration;
+    }
+
+    div#home_row_left, div#home_row_right {
+        float: left;
+        font-size: 3vh;
+        padding: 0.5vh 2vh;
+        /* max-width: 300px; */
+        min-width: 250px;
+        width: 35vw;
+    }
+
+    h1.fancy {
+        font-size: 4vh;
+    }
+}
+
+html, body {height: 100%;overflow: hidden;}
+
+body.about{
+    background: url(../img/about.jpg);
+    background-size: cover;
+}
+
+p {
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 300;
+}
+
+div.navigation {
+    position: absolute;
+    max-width: 150px;
+    background-color: white;
+    box-shadow: 10px 0px 10px #888888;
+    z-index: 10;
+    padding: 100% 4%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.nav_wrapper {
+    position: relative;
+    height: 100vh;
+}
+
+div#home_row_left h1 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.2vmin;
+}
+
+#caption {
+  margin-top: 3%;
+}
+
+#title {
+  position: fixed;
+  top: 10vh;
+  display: inline;
+  width: 100%;
+}
+
+h1.fancy {
+  /* font-family: 'Josefin Sans', sans-serif; */
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+}
+
+div.small_nav {
+    content:url(../img/hamburger_menu.png);
+    width: 10vh;
+    padding: 1vh;
+    top: 0;
+    position: absolute;
+}
+
+.header_img {
+  /*height: 200px;*/
+  /*width: auto;*/
+  width: 100%;
+  /*content: url(../img/needs.jpg);*/
+  /*display: block;*/
+  /*margin: auto;*/
+  /*margin-top: 30px;*/
+  margin-bottom: 20px;
+}
+
+.img_info {
+  color:white;
+  position: relative;
+  margin-bottom: 30;
+  bottom: 40px;
+  left: 20px;
+}
+
+img.display_img {
+  width:100%;
+}
+
+img.center_img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+img #home {
+    width: 10vh;
+}
+
+.content {
+    position: relative;
+    top: 10%;
+}
+
+.subtitle {
+    font-weight: bold;
+}
+
+.container.content.about {
+    width: 30%;
+    float: left;
+    margin-left: 20%;
+}
+
+@media screen and (min-width: 600px) {
+    div.small_nav {
+        visibility: hidden;
+        display: none;
+    }
+    ul.navigation {
+        /* background-color:black; */
+        /* background-color: white; */
+        /* box-shadow: 10px 0px 10px #888888; */
+        /* z-index: 10; */
+        list-style: none;
+        /* padding: 5% 4%; */
+        /* height: 100%; */
+        /* max-width: 150px; */
+        text-decoration: none;
+        margin: 0;
+        /* display: block; */
+        /* position: absolute; */
+        /* float: left; */
+        /* top: 50%; */
+        /* transform: translateY(-50%); */
+    }
+
+    .nav_item img {
+        width: 6vh;
+    }
+
+    .nav_item img:hover {
+        filter: blur(5px);
+    }
+
+    li.nav_item {
+        padding-bottom: 2vh;
+        padding-top: 2vh;
+        text-align: center;
+        margin: 0;
+    }
+
+    div#nav_buttons {
+        /* position: absolute; */
+        /* height: 100vh; */
+        /* top: 50%; */
+        /* float: left; */
+        /* transform: translateY(-50%); */
+        /* background-color: white; */
+        /* box-shadow: 10px 0px 10px #888888; */
+        /* z-index: 10; */
+        /* padding: 5% 4%; */
+        /* max-width: 150px; */
+        /* height: 100%; */
+    }
+    div.nav_button_img {
+    position: relative;
+    }
+
+    div.nav_label {
+        z-index: 100;
+        position: relative;
+        left: 0;
+        text-align: center;
+        opacity: 0;
+        margin: 0;
+    }
+
+    div.nav_label:hover {
+        opacity: 0;
+    }
+
+    .nav_item:hover > div#home {
+        opacity: 0;
+    }
+
+    .nav_button_img:hover > div#home {
+        opacity: 0;
+    }
+
+    .nav_item:hover > div.nav_label {
+        opacity: 1;
+    }
+
+    .nav_button_img:hover > div.nav_label {
+        opacity: 1;
+    }
+
+    .home_content {
+        position:absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-40%, -50%);
+        width: 50vmax;
+        min-width: 400px;
+    }
+
+    div#home_row_left {
+        float: left;
+        text-align: left;
+        font-size: 2vmax;
+        padding: 0.5vh 2vh;
+        max-width: 600px;
+        min-width: 300px;
+        width: 60vmin;
+    }
+
+    div#home_row_right {
+        float: right;
+        text-align: right;
+        font-size: 2vmax;
+        padding: 0.5vh 2vh;
+        max-width: 600px;
+        min-width: 300px;
+        width: 60vmin;
+    }
+
+    h1.fancy {
+        font-size: 5vmin;
+    }
+}

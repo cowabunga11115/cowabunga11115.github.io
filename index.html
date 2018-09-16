@@ -25,7 +25,7 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link rel="stylesheet" href="assets/css/normalize.css">
   <link rel="stylesheet" href="assets/css/skeleton.css">
-  <link rel="stylesheet" href="assets/css/mimilei.css">
+  <link rel="stylesheet" href="assets/css/style.css">
 
   <!-- Favicon
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -36,6 +36,22 @@
   <!-- Primary Page Layout
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <!-- <div class="container"> -->
+
+  <!-- Nav for mobile / small screens -->
+  <input id="toggle_nav" type="checkbox">
+  <label class="toggle_nav_container" for="toggle_nav">
+    <span class="small_nav_toggle_button"></span>
+  </label>
+
+  <nav class="small_nav_menu">
+    <a class="small_nav_item" href="index.html">home</a>
+    <a class="small_nav_item" href="about.html">about</a>
+    <a class="small_nav_item" href="#">code</a>
+    <a class="small_nav_item" href="#">design</a>
+    <a class="small_nav_item" href="#">creative</a>
+  </nav>
+  <!-- End nav for mobile / small screens -->
+
   <div class="nav_wrapper">
     <div class="navigation">
       <ul class="navigation">
@@ -74,12 +90,11 @@
       </ul>
     </div>
   </div>
-  
-  <div class="small_nav"></div>
+
   <div class="home_content">
     <div class="row" id="home_row_left">
       <h1 class="fancy"><strong>michelle chang</strong></h1>
-      <p class="home_text">is an engineering resident at <strong>Google</strong>.</p>
+      <p class="home_text">writes code for <strong>Google</strong>.</p>
     </div>
 
     <div class="row" id="home_row_right">

@@ -1,5 +1,5 @@
 $num_nav_items: 5;
-$transition-duration: 0.5s;
+$transition-duration: 0.8s;
 $transition-delay: 0.02s;  
 
 #toggle_nav {
@@ -12,6 +12,24 @@ $transition-delay: 0.02s;
 
 .small_nav_menu {
     display: None;
+}
+
+.content {
+    overflow: auto;
+    margin-bottom: 10vh;
+    // height: 85vh;
+}
+
+.content.about {
+    height: 85vh;
+}
+
+.content::-webkit-scrollbar {
+    display: none;
+}
+
+body {
+    overflow: hidden;
 }
 
   @media screen and (max-width: 600px) and (orientation: portrait){  
@@ -50,25 +68,19 @@ $transition-delay: 0.02s;
         display: block;
     }
 
-    #toggle_nav:focus {
-        & ~ .toggle-container .button-toggle {
-            box-shadow: 0 0 0 8px rgba(0, 0, 0, 0.1), inset 0 0 0 20px rgba(0, 0, 0, 0.1);
-        }
-    }
-
     // Styles for open state when toggle checkbox is checked
     #toggle_nav:checked {
 
-        & ~ .home_content {
+        & ~ .content {
             opacity: 0;
         }
 
         & ~ .toggle_nav_container .small_nav_toggle_button {
             // box-shadow: 0 0 0 550px rgba(0, 0, 0, 0.1), inset 0 0 0 20px rgba(0, 0, 0, 0.1);
 
-            &:hover {
-            box-shadow: 0 0 0 550px rgba(0, 0, 0, 0.1), inset 0 0 0 20px rgba(0, 0, 0, 0.1), 0 0 0 8px rgba(0, 0, 0, 0.1), inset 0 0 0 20px rgba(0, 0, 0, 0.1);
-            }
+            // &:hover {
+            // box-shadow: 0 0 0 550px rgba(0, 0, 0, 0.1), inset 0 0 0 20px rgba(0, 0, 0, 0.1), 0 0 0 8px rgba(0, 0, 0, 0.1), inset 0 0 0 20px rgba(0, 0, 0, 0.1);
+            // }
 
             &:before {
             transform: translateY(-50%) rotate(45deg) scale(1);
@@ -77,11 +89,12 @@ $transition-delay: 0.02s;
             &:after {
             transform: translateY(-50%) rotate(-45deg) scale(1);
             }
+
         }
 
-        &:focus ~ .toggle_nav_container .small_nav_toggle_button {
-            box-shadow: 0 0 0 550px rgba(0, 0, 0, 0.1), inset 0 0 0 20px rgba(0, 0, 0, 0.1), 0 0 0 8px rgba(0, 0, 0, 0.1), inset 0 0 0 20px rgba(0, 0, 0, 0.1);
-        }
+        // &:focus ~ .toggle_nav_container .small_nav_toggle_button {
+        //     box-shadow: 0 0 0 550px rgba(0, 0, 0, 0.1), inset 0 0 0 20px rgba(0, 0, 0, 0.1), 0 0 0 8px rgba(0, 0, 0, 0.1), inset 0 0 0 20px rgba(0, 0, 0, 0.1);
+        // }
 
         // Open nav
         & ~ .small_nav_menu {
@@ -112,6 +125,7 @@ $transition-delay: 0.02s;
                 // Hiding the lines
                 &:before {
                     opacity: 0;
+                    left: -100vh;
                 }
 
                 // Setting delays for the nav items in open transition
@@ -141,18 +155,19 @@ $transition-delay: 0.02s;
         text-transform: uppercase;
         white-space: nowrap;
         transform: scaleY(0.2);
-        transition: $transition-duration, opacity 1s;
+        // transition: opacity $transition-duration ease-in,
+        //             transform $transition-duration ease-in;
 
         // Set delays for nav items in close transition
-        @for $i from 1 through $num_nav_items {
-            &:nth-child(#{$i}) {
-                $delay: ($num_nav_items - $i) * $transition-delay;
-                transition-delay: $delay;
-                &:before {
-                    transition-delay: $delay;
-                }
-            }
-        }
+        // @for $i from 1 through $num_nav_items {
+        //     &:nth-child(#{$i}) {
+        //         $delay: ($num_nav_items - $i) * $transition-delay;
+        //         transition-delay: $delay;
+        //         &:before {
+        //             transition-delay: $delay;
+        //         }
+        //     }
+        // }
 
         // Adjusting width for the first line
         &:nth-child(1) {
@@ -171,8 +186,8 @@ $transition-delay: 0.02s;
 
         // Adjusting from the fourth element onwards
         &:nth-child(n + 4) {
-            letter-spacing: -8px;
-            margin-top: -7px;
+            // letter-spacing: -8px;
+            // margin-top: -7px;
             opacity: 0;
         }
 
@@ -186,7 +201,7 @@ $transition-delay: 0.02s;
             height: 2px;
             background-color: #000000;
             transform: translateY(-50%) scaleY(5);
-            transition: $transition-duration;
+            // transition: $transition-duration;
         }
     }
 
@@ -201,12 +216,7 @@ $transition-delay: 0.02s;
         border: none;
         cursor: pointer;
         border-radius: 100%;
-        transition: $transition-duration + 0.1;
-      
-        // Shadow on hover
-        &:hover {
-          box-shadow: 0 0 0 8px rgba(0, 0, 0, 0.1), inset 0 0 0 20px rgba(0, 0, 0, 0.1);
-        }
+        // transition: $transition-duration + 0.1;
       
         // Making the "X" icon using `:before` and `:after` pseudo-elements
         // Initially hidden because `scale(0)` transformation
@@ -220,7 +230,7 @@ $transition-delay: 0.02s;
           height: 2px;
           background-color: rgb(0, 0, 0);
           border-radius: 5px;
-          transition: $transition-duration;
+        //   transition: $transition-duration;
         }
       
         &:before {
@@ -230,6 +240,7 @@ $transition-delay: 0.02s;
         &:after {
           transform: translateY(-50%) rotate(-45deg) scale(0);
         }
+        
     }
 
     .small_nav_menu {
@@ -237,16 +248,16 @@ $transition-delay: 0.02s;
         margin: 25px 25px 20px;
         // Don't want pointer-events as menu is closed
         pointer-events: none;
-        transition: $transition-duration;
+        // transition: $transition-duration;
     }
 
     // END SMALL NAV STYLING
 
-    .home_content {
+    .content {
         position:absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);
+        transform: translate(-50%, -40vh);
         transition: $transition-duration;
     }
 
@@ -264,12 +275,14 @@ $transition-delay: 0.02s;
     }
 }
 
-html, body {height: 100%;overflow: hidden;}
-
-body.about{
-    background: url(../img/about.jpg);
-    background-size: cover;
+html, body {
+    height: 100%;
 }
+
+// body.about{
+//     background: url(../img/about.jpg);
+//     background-size: cover;
+// }
 
 p {
   font-family: 'Josefin Sans', sans-serif;
@@ -290,6 +303,7 @@ div.navigation {
 .nav_wrapper {
     position: relative;
     height: 100vh;
+    overflow: hidden;
 }
 
 div#home_row_left h1 {
@@ -355,19 +369,8 @@ img #home {
     width: 10vh;
 }
 
-.content {
-    position: relative;
-    top: 10%;
-}
-
 .subtitle {
     font-weight: bold;
-}
-
-.container.content.about {
-    width: 30%;
-    float: left;
-    margin-left: 20%;
 }
 
 @media screen and (min-width: 600px) {
@@ -454,7 +457,7 @@ img #home {
         opacity: 1;
     }
 
-    .home_content {
+    .content {
         position:absolute;
         top: 50%;
         left: 50%;

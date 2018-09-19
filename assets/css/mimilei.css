@@ -1,13 +1,94 @@
-  @media screen and (max-width: 600px) and (orientation: portrait){  
+@media screen and (max-width: 600px) and (orientation: portrait){  
     div.navigation {
         visibility: hidden;
         display: none;
     }
 
-    div.small_nav {
+    span.small_nav_toggle_button {
         visibility: visible;
         display: block;
     }
+
+    .nav {
+        display: inline-block;
+        margin: 25px 25px 20px;
+        pointer-events: none;
+        -webkit-transition: 0.5s;
+        transition: 0.5s;
+    }
+
+    .small_nav_item {
+        position: relative;
+        /* display: inline-block; */
+        /* float: left; */
+        float:center;
+        clear: both;
+        color: transparent;
+        font-size: 14px;
+        letter-spacing: -6.2px;
+        height: 7px;
+        line-height: 7px;
+        text-transform: lowercase;
+        white-space: nowrap;
+        -webkit-transform: scaleY(0.2);
+        -ms-transform: scaleY(0.2);
+        transform: scaleY(0.2);
+        -webkit-transition: 0.5s, opacity 1s;
+        transition: 0.5s, opacity 1s;
+    }
+
+    .small_nav_item:nth-child(1) {
+        -webkit-transition-delay: 0s;
+        transition-delay: 0s;
+    }
+
+    .small_nav_item:nth-child(1) :before {
+        -webkit-transition-delay: 0s;
+        transition-delay: 0s;
+    }
+
+    .small_nav_item:nth-child(2) {
+        -webkit-transition-delay: 0.05s;
+        transition-delay: 0.05s;
+    }
+    
+    .small_nav_item:nth-child(2) :before {
+        -webkit-transition-delay: 0.05s;
+        transition-delay: 0.05s;
+    }
+
+    .small_nav_item:nth-child(3) {
+        -webkit-transition-delay: 0.1s;
+        transition-delay: 0.1s;
+    }
+
+    .small_nav_item:nth-child(3) :before {
+        -webkit-transition-delay: 0.1s;
+        transition-delay: 0.1s;
+    }
+
+    .small_nav_item:nth-child(4) {
+        -webkit-transition-delay: 0.15s;
+        transition-delay: 0.15s;
+    }
+
+    .small_nav_item:nth-child(4) :before {
+        -webkit-transition-delay: 0.15s;
+        transition-delay: 0.15s;
+    }
+
+    .small_nav_item:nth-child(5) {
+        -webkit-transition-delay: 0.2s;
+        transition-delay: 0.2s;
+    }
+
+    .small_nav_item:nth-child(5) :before {
+        -webkit-transition-delay: 0.2s;
+        transition-delay: 0.2s;
+    }
+
+
+
 
     .home_content {
         position:absolute;

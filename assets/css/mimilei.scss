@@ -20,10 +20,6 @@ $transition-delay: 0.02s;
     // height: 85vh;
 }
 
-.content.about {
-    height: 85vh;
-}
-
 .content::-webkit-scrollbar {
     display: none;
 }
@@ -41,6 +37,10 @@ body {
     span.small_nav_toggle_button {
         visibility: visible;
         // display: block;
+    }
+
+    .content.about, .content.code {
+        height: 85vh;
     }
 
     .nav {

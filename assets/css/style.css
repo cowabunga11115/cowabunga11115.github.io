@@ -15,10 +15,6 @@
   margin-bottom: 10vh;
 }
 
-.content.about {
-  height: 85vh;
-}
-
 .content::-webkit-scrollbar {
   display: none;
 }
@@ -35,6 +31,10 @@ body {
 
   span.small_nav_toggle_button {
     visibility: visible;
+  }
+
+  .content.about, .content.code {
+    height: 85vh;
   }
 
   .nav {

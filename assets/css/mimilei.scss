@@ -1,6 +1,7 @@
 $num_nav_items: 5;
 $transition-duration: 0.8s;
 $transition-delay: 0.02s;  
+$text_color: #222;
 
 #toggle_nav {
     display: None;
@@ -43,6 +44,11 @@ body {
     cursor: pointer;
 }
 
+.pj_name, h2, a {
+    text-decoration: none;
+    color: $text_color;
+}
+
   @media screen and (max-width: 600px) and (orientation: portrait){  
     div.nav_wrapper {
         visibility: hidden;
@@ -54,7 +60,11 @@ body {
         // display: block;
     }
 
-    .content.about, .content.code {
+    .content.home {
+        height: unset;
+    }
+
+    .content {
         height: 85vh;
     }
 
@@ -287,7 +297,7 @@ body {
     }
 
     h1.fancy {
-        font-size: 4vh;
+        font-size: 3.5rem;
     }
 }
 
@@ -390,6 +400,9 @@ img #home {
 }
 
 @media screen and (min-width: 600px) {
+    h1.fancy {
+        font-size: 4.0rem;
+    }
     div.small_nav {
         visibility: hidden;
         display: none;
@@ -478,7 +491,7 @@ img #home {
         top: 50%;
         left: 50%;
         transform: translate(-40%, -50%);
-        width: 50vmax;
+        width: 60vmax;
         min-width: 400px;
     }
 
@@ -500,9 +513,5 @@ img #home {
         max-width: 600px;
         min-width: 300px;
         width: 60vmin;
-    }
-
-    h1.fancy {
-        font-size: 5vmin;
     }
 }

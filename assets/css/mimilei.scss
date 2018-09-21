@@ -18,7 +18,10 @@ $text_color: #222;
 .content {
     overflow: auto;
     margin-bottom: 10vh;
-    // height: 85vh;
+}
+
+.content.home {
+    height: unset;
 }
 
 .content::-webkit-scrollbar {
@@ -35,8 +38,13 @@ body {
     font-variant-caps: all-small-caps;
 }
 
+.contributors {
+    font-size: 2.5vh;
+    font-weight: 800;
+}
+
 .pj_name h2 {
-    font-size: xx-large;
+    font-size: 3.0rem;
 }
 
 .pj_name h2:hover {
@@ -49,6 +57,10 @@ body {
     color: $text_color;
 }
 
+.home p {
+    font-size: 2.2rem;
+}
+
   @media screen and (max-width: 600px) and (orientation: portrait){  
     div.nav_wrapper {
         visibility: hidden;
@@ -58,10 +70,6 @@ body {
     span.small_nav_toggle_button {
         visibility: visible;
         // display: block;
-    }
-
-    .content.home {
-        height: unset;
     }
 
     .content {
@@ -296,8 +304,12 @@ body {
         width: 35vw;
     }
 
-    h1.fancy {
+    .home h1.fancy {
         font-size: 3.5rem;
+    }
+
+    h1.fancy {
+        font-size: 4.0rem;
     }
 }
 
@@ -400,8 +412,12 @@ img #home {
 }
 
 @media screen and (min-width: 600px) {
-    h1.fancy {
+    .home h1.fancy {
         font-size: 4.0rem;
+    }
+
+    h1.fancy {
+        font-size: 4.5rem;
     }
     div.small_nav {
         visibility: hidden;
@@ -486,6 +502,10 @@ img #home {
         opacity: 1;
     }
 
+    .content .home {
+        height: unset;
+    }
+
     .content {
         position:absolute;
         top: 50%;
@@ -493,6 +513,7 @@ img #home {
         transform: translate(-40%, -50%);
         width: 60vmax;
         min-width: 400px;
+        height: 85vh;
     }
 
     div#home_row_left {

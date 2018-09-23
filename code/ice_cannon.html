@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Michelle Chang</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Fredericka+the+Great|Josefin+Sans:300|Open+Sans+Condensed:300" rel="stylesheet">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="../assets/css/normalize.css">
+  <link rel="stylesheet" href="../assets/css/skeleton.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+
+</head>
+<body class="about">
+<!-- Primary Page Layout
+–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+<!-- Nav for mobile / small screens -->
+<input id="toggle_nav" type="checkbox">
+<label class="toggle_nav_container" for="toggle_nav">
+<span class="small_nav_toggle_button"></span>
+</label>
+
+<nav class="small_nav_menu">
+    <a class="small_nav_item" href="../index.html">home</a>
+    <a class="small_nav_item" href="../about.html">about</a>
+    <a class="small_nav_item" href="../code.html">code</a>
+    <a class="small_nav_item" href="../design.html">design</a>
+    <a class="small_nav_item" href="../creative.html">creative</a>
+</nav>
+<!-- End nav for mobile / small screens -->
+    
+<div class="nav_wrapper">
+    <div class="navigation">
+        <ul class="navigation">
+        <div class="row" id="nav_buttons">
+            <!-- <div class="nav_button_content"> -->
+            <li class="nav_item">
+                <a href="../index.html"><img id="home" src="../assets/img/home.png"></a>
+                <div class="nav_label" id="home">home</div>
+            </li>
+            <li class="nav_item">
+                <div class="nav_button_img">
+                <a href="../about.html"><img src="../assets/img/nav_icon_1.png"></a>
+                <div class="nav_label">about</div>
+                </div>
+                </li> <!-- about -->
+            <li class="nav_item">
+                <div class="nav_button_img">
+                <a href="../code.html"><img src="../assets/img/nav_icon_2_b.png"></a>
+                <div class="nav_label">code</div>
+                </div>
+            </li> <!-- code -->
+            <li class="nav_item">
+                <div class="nav_button_img">
+                <a href="../design.html"><img src="../assets/img/nav_icon_5_b.png"></a>
+                <div class="nav_label">design</div>
+                </div>
+            </li> <!-- design -->
+            <li class="nav_item">
+                <div class="nav_button_img">
+                <a href="../creative.html"><img src="../assets/img/nav_icon_4_b.png"></a>
+                <div class="nav_label">creative</div>
+                </div>
+            </li> <!-- creative -->
+            <!-- </div> -->
+        </div>
+        </ul>
+    </div>
+</div>
+
+<div class="content pj_page">
+    <div class="row">
+        <div class="title"><h1 class="fancy"><strong>< > Ice Cannon Game Controller</strong></h1></div>
+    </div>
+    <div class="row">
+        <p class="subtitle">
+            Reimagining a new game controller for the classic cannon game: Frozen Bubble
+        </p>
+    </div>
+    <div class="row photo_frame">
+        <p><img src="../assets/img/code/ice_cannon/frozen_bubble_cannon_front.jpg"></p>
+    </div>
+    <div class="row">
+        <p class="contributors">
+                Michelle Chang, Serena Chang, Jimmy Huang
+        </p>
+    </div>
+    <div class="row">
+        <p>
+            <a href="https://github.com/idd-fall16/frozen-bubbles">View on GitHub</a> | Presented poster at 2016 International Symposium for Academic Makerspaces at MIT
+        </p>
+    </div>
+    <div>
+        <p>
+            Read the <a href="../assets/pdf/ice_cannon.pdf">full report</a>, detailing the design, preliminary sketches, 
+            and fabrication process.
+        </p>
+    </div>
+    <div class="row">
+        <p>
+            In this project, we reimagined how users interact with Frozen Bubble 
+            (a variation of the classic arcade game, Puzzle Bobble,
+            and the Neopets game, Faerie Bubbles), and built a physical game controller that requires users
+            to relay their intent through the turning and firing of a physical cannon rather than through 
+            keypresses.
+        </p>
+        <p>
+            The game involves aiming a cannon and firing differently-colored
+            bubbles into a field of additional bubbles. If a fired bubble connects to form three or more bubbles of the
+            same color, the bubbles get knocked off the playing field. However, additional bubbles are added to the
+            playing field from the top of the screen in an accelerated manner. The player loses when the field of
+            bubbles passes below an end line towards the bottom of the screen. Below is a screenshot of the game:
+        </p>
+        <div class="photo_frame">
+            <img src="../assets/img/code/ice_cannon/frozen_bubble_game.jpg">
+        </div>
+        <p>
+            We designed and manufactured a laser-cut cannon as a physical representation of the
+            bubble-firing cannon in the game. Turning the physical cannon aims the virtual cannon and pulling a trigger
+            on the cannon fires a bubble.
+        </p>
+    </div>
+    <div class="row">
+        <div class="one-third column photo_frame">
+            <img src="../assets/img/code/ice_cannon/sketch1.jpg">
+        </div>
+        <div class="one-third column photo_frame">
+            <img src="../assets/img/code/ice_cannon/sketch2.jpg">
+        </div>
+        <div class="one-third column photo_frame">
+            <img src="../assets/img/code/ice_cannon/sketch3.jpg">
+        </div>
+    </div>
+    <div class="row">
+        <p>
+            In terms of the physical appearance of the controller, we chose to design the base of the cannon in
+            such a way as to provide ease of control and a more comfortable grip. As such, our cannon rests on top of
+            a sizeable piece of circular wood and has ergonomic handholds built into the steering pad.
+            The cannon requires two methods of input. A potentiometer in the base of the cannon outputs
+            values that are mapped by software to produce absolute positions on the screen that determine how the
+            virtual cannon is displayed. A joystick, our source of discrete input, is mounted within the cannon and acts
+            as our firing switch (the original Frozen Bubble game mapped from key-up to fire, instead). When pulled,
+            the virtual cannon will release a bubble on screen.
+        </p>
+        <p>
+            The cannon sports a whimsical, wintery aesthetic to reflect the classic nature of the game (as well as 
+            the fact that it features an arctic setting). This is further emphasized by its hand-painted appearance 
+            (done by yours truly) and the use of darker hues to make the cannon seem slightly aged.  
+        </p>
+    </div>
+    <div class="row">
+        <div class="six columns photo_frame">
+            <img src="../assets/img/code/ice_cannon/painting1.jpg">
+        </div>
+        <div class="six columns photo_frame">
+            <img src="../assets/img/code/ice_cannon/painting4.jpg">
+        </div>
+    </div>
+    <div class="row">
+        <!-- <div class="six columns photo_frame">
+            <img src="../assets/img/code/ice_cannon/painting1.jpg">
+        </div> -->
+        <div class="six columns photo_frame">
+            <img src="../assets/img/code/ice_cannon/painting2.jpg">
+        </div>
+        <div class="six columns photo_frame">
+            <img src="../assets/img/code/ice_cannon/painting3.jpg">
+        </div>
+    </div>
+    <div class="row">
+        <p>
+            <iframe width="853" height="480" src="https://www.youtube.com/embed/hXFDqAz1Lqk?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>    
+        </p>
+    </div>
+    <div class="row">
+        <p>
+            My contributions:
+            <ul>
+                <li>Concept design and sketching</li>
+                <li>Electrical and software prototyping: Modified the game’s original Java code to read in the serial input from the
+                    sensors and map them as new controls for the game
+                </li>
+                <li>Assisted in physical device assembly</li>
+                <li>Responsible for device appearance and painting</li>
+                <li>Photography and videography</li>
+            </ul>
+        </p>
+    </div>
+</div>
+
+</body>
+</html>

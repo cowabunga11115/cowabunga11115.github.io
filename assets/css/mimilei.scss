@@ -3,6 +3,10 @@ $transition-duration: 0.8s;
 $transition-delay: 0.02s;  
 $text_color: #222;
 
+a {
+    font-weight: 800;
+}
+
 #toggle_nav {
     display: None;
 }
@@ -59,6 +63,37 @@ body {
 
 .home p {
     font-size: 2.2rem;
+}
+
+.photo_frame {
+    object-fit: none;
+    object-position: center;
+    width: 100%;
+    max-height: 500px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+
+.photo_frame img {
+    width: 100%;
+}
+
+.github_link img {
+    vertical-align: middle;
+}
+
+.pj_page {
+    overflow-x: hidden;
+}
+
+.pj_page h1 {
+    font-size: 3.0rem;
+}
+
+.pj_page h2 {
+    font-size: 2.0rem;
+    font-weight: 500;
+    text-transform: uppercase;
 }
 
   @media screen and (max-width: 600px) and (orientation: portrait){  
@@ -322,9 +357,14 @@ html, body {
 //     background-size: cover;
 // }
 
-p {
+p, ol, ul {
   font-family: 'Josefin Sans', sans-serif;
   font-weight: 300;
+  font-size: 1.7rem;
+}
+
+.pj_page ol, .pj_page ul {
+    padding-left: 2em;
 }
 
 div.navigation {

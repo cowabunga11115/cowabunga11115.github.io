@@ -3,4 +3,4 @@
 *.sass.map
 *.scss.map
 *.sketch
-.DS_Store
+*.DS_Store

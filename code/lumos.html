@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Michelle Chang</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Fredericka+the+Great|Josefin+Sans:300|Open+Sans+Condensed:300" rel="stylesheet">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="../assets/css/normalize.css">
+  <link rel="stylesheet" href="../assets/css/skeleton.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+
+</head>
+<body class="about">
+<!-- Primary Page Layout
+–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+<!-- Nav for mobile / small screens -->
+<input id="toggle_nav" type="checkbox">
+<label class="toggle_nav_container" for="toggle_nav">
+<span class="small_nav_toggle_button"></span>
+</label>
+
+<nav class="small_nav_menu">
+    <a class="small_nav_item" href="../index.html">home</a>
+    <a class="small_nav_item" href="../about.html">about</a>
+    <a class="small_nav_item" href="../code.html">code</a>
+    <a class="small_nav_item" href="../design.html">design</a>
+    <a class="small_nav_item" href="../creative.html">creative</a>
+</nav>
+<!-- End nav for mobile / small screens -->
+    
+<div class="nav_wrapper">
+    <div class="navigation">
+        <ul class="navigation">
+        <div class="row" id="nav_buttons">
+            <!-- <div class="nav_button_content"> -->
+            <li class="nav_item">
+                <a href="../index.html"><img id="home" src="../assets/img/home.png"></a>
+                <div class="nav_label" id="home">home</div>
+            </li>
+            <li class="nav_item">
+                <div class="nav_button_img">
+                <a href="../about.html"><img src="../assets/img/nav_icon_1.png"></a>
+                <div class="nav_label">about</div>
+                </div>
+                </li> <!-- about -->
+            <li class="nav_item">
+                <div class="nav_button_img">
+                <a href="../code.html"><img src="../assets/img/nav_icon_2_b.png"></a>
+                <div class="nav_label">code</div>
+                </div>
+            </li> <!-- code -->
+            <li class="nav_item">
+                <div class="nav_button_img">
+                <a href="../design.html"><img src="../assets/img/nav_icon_5_b.png"></a>
+                <div class="nav_label">design</div>
+                </div>
+            </li> <!-- design -->
+            <li class="nav_item">
+                <div class="nav_button_img">
+                <a href="../creative.html"><img src="../assets/img/nav_icon_4_b.png"></a>
+                <div class="nav_label">creative</div>
+                </div>
+            </li> <!-- creative -->
+            <!-- </div> -->
+        </div>
+        </ul>
+    </div>
+</div>
+
+<div class="content pj_page">
+    <div class="row">
+        <div class="title"><h1 class="fancy"><strong>< > Lumos</strong></h1></div>
+    </div>
+    <div class="row">
+        <p class="subtitle">
+            Ambient light control for patient-centered hospital rooms
+        </p>
+    </div>
+    <div class="row photo_frame">
+        <p><img src="../assets/img/code/lumos.jpg"></p>
+    </div>
+    <div class="row">
+        <p class="contributors">
+                Michelle Chang, Serena Chang, Carrina Dong, Jimmy Huang
+        </p>
+    </div>
+    <div class="row">
+        <p>
+            <a href="https://github.com/idd-fall16/lumos">View on GitHub</a> | <a href="http://www.infymakers.com/winners-2017.html">2017 Infy Maker Awards Winner</a>
+        </p>
+    </div>
+    <div class="row">
+        <p>
+            Lumos is a device which allows hospital in-patients to control their ambient 
+            environment and interact with loved ones. Its purpose is to combat hospital-induced
+            delirium as well as irritation and loneliness, which may stem from the clinical
+            environment. Lumos is a phyiscal controller with three key features:
+            <ol>
+                <li>Ambient lighting control</li>
+                <li>Environment simulation</li>
+                <li>The ability to interact with SendLove, a software 
+                    interface that allows patients to view photos and 
+                    messages sent by friends and family
+                </li>
+            </ol>
+        </p>
+        <p>
+            The controller interfaces with two external components: a LIFX smart bulb with 
+            WiFi capabilities and a projector.
+        </p>
+    </div>
+    <div class="row">
+        <p>
+            <iframe width="853" height="480" src="https://www.youtube.com/embed/Kb9DZyWNbms?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </p>
+    </div>
+    <div class="row">
+        <p>
+            My contributions:
+            <ul>
+                <li>Concept ideation, storyboards, and sketching</li>
+                <li>User research and interviews</li>
+                <li>Physical controller layout design</li>
+                <ul>
+                    <li>Embedded software and wiring</li>
+                    <li>Interfacing between controller, LIFX, RaspberryPi, projector, and speakers</li>
+                    <li>Environment simulation script</li>
+                </ul>
+                <li>Product testing at UCSF</li>
+                <li>Logo design</li>
+                <li>Product photography</li>
+            </ul>
+        </p>
+    </div>
+    <div class="row">
+        <h1>Design Process</h1>
+        <h2>Brainstorming</h2>
+        <div class="photo_frame"><img src="../assets/img/code/lumos_process/brainstorm.jpg"></div>
+        <p>
+            We began with the knowledge that we wanted to create a device to better the lives of others. 
+            Using a series of ideation exercises (including post-its and clustering), 
+            we compiled a 
+            <a href="../assets/pdf/lumos_brainstorm.pdf">list of 26 possible ideas</a> and used this to gauge
+            our interest as a group. Eventually, we settled on the health space (specifically on designing for 
+            the "hospital room of the future") and
+            <a href="https://docs.google.com/presentation/d/1BDgqwAwWmi238w_AWdjDvQdmLcPpmtPvvo6caHkzHvQ/edit?usp=sharing">
+                created a deck 
+            </a>
+            detailing our general interest area, target user group, and important questions we would consider 
+            in further distilling our product idea. 
+        </p>
+        <p>
+            We found the concept of hospital design universally relatable
+            (after all, everyone will inevitably go to the hospital at some point in their lives). The idea that
+            the majority of modern hospital rooms are designed for the physician and not patient-centered was both 
+            dismaying and something our members have experienced first-hand. After hearing a representative from 
+            UCSF explain how widespread the issue of delirium is in hospital in-patients, we decided to make this 
+            our core focus.
+        </p>
+        <h2>Contextual Inquiry & User Interviews</h2>
+        <p>
+            In order to figure 
+        </p>
+        <h2>Prototyping</h2>
+        <h2>Onsite Testing at UCSF</h2>
+    </div>
+</div>
+
+</body>
+</html>

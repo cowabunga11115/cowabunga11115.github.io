@@ -32,6 +32,16 @@ a {
     display: none;
 }
 
+.pj_name h2 {
+    font-size: 3.0rem;
+}
+
+.coming_soon p{
+    visibility: hidden;
+    font-variant: all-petite-caps;
+    font-size: 2.2rem;
+}
+
 body {
     overflow: hidden;
 }
@@ -47,13 +57,13 @@ body {
     font-weight: 800;
 }
 
-.pj_name h2 {
-    font-size: 3.0rem;
-}
-
-.pj_name h2:hover {
+.pj_title:hover .pj_name h2 {
     font-weight:800;
     cursor: pointer;
+}
+
+.pj_title:hover .three.columns.coming_soon p {
+    visibility: visible;
 }
 
 .pj_name, h2, a {

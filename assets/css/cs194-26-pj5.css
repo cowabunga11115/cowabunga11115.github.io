@@ -1,0 +1,57 @@
+#caption {
+    margin-top: 3%;
+  }
+  
+  #shift_info {
+    margin-top: 2%;
+    margin-bottom: 2%;
+    text-align: center;
+  }
+  
+  #title {
+    text-align: center;
+    margin-top: 30px;
+  }
+  
+  #title h1 {
+    font-family: 'Josefin Sans', sans-serif;
+    /*font-family: 'Amatic SC', cursive;*/
+    font-size: 60px;
+    margin-bottom: 0px;
+  }
+  
+  .header_img {
+    /*height: 200px;*/
+    /*width: auto;*/
+    width: 100%;
+    /*content: url(../img/needs.jpg);*/
+    /*display: block;*/
+    /*margin: auto;*/
+    /*margin-top: 30px;*/
+    margin-bottom: 20px;
+  }
+  
+  .prokudin-gorskii {
+    height: 500px;
+    width: auto;
+    content: url(../assets/prokudin_gorskii.jpg);
+  }
+  
+  .img_info {
+    color:white;
+    position: relative;
+    margin-bottom: 30;
+    bottom: 40px;
+    left: 20px;
+  }
+  
+  img.display_img {
+    width:100%;
+  }
+  
+  img.center_img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  

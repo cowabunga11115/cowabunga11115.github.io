@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Michelle Chang</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="../assets/css/normalize.css">
+  <link rel="stylesheet" href="../assets/css/skeleton.css">
+  <link rel="stylesheet" href="../assets/css/cs194-26-pj2.css">
+  <link rel="stylesheet" href="../assets/css/cs194-26-pj3.css">
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+
+</head>
+<body>
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="container">
+    <div class="row" id="title" style="margin-top:3%">
+      <h1>The Fascinating World of Frequencies</h1>
+      <h5>Revealing the magic behind image manipulation and blending</h5>
+      <h6>Implemented by Michelle Chang</h6>
+    </div>
+  </div>
+
+  <!-- Brief overview of project -->
+  <div class="container">
+    <div class="row">
+      <h3>About the Project</h3>
+      <p>In this project, we use high and low pass filters to manipulate everyday images into something more extraordinary. Described in more colloquial terms, high pass filters extract the edges and details from an image, whereas low pass filters extract the “gist” of an image, often resulting in a blurrier version of the original picture. Using these two tools (often obtained via Gaussian filters), we can do magic!</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <h3>Part 0: Image Sharpening</h3>
+      <p>Image sharpening is one of the most basic functionalities of any image editing program, like Adobe Photoshop.
+      We often use it to make our images clearer and our edges cleaner. But what exactly does Photoshop do, when we tell
+      it to sharpen our latest vacation photo?</p>
+      <p>To sharpen an image, we basically follow the formula: <code>img + &alpha; * highpass(img)</code>,
+      where <code>highpass(img)</code> is the high pass version of our original image, and &alpha; is a constant.
+      To get the high-pass-filtered version of an image, I convolved each color channel of the photo with a
+      Gaussian kernel of specified size and &sigma;. The right &sigma; to use often depends on the
+      particular image's unique attributes (it's size, resolution, etc). I often changed the sigma depending on
+      the image's size (a larger sigma for larger images, and vice versa). I specified my Gaussian kernels to be
+      6*&sigma; x 6*&sigma; squares. &alpha;, on the other hand, determines how much of an effect your high-pass-filtered
+      image will have on your original image. In other words, the degree to which you would like to sharpen you image.
+      You'll notice, from the images below, that as &alpha; increases, the photo takes on a more processed, artificial appearance.
+    </p>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj3/p0/mochi.JPG">
+        <p class="img_info">Original Image</p>
+      </div>
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj3/p0/mochi_sharpened_sig6_alpha0.5.jpg">
+        <p class="img_info">&alpha; = 0.5; &sigma; = 6</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj3/p0/mochi_sharpened_sig6_alpha1.jpg">
+        <p class="img_info">&alpha; = 1; &sigma; = 6</p>
+      </div>
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj3/p0/mochi_sharpened_sig6_alpha2.jpg">
+        <p class="img_info">&alpha; = 2; &sigma; = 6</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj3/p0/mochi_sharpened_sig6_alpha4.jpg">
+        <p class="img_info">&alpha; = 4; &sigma; = 6</p>
+      </div>
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj3/p0/mochi_sharpened_sig6_alpha6.jpg">
+        <p class="img_info">&alpha; = 6; &sigma; = 6</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <h3>Part 1: Hybrid Images</h3>
+      <h5>Look carefully, what do you see? Now, look <em>harder</em>....</h5>
+      <p> Knowing how to high-pass-filter an image means we also know how to get
+        the low pass version as well! Essentially: <code>lowpass(img) = img - highpass(img)</code>.
+        Using these skills, we can now create "hybrid images," that is, static images
+        that change in interpretation as a function of the viewing distance. This just
+        means that people who look at the picture will see one thing when
+        they're close to the image, and another thing when they're farther away.
+      </p>
+      <p> Hybrid images work because high frequency dominates human perception at
+        shorter distances, while low frequency dominates perception at greater
+        proximities. This is in part due to the fact that humans, unlike hawks, for instance, have no
+        need to see farther things exceptionally clearly. For us, what matters most
+        is our immediate surroundings. We'll take advantage of this human trait in
+        our construction of hybrid images.
+      </p>
+      <h6>A BASIC RECIPE FOR HYBRID IMAGES:</h6>
+      <p> Choose two images you'd like to combine. Let <code>high_img</code> be the
+        image you want to be visible at close distances, and <code>low_img</code> be
+        the image you want people to see when they're farther away.
+      </thead>
+      </p>
+      <pre><code>
+        1. Align high_img and low_img, and save those as aligned_high and aligned_low
+        2. high = the high-pass-filtered version of aligned_high
+        3. low = the low-pass-filtered version of aligned_low
+        4. Hybrid image = avg(high, low)
+      </code></pre>
+      <p> It should be noted that the alignment of the two images is very important
+        in producing a good hybrid image. As noted in the <a href="http://cvcl.mit.edu/publications/OlivaTorralb_Hybrid_Siggraph06.pdf">Hybrid images</a> paper,
+        lack of alignment can cause the two images to interfere with each other in ways
+        detrimental to the viewier experience. The best situation is one in which the
+        low pass image is masked by the high pass image at close proximity, meaning that
+        the two images are very well aligned. In this case, I manually aligned the images
+        each time, and chose two points in each image that corresponded to each other.
+      </p>
+    </div>
+    <div class="row">
+      <h5>Analysis of a Hybrid Image: Peacock and Fan</h5>
+    </div>
+    <div class="row">
+      <img src="../assets/img/code/cs194-26/pj3/p1/bw_peacock6_fan6/p1_hybrid.jpg">
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj3/p1/bw_peacock6_fan6/peacock.jpg">
+      </div>
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj3/p1/bw_peacock6_fan6/chinese_fan.jpg">
+      </div>
+    </div>
+    <div class="row">
+      <p> In building this hybrid image, the peacock was my high pass image, with &sigma; = 6.
+        The fan was the low pass image with &sigma; = 6. I decided to keep the &sigma;'s the same
+        because both images are similar in size. Before proceeding, both images were manually aligned
+        and reduced to grayscale.
+      </p>
+    </div>
+    <div class="row">
+      <img src="../assets/img/code/cs194-26/pj3/p1/bw_peacock6_fan6/highpass_construction.jpg">
+      <p>
+        To construct the high pass image, I, in accordance with the procedure given above,
+        took the original grayscale image and subtracted a low pass version of the image
+        from it in order to obtain the high pass peacock. The FFT frequency graphs of these
+        images are given below, each placed below its respective image:
+      </p>
+    </div>
+    <div class="row">
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p1/bw_peacock6_fan6/p1_orgHighImg_freq.png">
+      </div>
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p1/bw_peacock6_fan6/p1_lowpassForHighpass_freq.png">
+      </div>
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p1/bw_peacock6_fan6/p1_high_freq.png">
+      </div>
+    </div>
+    <div class="row">
+      <p>
+        The darker colors indicate lower frequencies. Notice how the high frequency FFT
+        diagram is the brightest, most of the lower frequencies having been removed
+        from the subtraction.
+      </p>
+      <p>
+        To obtain the low frequency version of the fan, I convolved the original image
+        with its respective Gaussian kernel. Since &sigma; = 6, the kernel was 36 by 36 in size.
+        From the FFT images below, it can be seen that the original image, which was
+        full of high frequencies was largely reduced to low frequencies by the Gaussian filter.
+      </p>
+    </div>
+    <div class="row">
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p1/bw_peacock6_fan6/p1_orgLowImg_freq.png">
+        <p class="img_info">FFT of original fan image</p>
+      </div>
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p1/bw_peacock6_fan6/p1_lowpass_sig6.jpg">
+        <p class="img_info" style="color:black; bottom: 180px;">Low pass fan</p>
+      </div>
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p1/bw_peacock6_fan6/p1_low_freq.png">
+        <p class="img_info" style="bottom: 180px">FFT of low pass fan</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj3/p1/bw_peacock6_fan6/p1_hybrid.jpg">
+      </div>
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj3/p1/bw_peacock6_fan6/p1_hybrid_freq.png">
+      </div>
+    </div>
+    <div class="row">
+      Above is the final hybrid image, along with its FFT diagram.
+    </div>
+    <div class="row" style="margin-top: 2%">
+      <h5>More Hybrid Images</h5>
+      <h6>HARVEST MOON & MOONCAKE</h6>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj3/p1/harvest_moon.jpg">
+      </div>
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj3/p1/mooncake.jpg">
+      </div>
+    </div>
+    <div class="row">
+      <img src="../assets/img/code/cs194-26/pj3/p1/moon_mooncake.jpg">
+    </div>
+    <div class="row" style="margin-top:2%">
+      <h6>FAILURE CASE: MILK & WASHINGTON MONUMENT</h6>
+      <p>
+        This particular case likely did not work out because of the drastic visual
+        differences between the milk carton and the monument. One is shorter and wider,
+        while the other is taller and thinner. In accordance with the research paper's
+        point about proper alignment, the milk carton is not compatible with the monument
+        in that they can't be properly aligned. This results in the images interfering with
+        each other and distracting the viewer. Thus, the output is sub-optimal.
+      </p>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj3/p1/washington_monument.jpg" style="height:300px; width: auto;">
+        <img src="../assets/img/code/cs194-26/pj3/p1/milk.jpg">
+      </div>
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj3/p1/fail_milk_wash.jpg">
+      </div>
+    </div>
+    <div class="row">
+      <h5>Bells & Whistles: Colored Hybrid Images</h5>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj3/p1/color_moon_mooncake.jpg">
+      </div>
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj3/p1/p1_hybridpeacock_fan.jpg">
+      </div>
+    </div>
+  </div>
+
+  <div class="container" style="margin-top:2%">
+    <div class="row">
+      <h3>Part 2: Stacks</h3>
+      <h4>Stacks for Salvador Dali</h4>
+      <h5>Gaussian Stack</h5>
+    </div>
+    <div class="row">
+      <div class="three columns"><img src="../assets/img/code/cs194-26/pj3/p2/dali_gala_lincolngstack_sigma0_layer0.jpg">
+        <p class="img_info" style="bottom:40px">Original</p>
+      </div>
+      <div class="three columns"><img src="../assets/img/code/cs194-26/pj3/p2/dali_gala_lincolngstack_sigma1_layer1.jpg">
+      <p class="img_info" style="bottom:40px">&sigma; = 1</p></div>
+      <div class="three columns"><img src="../assets/img/code/cs194-26/pj3/p2/dali_gala_lincolngstack_sigma2_layer2.jpg">
+      <p class="img_info" style="bottom:40px">&sigma; = 2</p></div>
+      <div class="three columns"><img src="../assets/img/code/cs194-26/pj3/p2/dali_gala_lincolngstack_sigma4_layer3.jpg">
+      <p class="img_info" style="bottom:40px">&sigma; = 4</p></div>
+    </div>
+    <div class="row">
+      <div class="three columns"><img src="../assets/img/code/cs194-26/pj3/p2/dali_gala_lincolngstack_sigma8_layer4.jpg">
+      <p class="img_info" style="bottom:40px">&sigma; = 8</p></div>
+      <div class="three columns"><img src="../assets/img/code/cs194-26/pj3/p2/dali_gala_lincolngstack_sigma16_layer5.jpg">
+      <p class="img_info" style="bottom:40px">&sigma; = 16</p></div>
+      <div class="three columns"><img src="../assets/img/code/cs194-26/pj3/p2/dali_gala_lincolngstack_sigma32_layer6.jpg">
+      <p class="img_info" style="bottom:40px">&sigma; = 32</p></div>
+      <!-- <div class="three columns"><img src="../assets/img/code/cs194-26/pj3/p2/dali_gala_lincolngstack_sigma64_layer7.jpg"></div> -->
+    </div>
+    <div class="row" style="margin-top:2%">
+      <h5>Laplacian Stack</h5>
+    </div>
+    <div class="row">
+      <div class="three columns"><img src="../assets/img/code/cs194-26/pj3/p2/dali_gala_lincolnlstack_layer0.jpg">
+      <p class="img_info" style="bottom:40px">g0 - g1</p></div>
+      <div class="three columns"><img src="../assets/img/code/cs194-26/pj3/p2/dali_gala_lincolnlstack_layer1.jpg">
+      <p class="img_info" style="bottom:40px">g1 - g2</p></div>
+      <div class="three columns"><img src="../assets/img/code/cs194-26/pj3/p2/dali_gala_lincolnlstack_layer2.jpg">
+      <p class="img_info" style="bottom:40px">g2 - g3</p></div>
+      <div class="three columns"><img src="../assets/img/code/cs194-26/pj3/p2/dali_gala_lincolnlstack_layer3.jpg">
+      <p class="img_info" style="bottom:40px">g3 - g4</p></div>
+    </div>
+    <div class="row">
+      <div class="three columns"><img src="../assets/img/code/cs194-26/pj3/p2/dali_gala_lincolnlstack_layer4.jpg">
+      <p class="img_info" style="bottom:40px">g4 - g5</p></div>
+      <div class="three columns"><img src="../assets/img/code/cs194-26/pj3/p2/dali_gala_lincolnlstack_layer5.jpg">
+      <p class="img_info" style="bottom:40px">g5-g6</p></div>
+      <div class="three columns"><img src="../assets/img/code/cs194-26/pj3/p2/dali_gala_lincolngstack_sigma32_layer6.jpg">
+      <p class="img_info" style="bottom:40px">g6</p></div>
+    </div>
+    <div class="row">
+      <h4>Stacks for Peacock and Fan</h4>
+      <h5>Gaussian Stack</h5>
+    </div>
+    <div class="row">
+      <div class="three columns"><img src="../assets/img/code/cs194-26/pj3/p2/p1_hybridpeacock_fangstack_sigma0_layer0.jpg">
+        <p class="img_info" style="bottom:40px">Original</p>
+      </div>
+      <div class="three columns"><img src="../assets/img/code/cs194-26/pj3/p2/p1_hybridpeacock_fangstack_sigma1_layer1.jpg">
+      <p class="img_info" style="bottom:40px">&sigma; = 1</p></div>
+      <div class="three columns"><img src="../assets/img/code/cs194-26/pj3/p2/p1_hybridpeacock_fangstack_sigma2_layer2.jpg">
+      <p class="img_info" style="bottom:40px">&sigma; = 2</p></div>
+      <div class="three columns"><img src="../assets/img/code/cs194-26/pj3/p2/p1_hybridpeacock_fangstack_sigma4_layer3.jpg">
+      <p class="img_info" style="bottom:40px">&sigma; = 4</p></div>
+    </div>
+    <div class="row">
+      <div class="three columns"><img src="../assets/img/code/cs194-26/pj3/p2/p1_hybridpeacock_fangstack_sigma8_layer4.jpg">
+      <p class="img_info" style="bottom:40px">&sigma; = 8</p></div>
+      <div class="three columns"><img src="../assets/img/code/cs194-26/pj3/p2/p1_hybridpeacock_fangstack_sigma16_layer5.jpg">
+      <p class="img_info" style="bottom:40px">&sigma; = 16</p></div>
+    </div>
+    <div class="row">
+      <h5>Laplacian Stack</h5>
+    </div>
+    <div class="row">
+      <div class="three columns"><img src="../assets/img/code/cs194-26/pj3/p2/laplace0.png">
+        <p class="img_info" style="bottom:40px">Original</p>
+      </div>
+      <div class="three columns"><img src="../assets/img/code/cs194-26/pj3/p2/laplace1.png">
+      <p class="img_info" style="bottom:40px">&sigma; = 1</p></div>
+      <div class="three columns"><img src="../assets/img/code/cs194-26/pj3/p2/laplace2.png">
+      <p class="img_info" style="bottom:40px">&sigma; = 2</p></div>
+      <div class="three columns"><img src="../assets/img/code/cs194-26/pj3/p2/laplace3.png">
+      <p class="img_info" style="bottom:40px">&sigma; = 4</p></div>
+    </div>
+    <div class="row">
+      <div class="three columns"><img src="../assets/img/code/cs194-26/pj3/p2/laplace4.png">
+      <p class="img_info" style="bottom:40px">&sigma; = 8</p></div>
+      <div class="three columns"><img src="../assets/img/code/cs194-26/pj3/p2/p1_hybridpeacock_fangstack_sigma16_layer5.jpg"></div>
+    </div>
+  <div class="container">
+    <div class="row">
+      <h3>Part 3: Multiresolution Blending</h3>
+      <h5>Grayscale Blending</h5>
+    </div>
+    <div class="row">
+      <img src="../assets/img/code/cs194-26/pj3/p3/efros_statue.jpg">
+    </div>
+    <div class="row" style="margin-top:2%">
+      <h6>ORIGINAL IMAGES</h6>
+    </div>
+    <div class="row">
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/efros.jpg" style="height:300px; width: auto;">
+      </div>
+      <div class="eight columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/temple_statues.jpg" style="height:300px; width:auto;">
+      </div>
+    </div>
+    <div class="row" style="margin-top:2%">
+      <h6>HOW IT WORKS</h6>
+      <p>Multiresolution blending works by taking two images that you want to blend,
+      and creating a black and white "mask." The mask will be white where you want
+      the first of your images to appear in the final blended output, and black where
+      you'd like the second image to appear. In this case, I created a mask that
+      matched the head of the statue to Professor Efro's face. </p>
+      <img src="../assets/img/code/cs194-26/pj3/p3/temple_efros/statue_efros_mask.jpg">
+      <p> The general procedure is to take in two images. Let's say that img1 corresponds to
+        the white areas of the mask, and img2 corresponds to the black areas. Here's a high-level
+        recipe for blending the two pictures:
+      </p>
+      <pre><code>
+        1. Make a Laplacian stack for img1 (L1)
+        2. Make a Laplacian stack for img2 (L2)
+        3. Make a Gaussian stack for the mask (Gm)
+        4. For each level i of the stacks for all the images, find:
+            Gm_i * L1_i + (1 - Gm_i) * L2_i
+        5. Blended image = sum of all Gm_i for all levels i
+      </code></pre>
+      <p> The number of levels is arbitrary and completely up to you. My images
+        used levels of 6.
+      </p>
+    </div>
+    <div class="row" style="margin-top:2%">
+      <h6>GAUSSIAN STACK OUTPUT</h6>
+      <p>To create the Efros Statue image, Gaussian stacks of six levels were generated for each component image. </p>
+    </div>
+    <div class="row">
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/temple_efros/efros.jpg">
+      </div>
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/efros_stack/g_stack_blue_img1_layer1.jpg">
+      </div>
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/efros_stack/g_stack_blue_img1_layer2.jpg">
+      </div>
+    </div>
+    <div class="row">
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/efros_stack/g_stack_blue_img1_layer3.jpg">
+      </div>
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/efros_stack/g_stack_blue_img1_layer4.jpg">
+      </div>
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/efros_stack/g_stack_blue_img1_layer5.jpg">
+      </div>
+    </div>
+    <div class="row">
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/temple_efros/statue.jpg">
+      </div>
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/efros_stack/g_stack_blue_img2_layer1.jpg">
+      </div>
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/efros_stack/g_stack_blue_img2_layer2.jpg">
+      </div>
+    </div>
+    <div class="row">
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/efros_stack/g_stack_blue_img2_layer3.jpg">
+      </div>
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/efros_stack/g_stack_blue_img2_layer4.jpg">
+      </div>
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/efros_stack/g_stack_blue_img2_layer5.jpg">
+      </div>
+    </div>
+    <div class="row">
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/temple_efros/statue_efros_mask.jpg">
+      </div>
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/efros_stack/g_stack_blue_mask_layer1.jpg">
+      </div>
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/efros_stack/g_stack_blue_mask_layer2.jpg">
+      </div>
+    </div>
+    <div class="row">
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/efros_stack/g_stack_blue_mask_layer3.jpg">
+      </div>
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/efros_stack/g_stack_blue_mask_layer4.jpg">
+      </div>
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/efros_stack/g_stack_blue_mask_layer5.jpg">
+      </div>
+    </div>
+    <div class="row">
+      <h6>LAPLACIAN STACK OUTPUT</h6>
+      <p>
+        Laplacian stacks of five layers were also generated for two non-mask images.
+      </p>
+    </div>
+    <div class="row">
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/efros_stack/laplacian_stack_blue_img1_layer0.jpg">
+      </div>
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/efros_stack/laplacian_stack_blue_img1_layer1.jpg">
+      </div>
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/efros_stack/laplacian_stack_blue_img1_layer2.jpg">
+      </div>
+    </div>
+    <div class="row">
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/efros_stack/laplacian_stack_blue_img1_layer3.jpg">
+      </div>
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/efros_stack/laplacian_stack_blue_img1_layer4.jpg">
+      </div>
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/efros_stack/g_stack_blue_img1_layer5.jpg">
+      </div>
+    </div>
+    <div class="row">
+      <p>
+        The following is the Laplacian stack generated for the statue image.
+        Note that the very last image in each stack is always the last image from
+        the corresponding Gaussian stack.
+      </p>
+    </div>
+    <div class="row">
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/efros_stack/laplacian_stack_blue_img2_layer0.jpg">
+      </div>
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/efros_stack/laplacian_stack_blue_img2_layer1.jpg">
+      </div>
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/efros_stack/laplacian_stack_blue_img2_layer2.jpg">
+      </div>
+    </div>
+    <div class="row">
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/efros_stack/laplacian_stack_blue_img2_layer3.jpg">
+      </div>
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/efros_stack/laplacian_stack_blue_img2_layer4.jpg">
+      </div>
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/efros_stack/g_stack_blue_img2_layer5.jpg">
+      </div>
+    </div>
+    <div class="row">
+      <p>
+        Combining all the Laplacian and Gaussian stack outputs in accordance with the
+        formula specified above, results in the blended Efros Statue image!
+      </p>
+    </div>
+    <div class="row">
+      <h5>Bells and Whistles: Adding Color</h5>
+      <h6>FOREST ROBES</h6>
+    </div>
+    <div class="row">
+      <div class="eight columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/trad_clothing.jpg">
+      </div>
+    </div>
+    <div class="row">
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/blue_clothes/deep_blue.jpg">
+      </div>
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/blue_clothes/blue_lake.jpg">
+      </div>
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/blue_clothes/mask.jpg">
+      </div>
+    </div>
+    <div class="row" style="margin-top:2%;">
+      <h6>TURTLE-PINEAPPLE BUN</h6>
+    </div>
+    <div class="row">
+      <div class="eight columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/turtle_bun.jpg">
+      </div>
+    </div>
+    <div class="row">
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/turtle_bun/tortoise.jpg">
+      </div>
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/turtle_bun/use_tortoise_bun.jpg">
+      </div>
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/turtle_bun/use_tortoise_mask.jpg">
+      </div>
+    </div>
+    <div class="row" style="margin-top:2%;">
+      <h6>BUTTON EYES</h6>
+    </div>
+    <div class="row">
+      <div class="eight columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/BUTTON_WOMAN.jpg">
+      </div>
+    </div>
+    <div class="row">
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/coralinify/woman_buttons.jpg">
+      </div>
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/coralinify/woman_mask.jpg">
+      </div>
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/coralinify/woman.jpg">
+      </div>
+    </div>
+    <div class="row" style="margin-top:2%;">
+      <h6>FAILURES</h6>
+      <p>
+        I found that blending images with fairly different color schemes or textures
+        often did not produce optimal results. Ultimately, the more similar the images,
+        the better the result of the blend.
+      </p>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/blendeddiverpus.jpg">
+      </div>
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj3/p3/plagueworm.jpg">
+      </div>
+    </div>
+
+  </div>
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>

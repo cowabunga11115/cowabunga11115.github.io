@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Michelle Chang</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Fredericka+the+Great|Josefin+Sans:300|Open+Sans+Condensed:300" rel="stylesheet">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="../assets/css/normalize.css">
+  <link rel="stylesheet" href="../assets/css/skeleton.css">
+  <link rel="stylesheet" href="../assets/css/cs194-26-pj4.css">
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+
+</head>
+<body>
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="container">
+    <div class="row" id="title">
+      <div class="header_img">
+        <img src="../assets/img/code/cs194-26/anbileru_adaleru.png" style="width:100px; height:auto;">
+        <img src="../assets/img/code/cs194-26/gregory_sujkowski.png" style="width:100px; height:auto;">
+        <img src="../assets/img/code/cs194-26/ludmil.png" style="width:100px; height:auto;">
+      </div>
+      <h1>THE ART OF SEAM CARVING</h1>
+      <h5>Michelle Chang</h5>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <p>
+        The delicate art of “seam carving” involves using various computing methods to resize images, while still preserving the core of the viewing experience. By this, we refer to the technique’s usage of various “energy functions” to determine which pixels to remove during the resizing process (indeed, a similar technique can be employed for the purpose of image enlargement, but here we choose to focus solely on reduction). The objective is to remove the pixels which have the least impact on the image (the “unimportant” ones).
+      </p>
+    </div>
+    <div class="row">
+      <h6><strong>ON TECHNIQUE</strong></h6>
+    </div>
+    <div class="row">
+      <p>
+        The classic recipe for seam carving is as follows:
+      </p>
+      <p>
+        Ingredients:
+        <ul>
+          <li>1 image</li>
+          <li>1 energy function, ready to apply</li>
+          <li>A pair of new dimensions (width, height) to determine the size of our end goal</li>
+        </ul>
+      </p>
+      <p>
+        Procedure:
+        <ol>
+          <li>Apply the energy function to the image</li>
+          <li>
+            Use computing techniques (most notably, dynamic programming) to discover which line of contiguous pixels in the image has the least amount of cumulative energy. By “contiguous,” we mean that all subsequent pixels must be southwest, directly south, or southeast of their predecessors.
+          </li>
+          <li>
+            Remove the least energetic seam from the image (either horizontally or vertically, depending on the specified pair of new dimensions) until the image is the desired size. A well-loved technique for handling horizontal versus vertical is to write a function to remove pixels in one direction, but to transpose the image and employ the original removal function in order to off pixels in the other direction.
+          </li>
+        </ol>
+      </p>
+    </div>
+    <div class="row">
+      <h6><strong>ON ENERGY FUNCTIONS</strong></h6>
+    </div>
+    <div class="row">
+      <p>
+        An assortment of energy function may be used in tandem with this technique. Indeed, experts report that to this day, no “perfect” energy function has been found. Rather, individual energy functions have their strengths, and some may work better than others in certain cases. In the case of this reading, however, we showcase a modified version of the classic convolution-based function demonstrated in this <a href="http://inst.eecs.berkeley.edu/~cs194-26/fa16/hw/proj4-seamcarving/imret.pdf" target="_blank">superb paper</a>.
+      </p>
+      <p>
+        But before we talk about energy functions, let us speak of gradients. Those who study the noble art of image processing will agree that gradient domain filtering is a powerful technique with many applications. Gradients can be used to exert high-level control over images, as they showcase low-level image features but cause drastic visual effects when modified. As one might expect, then, energy functions that leverage gradients allow us advantages such as the preservation of strong contours (a necessary capability, as the human eye is very sensitive to edges, making slight distortions in this area quite noticeable), because, as mentioned above, gradient-filtered images display areas of low-level significance. The following energy function (employed throughout this reading) takes advantage of these qualities and is intended to remove, as much as possible, pixels that blend in with their surroundings:
+      </p>
+      <center><img src="../assets/img/code/cs194-26/pj4/math/prelim_energy_fxn.png" style="height:100px; width:auto;"></center>
+      <p>
+        This particular energy function takes the partial derivative of an image’s pixels with respect to both the y and x axes, and takes the sum as the energy value. In this demonstration, we have <em>modified the procedure slightly</em> so as to:
+        <ol>
+          <li>Take the x and y partial derivatives via convolution with matrices [-1, 1] and [[1], [-1]], respectively. (This is more of a programming enhancement than a modification.)</li>
+          <li>Use the gradient magnitude as the energy function that dictates which seams to remove. This change is useful because the gradient magnitude reports the edge strength of each pixel, and our intention is to remove those pixels with less edge strength. While the original function does technically calculate the gradient of the image, there are various ways the values can be put together (such as through summation), we chose to get the gradient magnitude.</li>
+        </ol>
+      </p>
+      <p>
+        Our final, modified energy function resembles the following:
+      </p>
+      <center><img src="../assets/img/code/cs194-26/pj4/math/energy_fxn.png" style="height:100px; width:auto;"></center>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <h6><strong>IN PRACTICE: VERTICAL CARVING</strong></h6>
+    </div>
+
+    <div class="row"> <!-- originals -->
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj4/org/blue_leaf.jpg">
+        <p class="img_info">Original: 427x625</p>
+      </div>
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj4/vertical/blue_leaf_427x525.jpg">
+        <p class="img_info">427x525</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj4/org/fence.jpg">
+        <p class="img_info">Original: 499x750</p>
+      </div>
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj4/vertical/fence_499x550.jpg">
+        <p class="img_info">499x550</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj4/org/nordic_woods.jpg">
+        <p class="img_info">Original: 437x640</p>
+      </div>
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj4/vertical/nordic_woods_437x500.jpg">
+        <p class="img_info">437x500</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj4/org/hot_cocoa.jpg">
+        <p class="img_info">Original: 500x749</p>
+      </div>
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj4/vertical/hot_cocoa_500x600.jpg">
+        <p class="img_info">500x600</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj4/org/dark_pumpkins.jpg">
+        <p class="img_info">Original: 455x577</p>
+      </div>
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj4/vertical/dark_pumpkins_455x377.jpg">
+        <p class="img_info">455x377</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj4/org/clovers.jpg">
+        <p class="img_info">Original: 426x640</p>
+      </div>
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj4/vertical/clovers_426x426.jpg">
+        <p class="img_info">426x426</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <h6><strong>IN PRACTICE: HORIZONTAL CARVING</strong></h6>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj4/org/fall_together.jpg">
+        <p class="img_info">Original: 479x700 (Painting by Pascal Campion)</p>
+      </div>
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj4/horizontal/fall_together_350x700.jpg">
+        <p class="img_info">350x700</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <h6><strong>IN PRACTICE: CARVING IN BOTH DIRECTIONS</strong></h6>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj4/org/blue_house.jpg">
+        <p class="img_info">Original: 474x609</p>
+      </div>
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj4/both/blue_house_474x474.jpg">
+        <p class="img_info">474x474</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj4/org/gloves.jpg">
+        <p class="img_info">Original</p>
+      </div>
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj4/both/gloves_400x400.jpg">
+        <p class="img_info">400x400</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <h6><strong>NOTABLE CAVEATS & ANALYSIS</strong></h6>
+    </div>
+    <div class="row">
+      <p>
+        The seam carving technique is noticeably flawed when dealing with images with defined lines or features. As such, photographs of people or distinct objects (cups, roads, houses) often become distorted after seam carving. Some examples of undesirable output are presented below. (Please note that images may have been resized to fit on the page. The actual, uncompressed dimensions of each image are listed on each image.)
+      </p>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj4/fail_input/blue_girl.jpg" style="width:500px; height:auto;">
+        <p class="img_info">Original: 564x552</p>
+      </div>
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj4/fail/blue_girl_564x400.jpg" style="width:500px; height:auto;">
+        <p class="img_info">564x400: The compression blatantly distorts the girl's face.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj4/fail_input/spiced_milk.jpg" style="width:500px; height:auto;">
+        <p class="img_info">Original: 474x663</p>
+      </div>
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj4/fail/spiced_milk_474x474.jpg" style="width:500px; height:auto;">
+        <p class="img_info" style="bottom:60px">474x474: Distinctly shaped, man-made objects are usually oddly-shaped after carving.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj4/fail_input/natural_fire.jpg" style="width:500px; height:auto;">
+        <p class="img_info">Original: 500x678</p>
+      </div>
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj4/fail/natural_fire_450x550.jpg" style="width:500px; height:auto;">
+        <p class="img_info" style="bottom:60px">450x550: Distinct edges are, more often than not, distorted. Notice that the foliage is relatively fine. </p>
+      </div>
+    </div>
+    <div class="row">
+      <p>
+        Seam carving seems to do best with images that involve seemingly random groups of pixels (often, these are nature images) that the human eye cannot easily distinguish between, or long stretches of “unimportant” information, such as blank space or darkness (the pumpkin image, above, is a good example of this). It is important, however, to note that often, artists include such blank stretches as elements of composition and movement. We thus find it somewhat regrettable that seam carving (through the demonstrated energy function) removes these features, which are intended to allow the viewer some amount of breathing room.
+      </p>
+      <p>
+        In fact, this brings up an interesting point about ethics. Should this technique ever be implemented in practice, it will likely only find success among publications and applications without an artistic application. It is not too farfetched to believe that those who find fulfillment in the production of creative visual works might take issue with their paintings and photographs being stretched and compressed without their consent. Piet Mondrian likely spent hours positioning his lines exactly the right distances from each other. Making it acceptable to modify these distances, changing them to the whim of viewers’ electronic devices, would likely have history’s virtuosos rolling in their graves.
+      </p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <img src="../assets/img/code/cs194-26/stanislav_levin.png" style="width:30px; height:auto;" class="one column">
+      <h6 class="nine columns" style="margin-top:1%; margin-left: 5px;"><strong>OBJECT REMOVAL WITH SEAM CARVING</strong></h6>
+    </div>
+    <div class="row">
+      <p>
+        Seam carving, with extra enhancements, can also be leveraged to remove certain objects from an image during reduction. One way to do this is to leverage a black and white mask (the image should only contain 1’s and 0’s), where the white areas resemble the shapes of objects you want removed during the compression process. The procedure is very similar to that of normal seam carving, except that after the energy function has been applied to the image (let’s call the result e(I) ), you’ll want to take the black and white mask (if it has three color channels, just extract one of the three to use) and subtract it from e(I). You can even multiply the mask by some constant to ensure the areas marked out in white are the number one priority for removal.
+      </p>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj4/removal/running.jpg">
+        <p class="img_info">Original: 500x730 (Painting by Pascal Campion)</p>
+      </div>
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj4/removal/running_mask.jpg">
+        <p class="img_info">Mask: 500x730 </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj4/removal/running_withMask_400x730.jpg">
+        <p class="img_info">400x730</p>
+      </div>
+      <div class="six columns">
+        <p> This particular exampled worked very well because of the hazy forest background. Such randomness is less detectable and distinct to the human eye. </p>
+      </div>
+    </div>
+    <div class="row">
+      <p>
+        Of course, this technique is not perfect and sometimes the image will have noticeable seams where the object was removed, due to the photo having distinct objects in the background.
+      </p>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj4/removal/haze.jpg">
+        <p class="img_info">Original: 474x632</p>
+      </div>
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj4/removal/haze_mask.jpg">
+        <p class="img_info">Mask: 474x632 </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj4/removal/haze_withMask_350x632.jpg">
+        <p class="img_info">350x632</p>
+      </div>
+      <div class="six columns">
+        <p> Both the leaves and apples are immediately distinguishable to the viewer, which is why having the program remove a single apple and compress leads to unnatural-seeming lines and positions in the resulting image.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <h6><strong>TAKEAWAYS</strong></h6>
+    </div>
+    <div class="row">
+      <p>
+        Through this experiment with seam carving, it’s clear that image processing is capable of incredible and truly surprising feats! I think image carving really demonstrates the relationship gradients have with edge strength, and that after this project, I feel like I understand its properties much better. I also think it worth noting that this project has taught me to never trust photography again and that despite its seemingly magical abilities, image processing is still incredibly imperfect.
+      </p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <p><em>Source Acknowledgements: Bell icon courtesy of Stanislav Levin. Title icons from left to right: Anbileru Adaleru, Gregory Sujkowski, Ludmil.</em></p>
+    </div>
+  </div>
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>

@@ -1,0 +1,12 @@
+img {
+width: 100%;
+}
+
+.img_info {
+color:white;
+z-index: 5;
+position: relative;
+margin-bottom: 30;
+bottom: 160px;
+left: 20px;
+}

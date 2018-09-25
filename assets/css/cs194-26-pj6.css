@@ -1,0 +1,50 @@
+#caption {
+    margin-top: 3%;
+  }
+  
+  #shift_info {
+    margin-top: 2%;
+    margin-bottom: 2%;
+    text-align: center;
+  }
+  
+  #title {
+    text-align: center;
+    margin-top: 30px;
+  }
+  
+  #title h1 {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 60px;
+    margin-bottom: 0px;
+  }
+  
+  .header_img {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .prokudin-gorskii {
+    height: 500px;
+    width: auto;
+    content: url(../img/code/cs194-26/prokudin_gorskii.jpg);
+  }
+  
+  .img_info {
+    color:white;
+    position: relative;
+    margin-bottom: 30;
+    bottom: 40px;
+    left: 20px;
+  }
+  
+  img.display_img {
+    width:100%;
+  }
+  
+  img.center_img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Michelle Chang</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Fredericka+the+Great|Josefin+Sans:300|Open+Sans+Condensed:300" rel="stylesheet">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="../assets/css/normalize.css">
+  <link rel="stylesheet" href="../assets/css/skeleton.css">
+  <link rel="stylesheet" href="../assets/css/cs194-26-pj5.css">
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+
+</head>
+<body>
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="container">
+    <div class="row" id="title">
+      <h1>FACE MORPHING</h1>
+      <h5>Michelle Chang</h5>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <p>
+        This project explores the use of triangulation and morphing to change the appearance of photos.
+      </p>
+    </div>
+    <div class="row">
+      <h6><strong>COMPUTING THE MIDWAY IMAGE</strong></h6>
+    </div>
+    <div class="row">
+      <pre>
+        <strong>Given:</strong> Two photos
+        <strong>Output:</strong> An image that represents the “midpoint” or average of the two</p>
+      </pre>
+      <p style="margin-top:-6%;">
+        To accomplish this, I selected a series of points on each image, focusing on areas that most defined each photograph. Each point in the first image, had a corresponding point in the second image. I then found the intermediate points by taking the average of each corresponding coordinate. A Delaunay triangulation was performed on the intermediate points, and each image was warped to the intermediate shape by taking pixel values from triangles in, say, IMG1, and mapping them to corresponding triangle pixel areas defined by the triangulation on the intermediate points.
+      </p>
+      <p>
+        <code>
+          Final midway image = warped_img1 * 0.5 + warped_img2 * 0.5
+        </code>
+      </p>
+      <p>
+        The factor of 0.5 is to average the color values, so that the final result is both the average of the colors and shapes of the two images.
+      </p>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj5/midway/me_ashley/michelle_ctrlPts.jpg">
+      </div>
+      <div class="six columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj5/midway/me_ashley/ashley_ctrlPts.jpg">
+      </div>
+    </div>
+    <div class="row" style="margin-top:-2%;">
+      <p style="text-align:left;">
+        Displayed above are the controls points selected for each image.
+      </p>
+    </div>
+    <div class="row">
+      <div class="four columns">
+        <img class="display_img" src="https://c2.staticflickr.com/6/5583/30589721265_9276d837a2.jpg">
+        <p class="img_info" style="color:black; bottom:255px;">Me</p>
+      </div>
+      <div class="four columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj5/midway/me_ashley/roommates_warp.jpg">
+        <p class="img_info" style="color:black; bottom:255px;">Midway</p>
+      </div>
+      <div class="four columns">
+        <img class="display_img" src="https://c2.staticflickr.com/6/5650/30589721555_4acd52019e.jpg">
+        <p class="img_info" style="color:black; bottom:255px;">My friend Ashley</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <h6><strong>MORPHING</strong></h6>
+    </div>
+    <div class="row">
+      <pre>
+        <strong>Given:</strong> Two photos
+        <strong>Output:</strong> An animated gif that morphs from IMG1 to IMG2 in 45 frames</p>
+      </pre>
+      <p style="margin-top:-6%;">
+        Creating a morph between two images uses a procedure extremely similar to the techniques for producing a midway face; the only difference being the <code>dissolve_frac</code> and <code>warp_frac</code> used. <code>dissolve_frac</code> refers to how much color in each image shows up in the resulting blend, while <code>warp_frac</code> refers to how much of the shape of each image comes through in the blend.
+      </p>
+      <p>
+        To create a morph sequence, I essentially created a series of “midway faces” with different <code>dissolve_frac</code> and <code>warp_frac</code> values. Frame 0 was the same as IMG1, and frame 45 was the same as IMG2. In between, both <code>dissolve_frac</code> and <code>warp_frac</code> decreased by 0.022 each time (starting from 1 and ending at 0).
+      </p>
+    </div>
+    <div class="row">
+      <img class="center_img" style="width:40%;" src="../assets/img/code/cs194-26/pj5/morph/roommates.gif">
+    </div>
+
+    <div class="row" style="margin-top:2%;">
+      <h6><strong>PLAYING WITH POPULATIONS</strong></h6>
+    </div>
+    <div class="row">
+      <pre>
+        <strong>Given:</strong> Images from a certain population (girls/guys/young/old/etc) in a dataset
+        <strong>Output:</strong> The average face of the whole population</p>
+      </pre>
+      <p style="margin-top:-6%;">
+        To create the average face of a population (I used the Danish dataset), I took all the corresponding data points of each image and calculated the average, to get the mean face shape. Then I warped each individual image into the average face shape, using the techniques employed in face morphing. Finally, the average image was produced by summing up all the pixel values of each image and taking the average.
+      </p>
+    </div>
+    <div class="row">
+      <h6>DANISH MALE POPULATION</h6>
+      <p>Here are a few samples morphed to the average Danish male face shape:</p>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img class="display_img" src="https://c2.staticflickr.com/6/5633/30500594651_dd5b3a7a3b.jpg">
+        <p class="img_info">Original</p>
+      </div>
+      <div class="six columns">
+        <img class="display_img" src="https://c2.staticflickr.com/6/5475/29954881473_384d2577e8.jpg">
+        <p class="img_info">Warped to average shape</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img class="display_img" src="https://c2.staticflickr.com/6/5444/29954880873_c9edc44141.jpg">
+        <p class="img_info">Original</p>
+      </div>
+      <div class="six columns">
+        <img class="display_img" src="https://c2.staticflickr.com/6/5832/30500594471_45e5570df7.jpg">
+        <p class="img_info">Warped to average shape</p>
+      </div>
+    </div>
+    <div class="row">
+      <img class="center_img" style="width:100%;" src="https://c2.staticflickr.com/6/5564/30289368580_ba310ae750_z.jpg">
+      <p class="img_info">The average Danish male</p>
+    </div>
+    <div class="row">
+      <h6>DANISH FEMALE POPULATION</h6>
+      <p>Here are a few samples morphed to the average Danish male face shape:</p>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img class="display_img" src="https://c2.staticflickr.com/6/5333/30500594871_009e13c883.jpg">
+        <p class="img_info">Original</p>
+      </div>
+      <div class="six columns">
+        <img class="display_img" src="https://c2.staticflickr.com/6/5494/29954881683_e15ddc2a2b.jpg">
+        <p class="img_info">Warped to average shape</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img class="display_img" src="https://c2.staticflickr.com/6/5526/29954879983_1cc28553c6.jpg">
+        <p class="img_info">Original</p>
+      </div>
+      <div class="six columns">
+        <img class="display_img" src="https://c2.staticflickr.com/6/5548/29956728444_e2caf69ec2.jpg">
+        <p class="img_info">Warped to average shape</p>
+      </div>
+    </div>
+    <div class="row">
+      <img class="center_img" style="width:100%;" src="https://c2.staticflickr.com/6/5635/30289366490_a162b61c94_z.jpg">
+      <p class="img_info">The average Danish female</p>
+    </div>
+    <div class="row">
+      <h6>THE DANISH FEMALE POPULATION & ME</h6>
+      <p>I also played with warping between the average population's shape and mine.</p>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img class="display_img" src="https://c2.staticflickr.com/6/5635/30289366490_a162b61c94_z.jpg">
+        <p class="img_info">Average Danish female</p>
+      </div>
+      <div class="six columns">
+        <img class="display_img" src="https://c1.staticflickr.com/9/8580/29956728614_3407371f3a_z.jpg">
+        <p class="img_info">Average female warped to my geometry</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img class="display_img" src="https://c2.staticflickr.com/6/5786/29954880503_437602ca7c.jpg">
+        <p class="img_info" style="color:black;">My original image</p>
+      </div>
+      <div class="six columns">
+        <img class="display_img" src="https://c2.staticflickr.com/6/5806/29954880163_6032d4c944_z.jpg">
+        <p class="img_info" style="color:black;">Me warped to the average female's geometry</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <h6><strong>CREATING CARICATURES</strong></h6>
+    </div>
+    <div class="row">
+      <pre>
+        <strong>Given:</strong> An image of me, the average Danish female
+        <strong>Output:</strong> A caricature of my face</p>
+      </pre>
+      <p style="margin-top:-6%;">
+        To produce a caricature of my face, I computed the difference between the average Danish female points and the points in my image, multiplied it by some constant &alpha;, and added that to the points in my image. I then warped my face to the calculated shape.
+      </p>
+      <p>
+        As I increase &alpha; my eyes become noticeably wider and my face more square. As I decrease &alpha; my eyes become much more narrow and my face more elongated.
+      </p>
+    </div>
+    <div class="row">
+      <div class="four columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj5/caricature/caricature_n1p5.jpg">
+        <p class="img_info" style="color:black;left:35px;">&alpha; = -1.5</p>
+      </div>
+      <div class="four columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj5/caricature/caricature_np8.jpg">
+        <p class="img_info" style="color:black;left:35px;">&alpha; = -0.8</p>
+      </div>
+      <div class="four columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj5/caricature/caricature_np5.jpg">
+        <p class="img_info" style="color:black;left:35px;">&alpha; = -0.5</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="four columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj5/caricature/caricature_p5.jpg">
+        <p class="img_info" style="color:black;left:35px;">&alpha; = 0.5</p>
+      </div>
+      <div class="four columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj5/caricature/caricature_p8.jpg">
+        <p class="img_info" style="color:black; left:35px;">&alpha; = 0.8</p>
+      </div>
+      <div class="four columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj5/caricature/caricature_1p5.jpg">
+        <p class="img_info" style="color:black; left:35px;">&alpha; = 1.5</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <img src="../assets/stanislav_levin.png" style="width:30px; height:auto;" class="one column">
+      <h6 class="nine columns" style="margin-top:1%; margin-left: 5px;"><strong>GENDERBENDING</strong></h6>
+    </div>
+    <div class="row">
+      <p>
+        To try to make my image more female (or male), I took images of the average Chinese actor and actress. In order to accomplish this, a desired face shape and color is required, as both differ among genders.
+      </p>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img class="display_img" src="https://c2.staticflickr.com/6/5483/30588555795_b9ed717a7e.jpg">
+        <p class="img_info">Average Chinese actor</p>
+      </div>
+      <div class="six columns">
+        <img class="display_img" src="https://c1.staticflickr.com/9/8561/29954874613_93fe99ee1d.jpg">
+        <p class="img_info">Average Chinese actress</p>
+      </div>
+    </div>
+    <div class="row">
+      <p>
+        <code>Desired face shape = my points + &alpha; * (female points - male points)</code>
+      </p>
+      <p>
+        A negative alpha makes the result more male, and a positive alpha makes the result more male. This holds throughout this entire process.
+      </p>
+      <p>
+        To get the desired color, all the images involved must be warped to the same shape first. After this is completed, the desired color can be computed as follows:
+      </p>
+      <p>
+        <code>Desired color = my pixel values + &alpha; * (female pixel values - male pixel values)</code>
+      </p>
+      <p> Below are my results with different &alpha; values. You'll notice that the results get more outlandish and exaggerated as the absolute value of the alpha value increases.</p>
+    </div>
+    <div class="row">
+      <h6>GENDERSWAPPING TO MALE (all &alpha; = -1)</h6>
+    </div>
+    <div class="row">
+      <div class="four columns">
+        <img class="display_img" src="https://c1.staticflickr.com/9/8672/29956725074_816b909aef_z.jpg">
+        <p class="img_info">Shape morph</p>
+      </div>
+      <div class="four columns">
+        <img class="display_img" src="https://c2.staticflickr.com/6/5760/29954876863_1a3b52f174_z.jpg">
+        <p class="img_info">Color modification</p>
+      </div>
+      <div class="four columns">
+        <img class="display_img" src="https://c2.staticflickr.com/6/5566/29954876543_49354415d8_z.jpg">
+        <p class="img_info">Complete modified image</p>
+      </div>
+    </div>
+    <div class="row">
+      <h6>GENDERSWAPPING TO MALE (all &alpha; = -0.5)</h6>
+    </div>
+    <div class="row">
+      <div class="four columns">
+        <img class="display_img" src="https://c2.staticflickr.com/6/5695/29957051854_3cb59f5ca5_z.jpg">
+        <p class="img_info">Shape morph</p>
+      </div>
+      <div class="four columns">
+        <img class="display_img" src="https://c2.staticflickr.com/6/5478/29957051984_45bfd90974_z.jpg">
+        <p class="img_info">Color modification</p>
+      </div>
+      <div class="four columns">
+        <img class="display_img" src="https://c2.staticflickr.com/6/5457/29957051074_07e7b752b0_z.jpg">
+        <p class="img_info">Complete modified image</p>
+      </div>
+    </div>
+    <div class="row">
+      <h6>GENDERBENDING TO MORE FEMALE (all &alpha; = 0.5)</h6>
+    </div>
+    <div class="row">
+      <div class="four columns">
+        <img class="display_img" src="https://c2.staticflickr.com/6/5605/29954876313_79832987a2_z.jpg">
+        <p class="img_info">Shape morph</p>
+      </div>
+      <div class="four columns">
+        <img class="display_img" src="https://c2.staticflickr.com/6/5752/30500591371_e8f882c2f0_z.jpg">
+        <p class="img_info">Color modification</p>
+      </div>
+      <div class="four columns">
+        <img class="display_img" src="https://c2.staticflickr.com/6/5461/30500591111_2526c1afde_z.jpg">
+        <p class="img_info">Complete modified image</p>
+      </div>
+    </div>
+    <div class="row">
+      <h6>GENDERBENDING TO MORE FEMALE (all &alpha; = 1)</h6>
+      <p>
+        Given that I'm enhancing myself with respect to the average of all Chinese actresses it makes sense
+        that my skin becomes much paler in these images. Further, since actresses have a tendency to wear
+        make-up, images where the coloring &alpha; is higher create the illusion of me wearing make-up as well.
+      </p>
+    </div>
+    <div class="row">
+      <div class="four columns">
+        <img class="display_img" src="https://c1.staticflickr.com/9/8670/30500590911_02d61358f5_z.jpg">
+        <p class="img_info">Shape morph</p>
+      </div>
+      <div class="four columns">
+        <img class="display_img" src="https://c2.staticflickr.com/6/5751/29956724474_330bca942a_z.jpg">
+        <p class="img_info">Color modification</p>
+      </div>
+      <div class="four columns">
+        <img class="display_img" src="https://c2.staticflickr.com/6/5657/29956723934_0a86bd0644_z.jpg">
+        <p class="img_info">Complete modified image</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <p><em>Source Acknowledgements: Bell icon courtesy of Stanislav Levin.</em></p>
+    </div>
+  </div>
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>

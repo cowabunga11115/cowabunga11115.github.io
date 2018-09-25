@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Michelle Chang</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Fredericka+the+Great|Josefin+Sans:300|Open+Sans+Condensed:300" rel="stylesheet">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="../assets/css/normalize.css">
+  <link rel="stylesheet" href="../assets/css/skeleton.css">
+  <link rel="stylesheet" href="../assets/css/cs194-26-pj7.css">
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+
+</head>
+<body>
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="container">
+    <div class="row" id="title">
+      <h1>Image Warping and Mosaic Construction</h1>
+      <h6><a href="#part1">PART 1</a> | <a href="#part2">PART 2</a></h6>
+      <h5>Michelle Chang</h5>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <h4 id="part1">PART 1: Creating Panoramas by Hand</h4>
+    </div>
+    <div class="row">
+      <p>
+        This project concerns programmatically taking a few related images, warping them to the same point of view, and then piecing them together into a large composite image. Such techniques are often seen implemented in products that involve the creation of panoramas or wide angle lenses.
+      </p>
+    </div>
+    <div class="row">
+      <h6><strong>I. CALCULATING HOMOGRAPHIES</strong></h6>
+    </div>
+    <div class="row">
+      <p>
+        In order to correctly warp an image A to image B, we first need to calculate the homography matrix between them. A homography can tell us the position of a pixel in image A when warped to the plane of image B.
+      </p>
+      <p>
+        Generating a homography requires at least four points, because we need to solve for eight unknown variables. In this project, I manually selected corresponding points between the two images, but there are techniques out there that will allow you to programmatically generate such points as well. I then solved a system of equations much like the following:
+      </p>
+    </div>
+    <div class="row" id="center_div">
+      <div class="six columns">
+        <img class="center_img" style="width:600px;" src="../assets/img/code/cs194-26/pj7/homography_formula.png">
+      </div>
+    </div>
+    <div class="row" style="margin-top:2%;">
+      <p>
+        The elements of vector h are also the elements of the square homography matrix H, which can be constructed as specified below. For our purposes, h_33 is 1.
+      </p>
+    </div>
+    <div class="row">
+      <div class="four columns" id="center_div" style="width:100%">
+        <img class="center_img" src="../assets/img/code/cs194-26/pj7/H_structure.png">
+      </div>
+    </div>
+
+    <div class="row">
+      <h6><strong>II. IMAGE RECTIFICATION</strong></h6>
+    </div>
+    <div class="row">
+      <p>
+        Using the above technique for finding a homography between two images, we can now essentially take any image we want and warp it to match a desired point of view. Below are examples of instances where I took an image and warped various signage / planar objects to face forward.
+      </p>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <p style="text-align:center;"><strong>Original Image</strong></p>
+      </div>
+      <div class="six columns">
+        <p style="text-align:center;"><strong>Rectified Image</strong></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj7/rectified/tea_small.jpg">
+      </div>
+      <div class="six columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj7/rectified/tea_warped.jpg">
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj7/rectified/rosie_book.jpg">
+      </div>
+      <div class="six columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj7/rectified/rosie_rectified.jpg">
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj7/rectified/matcha_sign.jpg">
+      </div>
+      <div class="six columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj7/rectified/matcha_sign_rectified.jpg">
+      </div>
+    </div>
+
+    <div class="row" style="margin-top:2%;">
+      <h6><strong>III. MOSAIC CONSTRUCTION</strong></h6>
+    </div>
+    <div class="row">
+      <p>
+        Now that we know how to warp and rectify images, we can use these same techniques to stitch many images together to create a panorama! I used sets of three images to create my mosaics.
+      </p>
+      <p>
+        First, we can determine the size of the final panorama by doing forward warping on the left corners of the left image and the right corners of the right image. Simple arithmetic allows us to use this information to find the width and height of the panorama canvas. Forward warping also allows us to figure out the coordinates of the rest of the corners of our images when mapped onto the plane of the final panorama. This information is useful for finding the sizes and locations of overlapping areas between the three photos.
+      </p>
+      <p>
+        With this information, we can now warp the images towards a plane of our choosing. I decided to warp the left and right images to the plane of the center image. If a point in the final panorama applies to more than one image (Ex. This would happen if the same flower shows up in the left and center images), I used weighted averaging to smooth out the difference. I detected overlaps using calculated information about the left and right bounds of each intersecting area between the images.
+      </p>
+      <p>
+        To find the weights for linear blending between, say, the left and center images, I used the ratio between the current point’s distance from the left edge of the intersecting area and the total width of the intersecting area. Subtracting that value from 1 gave me the weight for the pixel value from the center image.
+      </p>
+      <p>
+        To take photographs for this project, I paid a visit to the Berkeley Botanical Gardens and used a tripod to ensure that all my images were coming from a fixed point of rotation. Featured below are some of my results:
+      </p>
+    </div>
+
+    <div class="row">
+      <h6>MOSAIC EXAMPLE 1: DESERT ECOSYSTEM</h6>
+      <p>
+        This one actually turned out better than I expected (likely because I managed to keep the brightness consistent between shots).
+      </p>
+    </div>
+    <div class="row">
+    </div>
+    <div class="row">
+      <div class="four columns">
+        <p style="text-align:center;"><strong>Left</strong></p>
+      </div>
+      <div class="four columns">
+        <p style="text-align:center;"><strong>Center</strong></p>
+      </div>
+      <div class="four columns">
+        <p style="text-align:center;"><strong>Right</strong></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="four columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj7/mosaic/cacti/left.jpg">
+      </div>
+      <div class="four columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj7/mosaic/cacti/center.jpg">
+      </div>
+      <div class="four columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj7/mosaic/cacti/right.jpg">
+      </div>
+    </div>
+    <div class="row">
+      <div class="twelve columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj7/mosaic/cacti/cacti_warped_linearBlend.jpg">
+        <p class="img_info">Linear blending</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="twelve columns" style="margin-top:-40px;">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj7/mosaic/cacti/cacti_crop.jpg">
+        <p class="img_info">Cropped for aethetic effect</p>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <h6>MOSAIC EXAMPLE 2: ASIAN GARDEN</h6>
+    </div>
+    <div class="row">
+      <div class="four columns">
+        <p style="text-align:center;"><strong>Left</strong></p>
+      </div>
+      <div class="four columns">
+        <p style="text-align:center;"><strong>Center</strong></p>
+      </div>
+      <div class="four columns">
+        <p style="text-align:center;"><strong>Right</strong></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="four columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj7/mosaic/asian_garden/left.jpg">
+      </div>
+      <div class="four columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj7/mosaic/asian_garden/center.jpg">
+      </div>
+      <div class="four columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj7/mosaic/asian_garden/right.jpg">
+      </div>
+    </div>
+    <div class="row">
+      <div class="twelve columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj7/mosaic/asian_garden/asian_garden_linearBlend.jpg">
+        <p class="img_info">Linear blending</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="twelve columns" style="margin-top:-40px;">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj7/mosaic/asian_garden/asian_garden_crop.jpg">
+        <p class="img_info">Cropped for aesthetic effect</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <h6>MOSAIC EXAMPLE 3: EASTERN NORTH AMERICA</h6>
+      <p>
+        The mosaic generated from this photoset is actually pretty interesting due to the obvious blurring of the tree branches in the upper portion of the mosaic. This could have been caused by the fact that I selected very few corresponding points in that area due to its being extremely dense and random. Further, there is a noticeable line of darkness at the right side of the mosaic, which is indicative of the overlap between the right and center images. Part of this darkness is likely due to the fact that the brightness in the two original images differs somewhat. The sun was setting behind me at the time that I took these photos, so turning the camera towards my right exposed the lens to more sunlight. This might have caused the camera's auto settings to adjust themselves.
+      </p>
+    </div>
+    <div class="row">
+      <div class="four columns">
+        <p style="text-align:center;"><strong>Left</strong></p>
+      </div>
+      <div class="four columns">
+        <p style="text-align:center;"><strong>Center</strong></p>
+      </div>
+      <div class="four columns">
+        <p style="text-align:center;"><strong>Right</strong></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="four columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj7/mosaic/autumn/left.jpg">
+      </div>
+      <div class="four columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj7/mosaic/autumn/center.jpg">
+      </div>
+      <div class="four columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj7/mosaic/autumn/right.jpg">
+      </div>
+    </div>
+    <div class="row">
+      <div class="twelve columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj7/mosaic/autumn/autumn_linearBlend.jpg">
+        <p class="img_info">Linear blending</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="twelve columns" style="margin-top:-40px;">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj7/mosaic/autumn/autumn_crop.jpg">
+        <p class="img_info">Cropped for aesthetic effect</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <h6><strong>IV. TAKEAWAYS</strong></h6>
+    </div>
+    <div class="row">
+      <p>
+        Clearly, consistency in photo brightness is really important! Otherwise, no matter what you do, your final image will look odd. Also, foliage isn’t the best subject matter for this technique, as it is unpredictable and may display blurry or odd results. I had to select points more than once for the Asian garden image to get rid of the blurring effect.
+      </p>
+    </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <h4 id="part2">PART 2: Autostitching Panoramas</h4>
+  </div>
+  <div class="row">
+    <p>
+      Now that we’ve figured out how to create mosaics from multiple images, let’s figure out how to automate the process (if you haven’t tried it, selecting corresponding points by hand is hard work!). In this project, we roughly follow the process laid out in the paper: <a href="http://inst.eecs.berkeley.edu/~cs194-26/fa16/Papers/MOPS.pdfc">Multi-Image Matching Using Multi-Scale Oriented Patches</a>.
+    </p>
+  </div>
+  <div class="row">
+    <h6><strong>HOW TO AUTO-STITCH YOUR IMAGES</strong></h6>
+    <p>
+      We'll be using the Asian garden image as an example. Here are the original photos. The steps will only be shown for the left and center images.
+    </p>
+  </div>
+  <div class="row">
+    <div class="four columns">
+      <p style="text-align:center;"><strong>Left</strong></p>
+    </div>
+    <div class="four columns">
+      <p style="text-align:center;"><strong>Center</strong></p>
+    </div>
+    <div class="four columns">
+      <p style="text-align:center;"><strong>Right</strong></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="four columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/mosaic/asian_garden/left.jpg">
+    </div>
+    <div class="four columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/mosaic/asian_garden/center.jpg">
+    </div>
+    <div class="four columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/mosaic/asian_garden/right.jpg">
+    </div>
+  </div>
+  <div class="row" style="margin-top:2%;">
+    <h6>STEP 1: CORNER DETECTION</h6>
+    <p>
+      Detect the corner features of the image. I used the Harris corner detector provided in harris.m.
+    </p>
+  </div>
+  <!-- <harris corner on image example> -->
+  <div class="row">
+    <div class="six columns">
+      <p style="text-align:center;"><strong>Left</strong></p>
+    </div>
+    <div class="six columns">
+      <p style="text-align:center;"><strong>Center</strong></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="six columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/autostitch/asian_garden/asian_garden_harris_left.jpg">
+    </div>
+    <div class="six columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/autostitch/asian_garden/asian_garden_harris_center.jpg">
+    </div>
+  </div>
+
+  <div class="row">
+    <h6>STEP 2: SELECT ONLY THE STRONGEST CORNERS OF THOSE DETECTED</h6>
+    <p>
+      Use the Adaptive Non-Maximal Suppression (ANMS) technique specified in the paper to select a specified number (500, for instance) of corners that are most dominant in their surrounding area. For every Harris corner (xi, yi) in image 1, we calculate its distance from every Harris corner (xj, yj) in image 2.
+    </p>
+    <p>
+      Let the function f(x, y) give the corner strength for some pixel (x, y).
+If f(xi, yi) < 0.9*f(xj, yj) then (xj, yj) is significantly stronger than (xi,yi). In such a case, we compare the distance between (xi, yi) and (xj, yj) to the most recently recorded minimum distance, stored in some variable min_dist. If the new distance is smaller, then it becomes the new value of min_dist. At the end of this process, we sort all points (xi, yi) in img1 by their calculated min_dist information and take the 500 points with the largest min_dist. This means, we’re taking the 500 points that are most dominant in their local areas.
+    </p>
+  </div>
+
+  <!-- <example of ANMS corners on image>-->
+  <div class="row">
+    <div class="six columns">
+      <p style="text-align:center;"><strong>Left</strong></p>
+    </div>
+    <div class="six columns">
+      <p style="text-align:center;"><strong>Center</strong></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="six columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/autostitch/asian_garden/asian_garden_anms_left.jpg">
+    </div>
+    <div class="six columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/autostitch/asian_garden/asian_garden_anms_center.jpg">
+    </div>
+  </div>
+
+  <div class="row">
+    <h6>STEP 3: EXTRACT FEATURE DESCRIPTORS</h6>
+    <p>
+      A feature descriptor is a description of the area around a point in an image, the “description” portion really being the pixel values around the central point.
+    </p>
+    <p>
+      To extract feature descriptors, we, for every ANMS point, sample a 40x40 patch of pixels around the point. We then gaussian blur the patch and downsample it to an 8x8 matrix, after which we do bias-gain normalization by executing: patch = (patch - patch_mean) / std_dev(patch). Finally, we flatten every 8x8 patch into a vector of 64 values.
+    </p>
+  </div>
+
+  <div class="row">
+    <h6>STEP 4: FEATURE MATCHING</h6>
+    <p>
+      Now, echoing the manual specification of corresponding points that we did in part 1, we need to figure out which ANMS points in img1 match which ANMS points in img2. To do this, we use the features we extracted in step 3, and what Professor Efros calls the “Russian Granny Algorithm.”
+    </p>
+    <p>
+      For each ANMS point (xi, yi) in img1,
+      <ol>
+          <li>Calculate the squared Euclidean distance between the point’s feature vector and the feature vector of every single ANMS point in img2.</li>
+          <li>Sort the results and select the two points in img2 that have the smallest distance to (xi, yi) and call them nn1 and nn2 (where nn stands for “nearest neighbor”).</li>
+          <li>If the ratio nn1/nn2 is smaller than a specified threshold (I used 0.4), then we consider the difference between nn1 and nn2 great enough that we assign the point corresponding to nn1 as our match for (xi, yi).</li>
+      </ol>
+    </p>
+    <p>
+      Displayed in green below are points specified by the algorithm to be matches between the left and center images.
+      Matching points are also calculated between the center and right images.
+    </p>
+  </div>
+
+  <div class="row">
+    <div class="six columns">
+      <p style="text-align:center;"><strong>Left matched to center: Left</strong></p>
+    </div>
+    <div class="six columns">
+      <p style="text-align:center;"><strong>Left matched to center: Center</strong></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="six columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/autostitch/asian_garden/asian_garden_matched_lToC_left.jpg">
+    </div>
+    <div class="six columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/autostitch/asian_garden/asian_garden_matched_lToC_center.jpg">
+    </div>
+  </div>
+
+  <div class="row">
+    <h6>STEP 5: RANSAC FOR COMPUTING HOMOGRAPHIES</h6>
+    <p>
+      Now that we’ve got matched points between img1 and img2, we need to compute the homography between the images. The way we do this is rather straightforward. The following procedure is executed a specified number of times (I used 2000):
+    </p>
+    <p>
+      We select four random pairs of matched points from our results in step four and calculate a homography based on those points. Then, we apply the homography for for each of the matched pairs from step 4, and calculate the distance from the “converted” point produced by the homography and its matched counterpart. If this distance is less than a certain threshold (I used 1), then the pair is an “inlier” and we consider the homography to have done well for this matched set. We total up the number of inliers for this homography and store it.
+    </p>
+    <p>
+      At the end of this process, we sort our results and select the homography that got the most inliers.
+    </p>
+  </div>
+
+  <div class="row">
+    <h6>STEP 6: IMAGE STITCHING</h6>
+    <p>
+      This is simply passing all image information and the homographies calculated from the previous five steps to the functions we wrote in Part 1 of the project. A finished image mosaic will be produced at the end!
+    </p>
+  </div>
+  <div class="row">
+    <div class="twelve columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/autostitch/asian_garden/asian_garden_mosaic.jpg">
+    </div>
+  </div>
+  <div class="row">
+    <div class="twelve columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/mosaic/asian_garden/asian_garden_crop.jpg">
+      <p class="img_info">Cropped for aesthetic effect</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <h6><strong>SELECTED AUTO-STITCHED EXAMPLES</strong></h6>
+  </div>
+  <div class="row">
+    <h6>ONE. A bench and North American shrubbery</h6>
+  </div>
+  <div class="row">
+    <div class="four columns">
+      <p style="text-align:center;"><strong>Left</strong></p>
+    </div>
+    <div class="four columns">
+      <p style="text-align:center;"><strong>Center</strong></p>
+    </div>
+    <div class="four columns">
+      <p style="text-align:center;"><strong>Right</strong></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="four columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/autostitch/bench/left.jpg">
+    </div>
+    <div class="four columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/autostitch/bench/center.jpg">
+    </div>
+    <div class="four columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/autostitch/bench/right.jpg">
+    </div>
+  </div>
+  <div class="row">
+    <div class="twelve columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/autostitch/bench/bench_mosaic.jpg">
+    </div>
+  </div>
+  <div class="row">
+    <div class="twelve columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/autostitch/bench/bench_mosaic_crop.jpg">
+      <p class="img_info">Cropped for aesthetic effect</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <h6>TWO. Desert ecosystem</h6>
+  </div>
+  <div class="row">
+    <div class="four columns">
+      <p style="text-align:center;"><strong>Left</strong></p>
+    </div>
+    <div class="four columns">
+      <p style="text-align:center;"><strong>Center</strong></p>
+    </div>
+    <div class="four columns">
+      <p style="text-align:center;"><strong>Right</strong></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="four columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/mosaic/cacti/left.jpg">
+    </div>
+    <div class="four columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/mosaic/cacti/center.jpg">
+    </div>
+    <div class="four columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/mosaic/cacti/right.jpg">
+    </div>
+  </div>
+  <div class="row">
+    <div class="twelve columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/autostitch/cacti/cacti_mosaic.jpg">
+    </div>
+  </div>
+  <div class="row">
+    <div class="twelve columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/autostitch/cacti/cacti_mosaic_crop.jpg">
+      <p class="img_info">Cropped for aesthetic effect</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <h6>THREE. Little waterfall</h6>
+  </div>
+  <div class="row">
+    <div class="four columns">
+      <p style="text-align:center;"><strong>Left</strong></p>
+    </div>
+    <div class="four columns">
+      <p style="text-align:center;"><strong>Center</strong></p>
+    </div>
+    <div class="four columns">
+      <p style="text-align:center;"><strong>Right</strong></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="four columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/autostitch/little_waterfall/left.jpg">
+    </div>
+    <div class="four columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/autostitch/little_waterfall/center.jpg">
+    </div>
+    <div class="four columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/autostitch/little_waterfall/right.jpg">
+    </div>
+  </div>
+  <div class="row">
+    <div class="twelve columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/autostitch/little_waterfall/little_waterfall_mosaic.jpg">
+    </div>
+  </div>
+  <div class="row">
+    <div class="twelve columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/autostitch/little_waterfall/little_waterfall_mosaic_crop.jpg">
+      <p class="img_info">Cropped for aesthetic effect</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <h6>FOUR. The Children's Section of the Berkeley Public Library</h6>
+  </div>
+  <div class="row">
+    <div class="four columns">
+      <p style="text-align:center;"><strong>Left</strong></p>
+    </div>
+    <div class="four columns">
+      <p style="text-align:center;"><strong>Center</strong></p>
+    </div>
+    <div class="four columns">
+      <p style="text-align:center;"><strong>Right</strong></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="four columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/autostitch/library/left.jpg">
+    </div>
+    <div class="four columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/autostitch/library/center.jpg">
+    </div>
+    <div class="four columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/autostitch/library/right.jpg">
+    </div>
+  </div>
+  <div class="row">
+    <div class="twelve columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/autostitch/library/library_mosaic.jpg">
+    </div>
+  </div>
+  <div class="row">
+    <div class="twelve columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/autostitch/library/library_mosaic_crop.jpg">
+      <p class="img_info">Cropped for aesthetic effect</p>
+    </div>
+  </div>
+
+  <div class="row">
+      <img src="../assets/img/code/cs194-26/stanislav_levin.png" style="width:30px; height:auto;" class="one column">
+      <h6 class="nine columns" style="margin-top:1%; margin-left: 5px;"><strong>PANORAMA RECOGNITION</strong></h6>
+  </div>
+  <div class="row">
+    <p>
+      The goal of panorama recognition is to, given a set of unordered images in a directory, figure out which images form panoramas and to stitch them together. My implementation assumes that all mosaics are made of two images only and that all images in the given directory are JPGs.
+    </p>
+    <p>
+      A surprisingly straight-forward method works quite well in achieving this. I have my program iterate through all the images in the directory and run both Harris and ANMS to select points. I then extract feature descriptors for all of the images.
+    </p>
+    <p>
+      To figure out which images pair up into panoramas, I run the feature matching algorithm (step 4) on every combination of two image files. If the number of matches found exceeds a certain threshold, then the two images are declared part of the same panorama and are stitched together. I subsequently log that the two images have already been used (to prevent other files from being matched with them).
+    </p>
+    <p>
+      Since the mosaic-creation function needs to know which image is on the right and which on the left, a bit of checking needs to be done before stitching is possible. I compare the average column position of the matched points in each image. The image with the smaller average column position is the right image and the other the left.
+    </p>
+    </p>
+      To test my implementation, I put the following six images into a folder, along with a text file:
+    </p>
+  </div>
+  <div class="row">
+    <div class="four columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/autostitch/folder_blending/autumn_c.jpg">
+    </div>
+    <div class="four columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/autostitch/folder_blending/center 2.jpg">
+    </div>
+    <div class="four columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/autostitch/folder_blending/center.jpg">
+    </div>
+  </div>
+  <div class="row">
+    <div class="four columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/autostitch/folder_blending/left_2.jpg">
+    </div>
+    <div class="four columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/autostitch/folder_blending/left.jpg">
+    </div>
+    <div class="four columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/autostitch/folder_blending/center 3.jpg">
+    </div>
+  </div>
+  <div class="row" style="margin-top:2%;">
+    <p>
+      The resulting mosaics:
+    </p>
+  </div>
+  <div class="row">
+    <div class="twelve columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/autostitch/folder_blending/mosaic1.jpg">
+    </div>
+  </div>
+  <div class="row">
+    <div class="twelvecolumns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj7/autostitch/folder_blending/mosaic2.jpg">
+    </div>
+  </div>
+
+  <div class="row" style="margin-top:2%;">
+    <h6><strong>TAKEAWAYS</strong></h6>
+  </div>
+  <div class="row">
+    <p>
+      This is a practical one that has led to much head-banging in the last few weeks: MATLAB orders everything by column and then row, except in matrix accessing or the size and plot functions, where things are row first and then column!
+    </p>
+    <p>
+      Having a computer auto-stitch image mosaics is much more efficient and accurate than having a human do the same job. However, these algorithms still have room to grow, as evidenced by the fact that some images work better than others under these techniques. I think it’s amazing that such a simple procedure can obtain such amazing results.
+    </p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <p><em>Source Acknowledgements: Bell icon courtesy of Stanislav Levin.</em></p>
+  </div>
+</div>
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>

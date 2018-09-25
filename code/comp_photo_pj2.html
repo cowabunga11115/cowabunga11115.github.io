@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Michelle Chang</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="../assets/css/normalize.css">
+  <link rel="stylesheet" href="../assets/css/skeleton.css">
+  <link rel="stylesheet" href="../assets/css/cs194-26-pj2.css">
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+
+  <script type="text/javascript">
+    function showIt(imgsrc){
+      document.getElementById('imageshow').src=imgsrc;
+    }
+    function showIt2(imgsrc){
+      document.getElementById('imageshow2').src=imgsrc;
+    }
+    function showIt3(imgsrc){
+      document.getElementById('imageshow3').src=imgsrc;
+    }
+    function showIt4(imgsrc){
+      document.getElementById('imageshow4').src=imgsrc;
+    }
+    function showIt5(imgsrc){
+      document.getElementById('imageshow5').src=imgsrc;
+    }
+    function showIt6(imgsrc){
+      document.getElementById('imageshow6').src=imgsrc;
+    }
+    function showIt7(imgsrc){
+      document.getElementById('imageshow7').src=imgsrc;
+    }
+  </script>
+</head>
+<body>
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="img_info_package" style="margin-bottom:2%">
+    <!-- <p class="img_info">Pinhole: 1cm</p> -->
+    <div id="header_img"></div>
+    <p class="img_info">1cm: (5s, f/3.5, ISO-320)</p>
+  </div>
+
+  <div class="container">
+    <div class="row" id="title">
+      <div class="header_img"></div>
+      <h1>Exploring the Dark Chamber: Making a Camera Obscura</h1>
+      <h6>Angela Lin (adw), David Hua (aaj), Michelle Chang (aak)</h6>
+      <p><em>Camera Obscura (noun): In Latin — “room” and “dark.” A darkened boxlike device in which images of external objects, received through an aperture, as with a convex lens, are exhibited in their natural colors on a surface arranged to receive them. </em></p>
+    </div>
+  </div>
+
+  <!-- Brief overview of project -->
+  <div class="container">
+    <div class="row">
+      <h3>In a Dark, Dark Room</h3>
+      <p>Perhaps one of the oldest imaging devices (dating back to Aristotle in the 4th century and China in the 5th century), camera obscurae take advantage of the pinhole image phenomenon — when the image of a scene on the other side of a partition is projected through an opening in said barrier, onto a surface on the opposite side. Often this requires a completely dark environment. In the 16th century, camera obscurae were popular aids for artists and painters.</p>
+    </div>
+    <div class="row">
+      <h5>How it works</h5>
+      <p>A camera obscura mimics the human eye. Light enters from a small hole in the device, usually at an angle, and creates an upside down image. If the hole is of certain sizes (this often depends on the focal distance, or the distance between the pinhole and the opposite wall of the device), the light rays will converge, rather than scatter, and create a fairly sharp, recognizable scene. Thus, camera obscurae need not be confined to boxes. You can also create them with dark rooms and a window on a sunny day!</p>
+    </div>
+  </div>
+
+  <!-- Lens comparisons -->
+  <div class="container" style="margin-bottom:2%">
+    <div class="row">
+      <h3>Creating the Camera</h3>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img src="../assets/img/code/cs194-26/pj2/camera_correct_hole.jpg" />
+        <img src="../assets/img/code/cs194-26/pj2/1802.jpg" />
+      </div>
+      <div class="six columns">
+        <p>We used a cardboard (12 in x 8 in) shoebox as the base for our pinhole camera. We covered the interior (except the screen) with black construction paper and the screen with white printer paper. The corners and sides of the box were reinforced with duct tape, and the exterior entirely covered in aluminum foil. We cut a (7/16 in x 1/2 in) hole on the long face of the box facing the screen for the pinholes and a 2 3/16th inch diameter circular hole for the DSLR camera lens. A D5300 Nikon DSLR camera was used to capture the images.</p>
+        <p>Using the recommended formula for calculating pinhole size: 1.9 * sqrt(f * lambda), where f is the distance between the pinhole and the screen, and lambda is the wavelength of light, it can be found that the ideal pinhole size for our camera is around 0.62 mm (using f = 7.5 in, lambda = 550 nm).</p>
+        <p>To create pinholes of different sizes, we punched holes in cardstock with various implements (needles, mechanical pencil lead, etc.). We covered the back of each pinhole card with aluminum foil to block sunlight. The final pinhole sizes were 0.5 mm, 1 mm, and 2 mm. Pinhole cards were secured to the front of the box with painter’s tape.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Images -->
+  <div class="container">
+    <div class="row">
+      <h3>Comparison of Pinhole Quality</h3>
+      <p>Of the three images in both sets, the one taken with the 0.5 mm pinhole was the sharpest and the one taken with the 1 mm pinhole was the noisiest. The image taken with the 1 mm pinhole was noisy because the chad was not removed after the pinhole was created.</p>
+      <p>As we increased the pinhole size, the images became blurrier. The larger pinhole allows more light rays from the same point of the object to hit different points of the screen, resulting in blurriness. However, since the hole is larger, we needed a shorter exposure time to capture an image with the same brightness.</p>
+      <h4>Gardener’s truck at the Berkeley Rose Garden</h4>
+      <p>Hover over an image to view it fullsize.</p>
+    </div>
+    <div class="row">
+      <div class="four columns">
+        <div>
+          <img src="../assets/img/code/cs194-26/pj2/DSC_4380.jpg" onmouseover="showIt(this.src)"/>
+          <p id="pinhole_info">0.5 mm: (15s, f/3.5, ISO-2000)</p>
+        </div>
+      </div>
+      <div class="four columns">
+        <div>
+          <img src="../assets/img/code/cs194-26/pj2/DSC_4382.jpg" onmouseover="showIt(this.src)"/>
+          <p id="pinhole_info">1 mm: (10s, f/3.5, ISO-2000)</p>
+        </div>
+      </div>
+      <div class="four columns">
+        <div>
+          <img src="../assets/img/code/cs194-26/pj2/DSC_4387.jpg" onmouseover="showIt(this.src)"/>
+          <p id="pinhole_info">2 mm: (8s, f/3.5, ISO-500)</p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <img src="../assets/img/code/cs194-26/pj2/DSC_4380.jpg" id="imageshow"/>
+      </div>
+    </div>
+    <div class="row" style="margin-top:2%;">
+      <h4>Lower Sproul</h4>
+      <p>Hover over an image to view it fullsize.</p>
+    </div>
+    <div class="row">
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj2/DSC_4420.jpg" onmouseover="showIt2(this.src)"/>
+        <p id="pinhole_info">0.5 mm: (30s, f/3.5, ISO-1600)</p>
+      </div>
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj2/DSC_4425.jpg" onmouseover="showIt2(this.src)"/>
+        <p id="pinhole_info">1 mm: (25s, f/3.5, ISO-1000)</p>
+      </div>
+      <div class="four columns">
+        <img src="../assets/img/code/cs194-26/pj2/DSC_4432.jpg" onmouseover="showIt2(this.src)"/>
+        <p id="pinhole_info">2 mm: (8s, f/3.5, ISO-640)</p>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <img src="../assets/img/code/cs194-26/pj2/DSC_4420.jpg" id="imageshow2"/>
+      </div>
+    </div>
+  <div class="row" style="margin-top:2%; margin-bottom:2%">
+    <h4>A Note on Visual Artifacts</h4>
+    <p>We have a purple horizontal rectangle at the bottom of the screen of some of the images. After seeing this, we checked whether or not our box was light proof by covering the hole where we usually place the lens and taking a photo with a 30 second exposure. The resulting image was completely black. Thus, we think that the purple rectangle is a reflection of the black paper onto the white screen.</p>
+  </div>
+</div>
+
+<div class="img_info_package">
+  <img src="../assets/img/code/cs194-26/pj2/DSC_4275.jpg" style="width:100%;"/>
+  <p class="img_info">Thousand-armed deity (25s, f/3.5, ISO-320)
+</p>
+</div>
+<div class="container">
+  <div class="row">
+    <h3>Highlight Images: 0.5 mm</h3>
+    <p>When comparing our images, it appears that the images taken with the 0.5mm pinhole resulted in the highest feature clarity.</p>
+    <p>To view images fullsize: you know the drill by now.</p>
+  </div>
+  <div class="row">
+    <div class="four columns">
+      <div>
+        <img src="../assets/img/code/cs194-26/pj2/DSC_4419.jpg" onmouseover="showIt3(this.src)"/>
+        <p id="pinhole_info">Bridge (13s, f/3.5, ISO-1600)</p>
+      </div>
+    </div>
+    <div class="four columns">
+      <div>
+        <img src="../assets/img/code/cs194-26/pj2/DSC_4405.jpg" onmouseover="showIt3(this.src)"/>
+        <p id="pinhole_info">Rose Garden (25s, f/3.5, ISO-2000)</p>
+      </div>
+    </div>
+    <div class="four columns">
+      <div>
+        <img src="../assets/img/code/cs194-26/pj2/DSC_4360.jpg" onmouseover="showIt3(this.src)"/>
+        <p id="pinhole_info">Street (13s, f/3.5, ISO-2500)</p>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="four columns">
+      <div>
+        <img src="../assets/img/code/cs194-26/pj2/DSC_4355.jpg" onmouseover="showIt3(this.src)"/>
+        <p id="pinhole_info">Nasturtium (13s, f/3.5, ISO-2500)</p>
+      </div>
+    </div>
+    <div class="four columns">
+      <div>
+        <img src="../assets/img/code/cs194-26/pj2/DSC_4410.jpg" onmouseover="showIt3(this.src)"/>
+        <p id="pinhole_info">Angela (15s, f/3.5, ISO-2000)</p>
+      </div>
+    </div>
+    <div class="four columns">
+      <div>
+        <img src="../assets/img/code/cs194-26/pj2/DSC_4409.jpg" onmouseover="showIt3(this.src)"/>
+        <p id="pinhole_info">David and Angela (20s, f/3.5, ISO-2000)</p>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <img src="../assets/img/code/cs194-26/pj2/DSC_4419.jpg" id="imageshow3"/>
+  </div>
+</div>
+
+<div class="container" style="margin-top:2%;">
+  <div class="row">
+    <h3>Select Images: 1 mm</h3>
+  </div>
+  <div class="row">
+    <div class="six columns">
+      <div>
+        <img src="../assets/img/code/cs194-26/pj2/DSC_4267.jpg" onmouseover="showIt4(this.src)"/>
+        <p id="pinhole_info">Chair (20s, f/3.5, ISO-320)</p>
+      </div>
+    </div>
+    <div class="six columns">
+      <div>
+        <img src="../assets/img/code/cs194-26/pj2/DSC_4262.jpg" onmouseover="showIt4(this.src)"/>
+        <p id="pinhole_info">Group Photo (20s, f/3.5, ISO-320) </p>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="six columns">
+      <div>
+        <img src="../assets/img/code/cs194-26/pj2/DSC_4263.jpg" onmouseover="showIt4(this.src)"/>
+        <p id="pinhole_info">Bridge (20s, f/3.5, ISO-320)</p>
+      </div>
+    </div>
+    <div class="six columns">
+      <div>
+        <img src="../assets/img/code/cs194-26/pj2/DSC_4269.jpg" onmouseover="showIt4(this.src)"/>
+        <p id="pinhole_info">Heart (20s, f/3.5, ISO-320) </p>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <img src="../assets/img/code/cs194-26/pj2/DSC_4267.jpg" id="imageshow4"/>
+  </div>
+</div>
+
+<div class="container" style="margin-top:2%;">
+  <div class="row">
+    <h3>Bells & Whistles: Light Painting</h3>
+    <p>Using our camera obscura, we created light paintings by drawing images and letters in the air with flashlights in a dark room. We used a 2 centimeter pinhole to capture these images.</p>
+  </div>
+  <div class="row">
+    <div class="four columns">
+      <div>
+        <img src="../assets/img/code/cs194-26/pj2/DSC_4329.jpg" onmouseover="showIt6(this.src)"/>
+        <p id="pinhole_info">Cat (13s, f/3.5, ISO-320)</p>
+      </div>
+    </div>
+    <div class="four columns">
+      <div>
+        <img src="../assets/img/code/cs194-26/pj2/DSC_4333.jpg" onmouseover="showIt6(this.src)"/>
+        <p id="pinhole_info">Flower (15s, f/3.5, ISO-320)</p>
+      </div>
+    </div>
+    <div class="four columns">
+      <div>
+        <img src="../assets/img/code/cs194-26/pj2/DSC_4335.jpg" onmouseover="showIt6(this.src)"/>
+        <p id="pinhole_info">Smile (15s, f/3.5, ISO-320)</p>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <img src="../assets/img/code/cs194-26/pj2/DSC_4329.jpg" id="imageshow6"/>
+  </div>
+  <p style="margin-top:2%;">We also did several light paintings using the DSLR itself with long exposure.</p>
+  <div class="row">
+    <div class="four columns">
+      <div>
+        <img src="../assets/img/code/cs194-26/pj2/DSC_4462.jpg" onmouseover="showIt7(this.src)"/>
+        <p id="pinhole_info">Witch (15s, f/11, ISO-320)</p>
+      </div>
+    </div>
+    <div class="four columns">
+      <div>
+        <img src="../assets/img/code/cs194-26/pj2/DSC_4472.jpg" onmouseover="showIt7(this.src)"/>
+        <p id="pinhole_info">Mage (13s, f/8, ISO-320)</p>
+      </div>
+    </div>
+    <div class="four columns">
+      <div>
+        <img src="../assets/img/code/cs194-26/pj2/DSC_4467.jpg" onmouseover="showIt7(this.src)"/>
+        <p id="pinhole_info">Antlers (20s, f/8, ISO-320)</p>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <img src="../assets/img/code/cs194-26/pj2/DSC_4462.jpg" id="imageshow7"/>
+  </div>
+</div>
+
+<div class="container" style="margin-top:2%;">
+  <div class="row">
+    <p><em>Source Acknowledgements: "camera obscura". Dictionary.com Unabridged. Random House, Inc. 16 Sep. 2016. </em></p>
+  </div>
+</div>
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>

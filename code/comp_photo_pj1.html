@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Michelle Chang</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Fredericka+the+Great|Josefin+Sans:300|Open+Sans+Condensed:300" rel="stylesheet">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="../assets/css/normalize.css">
+  <link rel="stylesheet" href="../assets/css/skeleton.css">
+  <link rel="stylesheet" href="../assets/css/cs194-26.css">
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+
+</head>
+<body>
+<div class="container">
+    <div class="row" id="title">
+        <div class="header_img"></div>
+        <h1>Images of the Russian Empire</h1>
+        <h5>Bringing Prokudin-Gorskii's vision to life with image processing</h5>
+        <h6>Implemented by Michelle Chang</h6>
+    </div>
+    </div>
+
+    <!-- Brief overview of project -->
+    <div class="container">
+    <div class="row">
+        <h3>About the Project</h3>
+    </div>
+    <div class="row">
+        <div class="seven columns">
+        <!-- <h5>A photographer with a grand vision</h5> -->
+        <p> As early as 1907, Sergey Mikhailovich Prokudin-Gorskii, a Russian chemist and photographer, was convinced that color photography would revolutionize the future. His color portrait of Leo Tolstoy (author of War and Peace and Anna Karenina, among other titles), a widely acclaimed piece of work at the time, became a golden ticket that granted him the privilege of presenting his work to Tsar Nicholas II 1909. The Tsar so enjoyed the presentation that Prokudin-Gorskii was granted funds to document the entirety of Russia in color.
+        </p>
+        <p> Prokudin-Gorskii’s formula for color photography is simple. The photographer records three black-and-white exposures of the desired scene onto a glass plate using red, green, and blue filters. Aligning the three images should produce an RGB (color) image! (Prokudin-Gorskii envisioned accomplishing this with projectors.) With this in mind, he assembled a collection of over 10,000 photos over the course of 10 years (now known as the Prokudin-Gorskii Collection), traveling all over Russia.
+        </p>
+        <p> Prokudin-Gorskii never lived to see his negatives transformed into color images due to the political climate of the period and events such as World War I and the Russian Revolution. In fact, a portion of the photos were confiscated, hidden, or given away upon his departure from the country in 1918. Outside of the Library of Congress collection, no other photos from Prokudin-Gorskii’s collection have been recovered.
+        </p>
+        <h5>Reviving the legacy</h5>
+        <p>Luckily, photos from the Prokudin-Gorskii Collection are now public, courtesy of the Library of Congress. This project aims to experience Prokudin-Gorskii’s grand vision by taking the images he left behind and using image processing techniques to put them together according to his intended procedure. In doing so, we can get a glimpse of the world as he saw it—in color—a century ago! </p>
+        </div>
+        <div class="five columns">
+        <div class="prokudin-gorskii"></div>
+        <div id="caption">
+            <h6>Sergey Mikhailovich Prokudin-Gorskii in 1912</h6>
+        </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Your approach -->
+
+    <div class="container">
+    <div class="row">
+        <h3>Approach & Algorithms: Let's get down to business!</h3>
+        <p>So, how does one begin to align three grayscale images? To create the color photos, I followed this general procedure:</p>
+        <pre><code>
+        read in the image
+        split image into thirds and call them b, g, and r, respectively
+        if aligning from pixel values:
+            call <strong>ncc_align</strong>
+        else if aligning from edges:
+            call <strong>sobel_align</strong>
+        combine adjusted r and g images and combine with b to form 3D matrix with color channels
+        save image
+        </code></pre>
+        <h4>Method 1: Aligning with Normalized Cross-Correlation (NCC)</h4>
+        <p>The <strong>ncc_align</strong> method can be described as follows:</p>
+        <pre><code>
+        if image is small, perform <strong>single-scale alignment</strong>:
+            search over a grid of possible x and y shifts
+            score each combination using the NCC algorithm
+            return the combination with the highest NCC score and the shifted image
+        else if the image is big, use an <strong>image pyramid</strong>:
+            if image is small enough:
+            return the results of single-scale alignment
+            else:
+            do image pyramid with: 1) reduced image, 2) increase search range
+            apply the x-y shift returned, scaled up, to current image
+            do single-scale alignment on current image
+            return shifted image and overall x-y shift values
+        </code></pre>
+        <p>The purpose of the Normalized Cross Correlation algorithm is to normalize images so that vary brightness or exposure plays less of a role in determining whether a certain x-y shift is a good match. We typically do this by subtracting each image by its mean value and dividing by its standard deviation.</p>
+        <p>But, this relatively straight-forward method is no match for large images. Such photos would take much too long to process. Luckily, we have the <code>image pyramid</code>. The image pyramid is a technique often used for processing large images. It represents the image at multiple scales (in this case, a factor of 2) and processing is done sequentially starting from the smallest (roughest) image and going down the pyramid, updating the shift recommendations as we go.</p>
+        <p>I should note that, in single-scale alignment, my algorithm ignores a specified percentage of the edge pixels in order to reduce the effect of messy borders. None of the Prokudin-Gorskii images line up exactly, so it is counterproductive to force the algorithm to attempt to make the edges match. (You can see evidence of this in the colorful borders of the images below.)</p>
+    </div>
+    </div>
+    <div class="container">
+    <div class="row">
+        <h5>NCC: Required images</h5>
+    </div>
+    <div class="row">
+        <div class="twelve columns" id="aligned_img" style="content: url(../assets/img/code/cs194-26/pj1/ncc/ncc_onion_church.jpg)"></div>
+    </div>
+    <div class="row">
+        <div class="twelve columns" id="shift_info">Green: [27, 51] | Red: [36, 108]</div>
+    </div>
+    <div class="row">
+        <div class="six columns" id="aligned_img" style="content: url(../assets/img/code/cs194-26/pj1/ncc/ncc_cathedral.jpg)"></div>
+        <div class="six columns" id="aligned_img" style="content: url(../assets/img/code/cs194-26/pj1/ncc/ncc_icon.jpg)"></div>
+    </div>
+    <div class="row">
+        <div class="six columns" id="shift_info">Green: [2, 5] | Red: [3, 12]</div>
+        <div class="six columns" id="shift_info">Green: [17, 41] | Red: [23, 89]</div>
+    </div>
+    <div class="row">
+        <div class="six columns" id="aligned_img" style="content: url(../assets/img/code/cs194-26/pj1/ncc/ncc_lady.jpg)"></div>
+        <div class="six columns" id="aligned_img" style="content: url(../assets/img/code/cs194-26/pj1/ncc/ncc_melons.jpg)"></div>
+    </div>
+    <div class="row">
+        <div class="six columns" id="shift_info">Green: [9, 55] | Red: [12, 117]</div>
+        <div class="six columns" id="shift_info">Green: [10, 81] | Red: [14, 178]</div>
+    </div>
+    <div class="row">
+        <div class="six columns" id="aligned_img" style="content: url(../assets/img/code/cs194-26/pj1/ncc/ncc_monastery.jpg)"></div>
+        <div class="six columns" id="aligned_img" style="content: url(../assets/img/code/cs194-26/pj1/ncc/ncc_nativity.jpg)"></div>
+    </div>
+    <div class="row">
+        <div class="six columns" id="shift_info">Green: [2, -3] | Red: [2, 3]</div>
+        <div class="six columns" id="shift_info">Green: [1, 3] | Red: [0, 8]</div>
+    </div>
+    <div class="row">
+        <div class="six columns" id="aligned_img" style="content: url(../assets/img/code/cs194-26/pj1/ncc/ncc_workshop.jpg)"></div>
+        <div class="six columns" id="aligned_img" style="content: url(../assets/img/code/cs194-26/pj1/ncc/ncc_three_generations.jpg)"></div>
+    </div>
+    <div class="row">
+        <div class="six columns" id="shift_info">Green: [0, 53] | Red: [-12, 105]</div>
+        <div class="six columns" id="shift_info">Green: [14, 52] | Red: [11, 111]</div>
+    </div>
+    <div class="row">
+        <div class="six columns" id="aligned_img" style="content: url(../assets/img/code/cs194-26/pj1/ncc/ncc_emir.jpg)"></div>
+        <div class="six columns" id="aligned_img" style="content: url(../assets/img/code/cs194-26/pj1/ncc/ncc_tobolsk.jpg)"></div>
+    </div>
+    <div class="row">
+        <div class="six columns" id="shift_info">Green: [24, 49] | Red: [-482, 400]</div>
+        <div class="six columns" id="shift_info">Green: [3, 3] | Red: [3, 6]</div>
+    </div>
+    <div class="row">
+        <div class="six columns" id="aligned_img" style="content: url(../assets/img/code/cs194-26/pj1/ncc/ncc_train.jpg)"></div>
+        <div class="six columns" id="aligned_img" style="content: url(../assets/img/code/cs194-26/pj1/ncc/ncc_village.jpg)"></div>
+    </div>
+    <div class="row">
+        <div class="six columns" id="shift_info">Green: [6, 43] | Red: [32, 87]</div>
+        <div class="six columns" id="shift_info">Green: [12, 65] | Red: [22, 137]</div>
+    </div>
+    </div>
+    <div class="container">
+    <div class="row">
+        <h5>NCC: Selected images from the Prokudin-Gorskii Collection</h5>
+    </div>
+    <div class="row">
+        <div class="twelve columns" id="aligned_img" style="content: url(../assets/img/code/cs194-26/pj1/ncc/ncc_wooden_church_pidma.jpg)"></div>
+    </div>
+    <div class="row">
+        <div class="twelve columns" id="shift_info">Green: [20, 10] | Red: [39, 36]</div>
+    </div>
+    <div class="row">
+        <div class="six columns" id="aligned_img" style="content: url(../assets/img/code/cs194-26/pj1/ncc/ncc_boat.jpg)"></div>
+        <div class="six columns" id="aligned_img" style="content: url(../assets/img/code/cs194-26/pj1/ncc/ncc_lilacs.jpg)"></div>
+    </div>
+    <div class="row">
+        <div class="six columns" id="shift_info">Green: [-7, 13] | Red: [-12, 133]</div>
+        <div class="six columns" id="shift_info">Green: [-6, 49] | Red: [-25, 96]</div>
+    </div>
+    <div class="row">
+        <div class="six columns" id="aligned_img" style="content: url(../assets/img/code/cs194-26/pj1/ncc/ncc_materiki.jpg)"></div>
+        <div class="six columns" id="aligned_img" style="content: url(../assets/img/code/cs194-26/pj1/ncc/ncc_naziya.jpg)"></div>
+    </div>
+    <div class="row">
+        <div class="six columns" id="shift_info">Green: [25, 75] | Red: [44, 165]</div>
+        <div class="six columns" id="shift_info">Green: [3, 16] | Red: [4, 42]</div>
+    </div>
+    </div>
+
+    <!-- Problems and why they occurred and how you tried to solve them -->
+    <div class="container">
+    <div class="row">
+        <h5>Analysis of Basic NCC Alignment</h5>
+        <p>Simply applying NCC with single-scale alignment and the image pyramid seemed to do fairly well on most images except for the photo of Emir of Bukhara.</p>
+    </div>
+    <div class="row">
+        <div class="three columns" style="content: url(../assets/img/code/cs194-26/pj1//basic_emir.jpg); height:550px; width: auto;"></div>
+        <div class="nine columns" style="content: url(../assets/img/code/cs194-26/pj1//ncc/ncc_emir.jpg); height:550px; width: auto;"></div>
+    </div>
+    <div class="row" style="margin-top:2%;">
+        <p><strong>Left:</strong> The original B, G, R grayscale images (from top to bottom) taken by Prokudin-Gorskii. <strong>Right:</strong> An attempt at aligning the photo with NCC.</p>
+        <p>This is likely because the red, green, and blue grayscale images to be matched do not have the same brightness values. As such, using the raw pixels as a tool for alignment is not enough to produce a proper color image. Indeed, if we examine the grayscale images for Emir (the order is blue, green, red), it’s very clear that the image taken with the red filter is far brighter than the others. Further, the value of Emir’s clothing, in comparison to the rest of the background, changes with each image. In the blue picture, Emir’s clothing appears much lighter than his surroundings, while in the red image, his clothing appears to be darker.</p>
+        <p>It should also be noted that, while NCC as a technique, works well for images that may vary due to differences in lighting and exposure conditions (this is due to its normalization of the images involved), its performance degrades for low-contrast or noisy photos.</p>
+    </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="one column" style="content: url(../assets/img/code/cs194-26/stanislav_levin.png); height: 40px; width:auto;"></div>
+            <div style="margin-left: 5%"><h4>Method 2: Aligning with Sobel Edge Detection</h4></div>
+            <h6>(This is a <strong>bells and whistles</strong> implementation!)</h6>
+        </div>
+        <div class="row">
+            <p>In order to fix the problem of Emir of Bukhara, I turned to edge detection. Edge detection is essentially using mathematical methods to identify points in a digital image where the brightness changes abruptly. The result is that we are able to identify where the various lines are in an image! In this case, I used the Sobel filter provided by the scikit-image filters library. </p>
+            <pre><code>
+            given grayscale images r, g, and b, run all of them through the sobel filter
+            perform NCC alignment (from Method 1) on the edge images:
+            apply the recommended x-y shifts to the original r and g grayscale images
+            </code></pre>
+            <p>The technique was a success. Ladies and gentlemen, I now present to you, in full color, Emir. Of. Bukharaaaaaaaa!</p>
+        </div>
+        <div class="row">
+            <div class="row">
+            <div class="six columns" id="shift_info"><strong>Before: NCC and Image Pyramid</strong></div>
+            <div class="six columns" id="shift_info"><strong>After: Sobel Edge Detection</strong></div>
+            </div>
+            <div class="row">
+            <div class="six columns" id="aligned_img" style="content: url(../assets/img/code/cs194-26/pj1/ncc/ncc_emir.jpg)"></div>
+            <div class="six columns" id="aligned_img" style="content: url(../assets/img/code/cs194-26/pj1/sobel/sobel_emir.jpg)"></div>
+            </div>
+            <div class="row">
+            <div class="six columns" id="shift_info">Green: [24, 49] | Red: [-482, 400]</div>
+            <div class="six columns" id="shift_info">Green: [24, 49] | Red: [40, 107]</div>
+            </div>
+            <div class="row">
+            <p>This has been an incredibly fun project and there are so many other things that could be attempted to better these images (white balancing, edge cropping, etc.) But, I’ll bow out now and leave you with some more sobel-aligned images from the Collection. Thanks for reading!</p>
+            </div>
+            <div class="row">
+            <div class="six columns" id="aligned_img" style="content: url(../assets/img/code/cs194-26/pj1/sobel/sobel_forest.jpg)"></div>
+            <div class="six columns" id="aligned_img" style="content: url(../assets/img/code/cs194-26/pj1/sobel/sobel_satka_river.jpg)"></div>
+            </div>
+            <div class="row">
+            <div class="six columns" id="shift_info">Green: [-15, 46] | Red: [-50, 117]</div>
+            <div class="six columns" id="shift_info">Green: [10, 54] | Red: [19, 123]</div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container">
+    <div class="row">
+        <p><em>Source Acknowledgements: Header icon courtesy of Nikita Kozen. Bell icon courtesy of Stanislav Levin.</em></p>
+    </div>
+    </div>
+
+</body>
+</html>

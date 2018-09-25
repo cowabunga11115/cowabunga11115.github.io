@@ -1,0 +1,52 @@
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+#header_img {
+  content: url(../img/code/cs194-26/pj2/sunset.jpg);
+  width: 100%;
+}
+
+img {
+  width: 100%;
+}
+.img_info_package:hover .img_info{
+  visibility: visible;
+}
+
+.img_info {
+  visibility: hidden;
+  color:white;
+  z-index: 5;
+  position: relative;
+  margin-bottom: 30;
+  bottom: 40px;
+  left: 20px;
+}
+
+.img_info:hover {
+  color:white;
+  z-index: 5;
+  position: relative;
+  margin-bottom: 30;
+  bottom: 40px;
+  left: 15px;
+}
+
+#pinhole_info {
+  color:white;
+  z-index: 5;
+  position: relative;
+  margin-bottom: 30;
+  bottom: 40px;
+  left: 10px;
+}
+
+#flip_me {
+  -webkit-transform: rotate(180deg);     /* Chrome and other webkit browsers */
+  -moz-transform: rotate(180deg);        /* FF */
+  -o-transform: rotate(180deg);          /* Opera */
+  -ms-transform: rotate(180deg);         /* IE9 */
+  transform: rotate(180deg);
+}

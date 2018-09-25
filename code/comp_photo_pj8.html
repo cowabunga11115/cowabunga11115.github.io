@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Michelle Chang</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Fredericka+the+Great|Josefin+Sans:300|Open+Sans+Condensed:300" rel="stylesheet">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="../assets/css/normalize.css">
+  <link rel="stylesheet" href="../assets/css/skeleton.css">
+  <link rel="stylesheet" href="../assets/css/cs194-26-pj7.css">
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+
+</head>
+<body>
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="container">
+    <div class="row" id="title">
+      <h1>Tilt Shift Photography & Vertigo Shots</h1>
+      <h4>Computational Photography Final Project</h4>
+      <h5>Michelle Chang</h5>
+      <h6><a href="#part1">TILT SHIFT</a>  |  <a href="#part2">VERTIGO</a></h6>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <h4 id="part1">ONE. Tilt Shift Photography: The Illusion of Miniaturization</h4>
+    </div>
+    <div class="row">
+      <p>
+        ’Tis the season for delicious baked goods, frosty fingers, toasty fires, ice skating, and festive window displays! And now, with tilt shift photography, you too can capture your own mini-window-display-like scenes with your camera and show them off to your friends and family!
+      </p>
+      <p>
+        Tilt shift photography is a technique for simulating a miniature holiday-window-display-like scene by tilting / rotating the camera to control the depth of field and shifting the lens to modify the level of zoom. Tilting functions to ensure that the lens plane, plane of focus, and image plane are not all perpendicular. Examples of tilt shift photography can be seen everywhere. The opening sequence of Stephen Colbert’s Late Show, for instance.
+      </p>
+      <p>
+        Luckily, this technique can be simulated programmatically, so we don’t all have to go purchase expensive tilt lenses or Adobe Photoshop! Here’s the recipe:
+      </p>
+    </div>
+    <div class="row">
+      <h6><strong>HOW TO MAKE YOUR OWN FAKE MINIATURE IMAGE</strong></h6>
+    </div>
+    <div class="row">
+      <p>
+        What you'll need:
+        <ul>
+          <li>A photo</li>
+          <li>1/2 the depth of field value (units: pixels)</li>
+          <li>Defocus strength value (units: max level of Gaussian blur)</li>
+        </ul>
+      </p>
+      <p>
+        Procedure:
+        <ol style="margin-top:-1%;">
+          <li>Have the user specify two points that represent the “focus line.” This is the center of the area of the photo that will be in focus. The line can be diagonal, horizontal, or vertical. </li>
+          <li>Duplicate your image and apply a Gaussian blur to it. Then duplicate the blurred image and apply the Gaussian again. Repeat this for defocus_strength number of times so that you end up with defocus_strength number of images that all have progressively higher levels of blur. Your last image will have had a Gaussian applied defocus_strength number of times. Save these images (I put them in a dictionary for easy access). </li>
+          <li>Calculate the distance of every pixel from the focus line. I kept this information in a matrix.</li>
+          <li>Build the minified image! The DOF half-width value given in the ingredients list specifies the pixel boundaries of the focus area; in other words, all pixels within a distance of the given DOF half-width have the values of the original photograph. </li>
+          <p>
+            For the rest of the image, pixels are split into defocus_strength number of groups above and below the DOF area based on their distance from the focus line. This is done by taking the farthest distance (over all the pixels) from the focus line and dividing it by defocus_strength, which gives the thickness of each section. Pixels in section 1 will be assigned pixel values from the image with 1 layer of Gaussian blurring. Pixels in section 2 will be assigned pixel values from the image with 2 layers of Gaussian blurring, and so on and so forth. Of course, to avoid visible seams between the sections, some alpha blending will have to be done based on the pixel’s distance from the previous interval.
+          </p>
+          <li style="margin-top:-1%;">Increase the image saturation so it looks more ethereal and whimsical.</li>
+        </ol>
+      </p>
+    </div>
+    <div class="row">
+      <h6><strong>A SELECTION OF SAMPLE MINIATURES</strong></h6>
+      <p>
+        Below is a selection of images I tried this technique on. In general, it seems to work quite well. It usually took a few tries to get the focus line and area just right, however, depending on the image. I had to imagine what I might do if I were really taking photos of a dollhouse setup and choose my focus line from there. Additionally, defocus_strength must be chosen carefully. For smaller images, smaller values must be specified for defocus_strength. This is because defocus_strength determines into how many sections the photo is divided. If a picture is too small and the user specifies a high defocus_strength, the photo will be split into many sections. In such cases, a noticeable seam may appear between interval transitions because the amount of space available for transitioning from one interval to another is too short to produce a smooth change.
+      </p>
+    </div>
+    <div class="row">
+      <center><p><strong>1. PHOTOS I TOOK IN TAIWAN</strong></p></center>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <p style="text-align:center;"><strong>Original Image</strong></p>
+      </div>
+      <div class="six columns">
+        <p style="text-align:center;"><strong>Tilt Shift Version</strong></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj8/tilt_shift/taiwan_channel.JPG">
+        <p class="img_info">A small channel in Hsinchu</p>
+      </div>
+      <div class="six columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj8/tilt_shift/taiwan_channel_saturated.jpg">
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj8/tilt_shift/train_station.jpg">
+        <p class="img_info">A public tranportation station in Taipei</p>
+      </div>
+      <div class="six columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj8/tilt_shift/train_station_saturated.jpg">
+      </div>
+    </div>
+    <div class="row">
+      <center>
+      <p><strong>2. MAGOROKU ONSEN AND KITA ONSEN IN JAPAN</strong></p>
+      <p style="margin-top:-1%;">Credit: <a href="http://en.rocketnews24.com/2014/01/02/5-of-japans-most-unique-snow-covered-hot-spring-bathing-sites/">This article from RocketNews24</a> and <a href="https://static.retrip.jp/article/6526/images/6526f03941d3-6eb2-403a-9ecf-e0f3d796ca4e_m.jpg">Google Images for Magoroku Onsen</a></p>
+      </center>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <p style="text-align:center;"><strong>Original Image</strong></p>
+      </div>
+      <div class="six columns">
+        <p style="text-align:center;"><strong>Tilt Shift Version</strong></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj8/tilt_shift/onsen.jpg">
+        <p class="img_info">Magoroku Onsen</p>
+      </div>
+      <div class="six columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj8/tilt_shift/onsen_saturated.jpg">
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj8/tilt_shift/kita_onsen_1.jpg">
+        <p class="img_info">Kita Onsen</p>
+      </div>
+      <div class="six columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj8/tilt_shift/kita_onsen_1_saturated.jpg">
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj8/tilt_shift/kita_onsen_2.jpg">
+        <p class="img_info">Kita Onsen is thought to have been discovered by a Tenguu</p>
+      </div>
+      <div class="six columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj8/tilt_shift/kita_onsen_2_saturated.jpg">
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj8/tilt_shift/kita_onsen_3.jpg">
+      </div>
+      <div class="six columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj8/tilt_shift/kita_onsen_3_saturated.jpg">
+      </div>
+    </div>
+    <div class="row" style="margin-top:5%;">
+      <center>
+      <p><strong>3. VARIOUS PHOTOS FROM AROUND JAPAN</strong></p>
+      <p style="margin-top:-1%;">Credit: <a href="http://www.timetravelturtle.com/">Michael Turtle's travel blog</a>
+      </center>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <p style="text-align:center;"><strong>Original Image</strong></p>
+      </div>
+      <div class="six columns">
+        <p style="text-align:center;"><strong>Tilt Shift Version</strong></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj8/tilt_shift/jigokudani_2.jpg">
+        <p class="img_info">Jigokudani</p>
+      </div>
+      <div class="six columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj8/tilt_shift/jigokudani_2_saturated.jpg">
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj8/tilt_shift/kyoto_1.jpg">
+        <p class="img_info">Kyoto</p>
+      </div>
+      <div class="six columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj8/tilt_shift/kyoto_1_saturated.jpg">
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj8/tilt_shift/shirakawago_1.jpg">
+        <p class="img_info" style="top:-290px;">The village of Shirakawago</p>
+      </div>
+      <div class="six columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj8/tilt_shift/shirakawago_1_saturated.jpg">
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj8/tilt_shift/shirakawago_2.jpg">
+        <p class="img_info" style="top:-290px;">Shirakawago is a World Heritage Site</p>
+      </div>
+      <div class="six columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj8/tilt_shift/shirakawago_2_saturated.jpg">
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj8/tilt_shift/yokohama_1.jpg">
+        <p class="img_info">Yokohama</p>
+      </div>
+      <div class="six columns">
+        <img class="display_img" src="../assets/img/code/cs194-26/pj8/tilt_shift/yokohama_1_saturated.jpg">
+      </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <h4 id="part2">TWO: Vertigo Shots (Dolly Zoom Technique)</h4>
+  </div>
+  <div class="row">
+    <img src="../assets/img/code/cs194-26/stanislav_levin.png" style="width:30px; height:auto;" class="one column">
+    <h6 class="nine columns" style="margin-top:1%; margin-left: 5px;"><strong>ALL SHOTS ARE ACCOMPANIED BY GIFS</strong></h6>
+  </div>
+  <div class="row">
+    <p>
+      For this part of the project, I tried to implement the dolly zoom effect, which is a film technique often used to create a sense of realization, unreality, or high emotional impact. The effect is achieved by taking a camera and manually increasing the zoom as you get farther and farther away from the subject. Doing this causes the subject to maintain a relatively constant size and position, while the background grows larger. As a result, the growing background seems to loom over the subject (which doesn’t change throughout) and creates an often disorienting or slightly unsettling feeling in the viewer. (It’s no surprise, then, that this technique is commonly seen in horror and suspense movies.)
+    </p>
+    <p>
+      Equipment: I used a Nikon D5200 camera with a 18-55mm lens. All the shots below were taken in San Francisco (most of them featuring my friend Serena).
+    </p>
+  </div>
+  <div class="row">
+    <center>
+      <p><strong>Pier by San Francisco Ferry Building</strong></p>
+      <p>Model: Serena Chang</p>
+    </center>
+  </div>
+  <div class="row">
+    <div class="four columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/serena_pier_center/DSC_0229.jpg">
+      <p class="img_info">1</p>
+    </div>
+    <div class="four columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/serena_pier_center/DSC_0230.jpg">
+      <p class="img_info">2</p>
+    </div>
+    <div class="four columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/serena_pier_center/DSC_0231.jpg">
+      <p class="img_info">3</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="four columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/serena_pier_center/DSC_0232.jpg">
+      <p class="img_info">4</p>
+    </div>
+    <div class="four columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/serena_pier_center/DSC_0233.jpg">
+      <p class="img_info">5</p>
+    </div>
+    <div class="four columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/serena_pier_center/DSC_0234.jpg">
+      <p class="img_info">6</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="four columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/serena_pier_center/DSC_0235.jpg">
+      <p class="img_info">7</p>
+    </div>
+    <div class="four columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/serena_pier_center/DSC_0236.jpg">
+      <p class="img_info">8</p>
+    </div>
+    <div class="four columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/serena_pier_center/DSC_0237.jpg">
+      <p class="img_info">9</p>
+    </div>
+  </div>
+  <div class="row">
+    <h6><strong>PLAYING WITH ZOOM ORDER & CAMERA MOVEMENT</strong></h6>
+  </div>
+  <div class="row">
+    <p>
+      Although this image set was taken by shifting the camera backwards from the
+      subject and increasing the zoom each time, we can simulate the opposite effect
+      by simply reordering the pictures.
+    </p>
+    <p>
+      Playing the images in the opposite order from which they were taken produces
+      a slightly different effect. Rather than the background growing larger and more imposing, it now
+      seems as if the background is receding or falling away. I imagine this
+      is often used when a character has come to a horrible realization in a film, or something of the sort.
+    </p>
+  </div>
+  <div class="row">
+    <div class="six columns">
+      <p style="text-align:center;"><strong>Camera Moving Backwards with Increasing Zoom</strong></p>
+    </div>
+    <div class="six columns">
+      <p style="text-align:center;"><strong>Simulated: Camera Moving Forwards with Decreasing Zoom</strong></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="six columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/serena_pier_center/serena_pier_backwards.gif">
+    </div>
+    <div class="six columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/serena_pier_center/serena_pier_forwards.gif">
+    </div>
+  </div>
+  <div class="row">
+    <p>
+      One of the most difficult parts of creating the dolly zoom effect was maintaining the subject’s placement in the photographs. The shots above were taken with the camera placed on a tripod. As I moved backwards, I tried my best to maintain a straight line. But given that I had to lift the tripod up every time, the shots were not perfect. I believe this effect would be the easiest to create with a rolling camera dolly (hence the name of the technique, I suppose), which is, at its simplest, something akin to a tripod on scooter wheels.
+    </p>
+    <p>
+      Given the absence of such a fancy piece of equipment, I made do with various methods, including the tripod, just holding the camera with my hands (to avoid the laborious effort of lifting the tripod with every step back), or sliding the camera across the flat surface of a table. Tables worked surprisingly well since their consistently flat surfaces help maintain the vertical position of the camera. In fact, in some cases this was preferable to my tripod, which has the tendency to jiggle and change its angle or height due to its being slightly damaged.
+    </p>
+  </div>
+  <div class="row">
+    <center>
+      <p><strong>Pot in a Japanese Restaurant (Ryoko's)</strong></p>
+      <p>Sidenote: This store makes great ochazuke!</p>
+    </center>
+    <p>
+      In this particular instance, the photos were taken by sliding the camera back
+      across the table.
+    </p>
+  </div>
+  <div class="row">
+    <div class="six columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/pot_flower_side/DSC_0286.jpg">
+      <p class="img_info">1</p>
+    </div>
+    <div class="six columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/pot_flower_side/DSC_0287.jpg">
+      <p class="img_info">2</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="six columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/pot_flower_side/DSC_0288.jpg">
+      <p class="img_info">1</p>
+    </div>
+    <div class="six columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/pot_flower_side/DSC_0289.jpg">
+      <p class="img_info">2</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="six columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/pot_flower_side/DSC_0290.jpg">
+      <p class="img_info">3</p>
+    </div>
+    <div class="six columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/pot_flower_side/DSC_0291.jpg">
+      <p class="img_info">4</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="six columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/pot_flower_side/DSC_0292.jpg">
+      <p class="img_info">5</p>
+    </div>
+    <div class="six columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/pot_flower_side/DSC_0293.jpg">
+      <p class="img_info">6</p>
+    </div>
+  </div>
+  <div class="row">
+    <h6><strong>PLAYING WITH ZOOM ORDER & CAMERA MOVEMENT</strong></h6>
+  </div>
+  <div class="row">
+    <div class="six columns">
+      <p style="text-align:center;"><strong>Camera Moving Backwards with Increasing Zoom</strong></p>
+    </div>
+    <div class="six columns">
+      <p style="text-align:center;"><strong>Simulated: Camera Moving Forwards with Decreasing Zoom</strong></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="six columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/pot_flower_side/flowered_pot_backwards.gif">
+    </div>
+    <div class="six columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/pot_flower_side/flowered_pot_forwards.gif">
+    </div>
+  </div>
+  <div class="row" style="margin-top:5%;">
+    <center>
+      <p><strong>Union Square</strong></p>
+      <p>Model: Serena Chang</p>
+    </center>
+    <p>
+      In this particular instance, the photos were taken without a tripod. I held the
+      camera with my hands and tried to keep the subject in a constant position.
+    </p>
+  </div>
+  <div class="row">
+    <div class="four columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/serena_union_square/DSC_0305.jpg">
+      <p class="img_info">1</p>
+    </div>
+    <div class="four columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/serena_union_square/DSC_0306.jpg">
+      <p class="img_info">2</p>
+    </div>
+    <div class="four columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/serena_union_square/DSC_0307.jpg">
+      <p class="img_info">3</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="four columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/serena_union_square/DSC_0308.jpg">
+      <p class="img_info">4</p>
+    </div>
+    <div class="four columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/serena_union_square/DSC_0309.jpg">
+      <p class="img_info">5</p>
+    </div>
+    <div class="four columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/serena_union_square/DSC_0310.jpg">
+      <p class="img_info">6</p>
+    </div>
+  </div>
+  <div class="row">
+    <h6><strong>PLAYING WITH ZOOM ORDER & CAMERA MOVEMENT</strong></h6>
+  </div>
+  <div class="row">
+    <div class="six columns">
+      <p style="text-align:center;"><strong>Camera Moving Backwards with Increasing Zoom</strong></p>
+    </div>
+    <div class="six columns">
+      <p style="text-align:center;"><strong>Simulated: Camera Moving Forwards with Decreasing Zoom</strong></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="six columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/serena_union_square/serena_union_square_backwards.gif">
+    </div>
+    <div class="six columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/serena_union_square/serena_union_square_forwards.gif">
+    </div>
+  </div>
+
+  <div class="row" style="margin-top:5%;">
+    <center>
+      <p><strong>European Drinking Chocolate from Dandelion Chocolate</strong></p>
+    </center>
+    <p>
+      We stopped at a small chocolate shop by the Ferry Building and treated ourselves
+      to some dark hot chocolate! The staff were very friendly and the places is very
+      well designed.
+    </p>
+    <p>
+      In this particular instance, the photos were taken by sliding the camera across the table.
+    </p>
+  </div>
+  <div class="row">
+    <div class="six columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/michelle_chocolate/DSC_0258.jpg">
+      <p class="img_info">1</p>
+    </div>
+    <div class="six columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/michelle_chocolate/DSC_0260.jpg">
+      <p class="img_info">2</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="six columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/michelle_chocolate/DSC_0261.jpg">
+      <p class="img_info">3</p>
+    </div>
+    <div class="six columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/michelle_chocolate/DSC_0262.jpg">
+      <p class="img_info">4</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="six columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/michelle_chocolate/DSC_0263.jpg">
+      <p class="img_info">5</p>
+    </div>
+    <div class="six columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/michelle_chocolate/DSC_0264.jpg">
+      <p class="img_info">6</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="six columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/michelle_chocolate/DSC_0265.jpg">
+      <p class="img_info">7</p>
+    </div>
+    <div class="six columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/michelle_chocolate/DSC_0266.jpg">
+      <p class="img_info">8</p>
+    </div>
+  </div>
+  <div class="row">
+    <h6><strong>PLAYING WITH ZOOM ORDER & CAMERA MOVEMENT</strong></h6>
+  </div>
+  <div class="row">
+    <div class="six columns">
+      <p style="text-align:center;"><strong>Camera Moving Backwards with Increasing Zoom</strong></p>
+    </div>
+    <div class="six columns">
+      <p style="text-align:center;"><strong>Simulated: Camera Moving Forwards with Decreasing Zoom</strong></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="six columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/michelle_chocolate/chocolate_backwards.gif">
+    </div>
+    <div class="six columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/michelle_chocolate/chocolate_forwards.gif">
+    </div>
+  </div>
+  <div class="row" style="margin-top:5%;">
+    <img src="../assets/img/code/cs194-26/stanislav_levin.png" style="width:30px; height:auto;" class="one column">
+    <h6 class="nine columns" style="margin-top:1%; margin-left: 5px;"><strong>VARIATIONS ON CAMERA MOTION, ZOOM, AND PLACEMENT OF SUBJECT</strong></h6>
+  </div>
+  <div class="row">
+    <p>
+      I took some time to mess with this technique. On the left is a GIF created
+      by moving the camera forwards instead of backwards and with each shift
+      forwards, decreasing the zoom. Like the other GIFS created by artificially
+      shifting the image orders above, the effect is that off the background falling away.
+    </p>
+    <p>
+      On the right, I tried moving the octocat (the subject) instead of the camera.
+      Each time I moved the octocat back, I decreased the zoom. The camera was set
+      on a chair for the duration of the shooting. The resulting effect is that of
+      an enhanced, backwards zoom. That is, it seems as if the camera is moving away
+      from the subject, but the octocat moves away faster than it would have with simply
+      zooming because moving the octocat away and decreasing the zoom all at once speeds up
+      the creation of distance between the camera and the subject.
+    </p>
+  </div>
+  <div class="row">
+    <div class="six columns">
+      <p style="text-align:center;"><strong>Camera Moving Forwards with Decreasing Zoom</strong></p>
+    </div>
+    <div class="six columns">
+      <p style="text-align:center;"><strong>Camera Decreasing Zoom with Subject Moving Backwards</strong></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="six columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/octocat_forward.gif">
+    </div>
+    <div class="six columns">
+      <img class="display_img" src="../assets/img/code/cs194-26/pj8/vertigo/octocat_zoomout_moveback.gif">
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <!-- <div class="row" style="margin-top:2%;">
+    <h6><strong>TAKEAWAYS</strong></h6>
+  </div> -->
+  <div class="row" style="margin-top:5%;">
+    <h4 id="part1">THREE. Takeaways</h4>
+  </div>
+  <div class="row">
+    <p>
+      This class has given me much insight into the backend of Photoshop and special
+      effects techniques. It's very exciting! As the semester has progressed, I've noticed
+      that the many functions and features of Photoshop now have new meaning for me,
+      and I'm certain that this class has improved not only my photography skills but also
+      how I view films, photography, and other sources of media. This is definitely one of
+      the best courses I've taken at Berkeley; every lecture and project was truly an enjoyable experience!
+    </p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <p><em>Source Acknowledgements: Bell icon courtesy of Stanislav Levin.</em></p>
+  </div>
+</div>
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>

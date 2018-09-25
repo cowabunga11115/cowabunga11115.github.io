@@ -1,0 +1,29 @@
+#caption {
+    margin-top: 3%;
+  }
+  
+  #shift_info {
+    margin-top: 2%;
+    margin-bottom: 2%;
+    text-align: center;
+  }
+  
+  #title {
+    text-align: center;
+  }
+  
+  .header_img {
+    height: 200px;
+    width: auto;
+    content: url(../img/code/cs194-26/pj1/nikita_kozen.png);
+    display: block;
+    margin: auto;
+    margin-top: 30px;
+  }
+  
+  .prokudin-gorskii {
+    height: 500px;
+    width: auto;
+    content: url(../img/code/cs194-26/pj1/prokudin_gorskii.jpg);
+  }
+  

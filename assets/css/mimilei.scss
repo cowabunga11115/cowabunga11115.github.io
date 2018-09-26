@@ -111,6 +111,11 @@ body {
     font-weight: 600;
 }
 
+.design .row.info_card {
+    left: 50%;
+    margin: 0 10%;
+}
+
   @media screen and (max-width: 600px) and (orientation: portrait){  
     div.nav_wrapper {
         visibility: hidden;

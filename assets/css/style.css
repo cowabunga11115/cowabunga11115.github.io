@@ -111,6 +111,10 @@ body {
   margin: 0 10%;
 }
 
+.design > .full_image > img {
+  width: 100%;
+}
+
 @media screen and (max-width: 600px) and (orientation: portrait) {
   div.nav_wrapper {
     visibility: hidden;

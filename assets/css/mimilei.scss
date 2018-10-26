@@ -84,7 +84,7 @@ body {
     margin-bottom: 1.5rem;
 }
 
-.photo_frame img {
+.photo_frame img, .innod_pattern img {
     width: 100%;
 }
 
@@ -111,13 +111,50 @@ body {
     font-weight: 600;
 }
 
-.design .row.info_card {
+.design > .row.info_card, .design > .row.title_card {
     left: 50%;
-    margin: 0 10%;
+    margin-bottom: 5%;
+    text-align: center;
+    padding: 10% 15%;
+}
+
+.title_card {
+    height: 15rem;
+    border-style: dashed;
+}
+
+.title_card h1 {
+    font-family: "Playfair Display";
+    font-weight: 500;
+    font-size: 5.0rem;
+    font-style: italic;
 }
 
 .design > .full_image > img{
     width: 100%;
+}
+
+.design > .innod_pattern {
+    height: 60%;
+    margin-bottom: 5%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.design .pj_title_square {
+    text-align: center;
+    border-style: dashed;
+    padding: 5rem;
+    vertical-align: middle;
+}
+
+.design .pj_title_square h2 {
+    margin: 0;
+    padding: 0;
+}
+
+.design .pj_title_square:hover {
+    border-style: solid;
 }
 
   @media screen and (max-width: 600px) and (orientation: portrait){  

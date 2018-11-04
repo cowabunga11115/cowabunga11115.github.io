@@ -65,6 +65,10 @@ body {
 .photo_frame img, .innod_pattern img {
   width: 100%; }
 
+div .six.columns.square {
+  width: 28vw;
+  height: 28vw; }
+
 .github_link img {
   vertical-align: middle; }
 

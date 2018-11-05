@@ -32,7 +32,7 @@ a {
     display: none;
 }
 
-.pj_name h2 {
+.pj_name h2, .row.bio h1 {
     font-size: 3.0rem;
 }
 
@@ -93,6 +93,11 @@ div .six.columns.square {
     height: 28vw;
 }
 
+.frosted_glass {
+    filter: blur(5px);
+    -webkit-filter: blur(8px);
+}
+
 .github_link img {
     vertical-align: middle;
 }
@@ -123,6 +128,10 @@ div .six.columns.square {
     padding: 10% 15%;
 }
 
+div.row.bio {
+    width: 40vw;
+}
+
 .title_card {
     height: 15rem;
     border-style: dashed;
@@ -137,6 +146,7 @@ div .six.columns.square {
 
 .design > .full_image > img{
     width: 100%;
+    overflow:hidden;
 }
 
 .design > .innod_pattern {

@@ -32,6 +32,45 @@ a {
     display: none;
 }
 
+// .tokiha_logo_card {
+//     background-image: url("../assets/img/design/tokiha/camp.jpg"); 
+//     background-size: cover;
+//     // filter: blur(5px);
+// }
+
+.tokiha_logo {
+    background-image: url("../img/design/tokiha/tokiha_logo-24.png");
+    background-size: contain;
+    // position: relative;
+}
+
+div .tokiha_bg_img {
+    overflow:hidden; 
+    background-image: url('../img/design/tokiha/camp.jpg'); 
+    background-size:cover;
+    height: 30vw;
+    filter: blur(8px);
+    box-shadow: inset 0 0 0 200px rgba(255,255,255,0.4);
+}
+
+div .frosted_glass::before {
+    content: ' ';
+    background: inherit; 
+    // position: absolute;
+    // left: 0;
+    // right: 0;
+    // top: 0; 
+    // bottom: 0;
+    // box-shadow: inset 0 0 0 3000px rgba(255,255,255,0.3);
+    filter: blur(10px);
+}
+
+.frosted_glass {
+    background: inherit;
+    overflow: hidden;
+    position:absolute;
+}
+
 .pj_name h2, .row.bio h1 {
     font-size: 3.0rem;
 }
@@ -93,10 +132,10 @@ div .six.columns.square {
     height: 28vw;
 }
 
-.frosted_glass {
-    filter: blur(5px);
-    -webkit-filter: blur(8px);
-}
+// .frosted_glass {
+//     filter: blur(5px);
+//     -webkit-filter: blur(8px);
+// }
 
 .github_link img {
     vertical-align: middle;
@@ -427,11 +466,6 @@ div.row.bio {
 html, body {
     height: 100%;
 }
-
-// body.about{
-//     background: url(../img/about.jpg);
-//     background-size: cover;
-// }
 
 p, ol, ul , h1, h2, h3, h4 {
   font-family: 'Josefin Sans', sans-serif;

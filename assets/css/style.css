@@ -35,6 +35,10 @@ a {
   overflow: scroll;
   bottom: 0; }
 
+.subtitle.work:hover {
+  cursor: pointer;
+  font-style: italic; }
+
 .creative p.subtitle {
   display: inline-block; }
 

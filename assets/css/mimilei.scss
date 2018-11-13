@@ -54,6 +54,11 @@ a {
     // width: 100%;	// I recommend to assign the width in px, prevents preloading issues
 }
 
+.subtitle.work:hover {
+    cursor: pointer;
+    font-style: italic;
+}
+
 .creative p.subtitle {
     display: inline-block;
 }

@@ -42,9 +42,6 @@ a {
 .creative p.subtitle {
   display: inline-block; }
 
-img {
-  pointer-events: none !important; }
-
 .tokiha_logo {
   background-image: url("../img/design/tokiha/tokiha_logo-24.png");
   background-size: contain; }

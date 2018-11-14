@@ -16,8 +16,8 @@ $(".subtitle.work").on("click", function(e){
         }
         console.log(this.id);
         this.style.fontWeight = 600;
+        $(".scroll_window").mCustomScrollbar("update");
     }); 
-    $(".scroll_window").mCustomScrollbar("update");
   });
 
 $(window).on("wheel", function(e){

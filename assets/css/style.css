@@ -503,7 +503,8 @@ img #home {
     transform: translate(-40%, -50%);
     width: 60vmax;
     min-width: 400px;
-    height: 85vh; }
+    height: 85vh;
+    overflow-y: scroll; }
 
   div#home_row_left {
     float: left;

@@ -1,7 +1,20 @@
 $(".subtitle.work").on("click", function(e){ 
     console.log("Clicked a creative category");
-    $(".scroll_window").mCustomScrollbar("destroy");
-    $(".scroll").load("creative/" + this.id + ".html"); 
+    $(".scroll").load("creative/" + this.id + ".html", function() {
+        $(".scroll_window").mCustomScrollbar("destroy");
+        $(".scroll_window").mCustomScrollbar({
+            axis:"x", // horizontal scrollbar
+            scrollInertia: 5,
+            advanced:{ updateOnContentResize: true },
+            advanced:{ updateOnSelectorChange: "img.u-max-full-width" },
+            advanced:{ updateOnImageLoad: true },
+            callbacks:{
+                onUpdate:function(){
+                    console.log("Scrollbars updated");
+                }
+            },
+        });
+    }); 
     console.log("after loading call");
     e.preventDefault(); // cancel the click
     var allSubtitles = $(".subtitle.work");
@@ -11,18 +24,6 @@ $(".subtitle.work").on("click", function(e){
     }
     console.log(this.id);
     this.style.fontWeight = 600;
-    $(".scroll_window").mCustomScrollbar({
-        axis:"x", // horizontal scrollbar
-        scrollInertia: 5,
-        advanced:{ updateOnContentResize: true },
-        advanced:{ updateOnSelectorChange: "img.u-max-full-width" },
-        advanced:{ updateOnImageLoad: true },
-        callbacks:{
-            onUpdate:function(){
-                console.log("Scrollbars updated");
-            }
-        },
-    });
   });
 
 $(window).on("wheel", function(e){

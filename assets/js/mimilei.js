@@ -6,7 +6,7 @@
 // });
 
 $(".subtitle.work").on("click", function(e){ 
-    $(".scroll_window").mCustomScrollbar("destroy");
+    // $(".scroll_window").mCustomScrollbar("destroy");
     console.log("Clicked a creative category");
     e.preventDefault(); // cancel the click
     $(".scroll").load("creative/" + this.id + ".html", function() {
@@ -17,10 +17,10 @@ $(".subtitle.work").on("click", function(e){
         }
         console.log(this.id);
         this.style.fontWeight = 600;
-        $(".scroll_window").mCustomScrollbar({
-            axis:"x", // horizontal scrollbar
-            scrollInertia: 5
-        });
+        // $(".scroll_window").mCustomScrollbar({
+        //     axis:"x", // horizontal scrollbar
+        //     scrollInertia: 5
+        // });
     }); 
   });
 

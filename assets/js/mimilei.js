@@ -26,10 +26,3 @@ $(window).on("wheel", function(e){
 
     return false; // prevent body scrolling
 });
-
-function preventDefault(e) {
-    e = e || window.event;
-    if (e.preventDefault)
-        e.preventDefault();
-    e.returnValue = false;  
-}

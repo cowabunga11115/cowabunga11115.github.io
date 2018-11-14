@@ -133,6 +133,12 @@
             $("#personal_works")[0].style.fontWeight = 600;
             $(".scroll").load("creative/personal_works.html"); 
         });
+        function preventDefault(e) {
+            e = e || window.event;
+            if (e.preventDefault)
+                e.preventDefault();
+            e.returnValue = false;  
+        }
         (function($){
             $(window).on("load",function(){
                 $(".scroll_window").mCustomScrollbar({

@@ -9,14 +9,14 @@ $(".subtitle.work").on("click", function(e){
     $(".scroll_window").mCustomScrollbar("destroy");
     console.log("Clicked a creative category");
     e.preventDefault(); // cancel the click
-    var allSubtitles = $(".subtitle.work");
-    var i;
-    for (i = 0; i < allSubtitles.length; i++) {
-        allSubtitles[i].style.fontWeight = 300;
-    }
-    console.log(this.id);
-    this.style.fontWeight = 600;
     $(".scroll").load("creative/" + this.id + ".html", function() {
+        var allSubtitles = $(".subtitle.work");
+        var i;
+        for (i = 0; i < allSubtitles.length; i++) {
+            allSubtitles[i].style.fontWeight = 300;
+        }
+        console.log(this.id);
+        this.style.fontWeight = 600;
         $(".scroll_window").mCustomScrollbar({
             axis:"x", // horizontal scrollbar
             scrollInertia: 5

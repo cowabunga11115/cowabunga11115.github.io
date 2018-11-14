@@ -140,6 +140,14 @@
                     scrollInertia: 5
                 });
             });
+            $('.content').mouseover(function() {
+                $('.content').on("wheel", function(){
+                    window.onwheel = preventDefault; // modern standard
+                    window.onmousewheel = document.onmousewheel = preventDefault; // older browsers, IE
+                    window.ontouchmove  = preventDefault; // mobile
+                    return false;
+                });
+            });
         })(jQuery);
     </script>
 </body>

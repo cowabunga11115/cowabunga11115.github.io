@@ -28,7 +28,8 @@ a {
   margin-right: 20px; }
 
 .scroll {
-  display: inline-flex; }
+  display: inline-flex;
+  width: 100vw; }
 
 .scroll_window {
   position: relative;

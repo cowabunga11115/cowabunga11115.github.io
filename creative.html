@@ -132,6 +132,10 @@
         $( document ).ready(function() {
             $("#personal_works")[0].style.fontWeight = 600;
             $(".scroll").load("creative/personal_works.html"); 
+            $(".scroll_window").mCustomScrollbar({
+                axis:"x", // horizontal scrollbar
+                scrollInertia: 5
+            });
         });
         function preventDefault(e) {
             e = e || window.event;
@@ -140,12 +144,12 @@
             e.returnValue = false;  
         }
         (function($){
-            $(window).on("load",function(){
-                $(".scroll_window").mCustomScrollbar({
-                    axis:"x", // horizontal scrollbar
-                    scrollInertia: 5
-                });
-            });
+            // $(window).on("load",function(){
+            //     $(".scroll_window").mCustomScrollbar({
+            //         axis:"x", // horizontal scrollbar
+            //         scrollInertia: 5
+            //     });
+            // });
             $('.content').mouseover(function() {
                 $('.content').on("wheel", function(){
                     window.onwheel = preventDefault; // modern standard

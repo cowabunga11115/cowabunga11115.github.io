@@ -502,11 +502,9 @@ img #home {
     left: 50%;
     transform: translate(-40%, -50%);
     min-width: 400px;
+    width: 60vmax;
     height: 85vh;
     overflow-y: scroll; }
-
-  .content .row {
-    width: 65vw; }
 
   div#home_row_left {
     float: left;

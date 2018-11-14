@@ -690,17 +690,10 @@ img #home {
         top: 50%;
         left: 50%;
         transform: translate(-40%, -50%);
-        // width: 100vw;
-        // height: 60vw;
-        // padding-left: 25vw;
-        // width: 60vmax;
         min-width: 400px;
+        width: 60vmax;
         height: 85vh;
         overflow-y: scroll;
-    }
-
-    .content .row {
-        width: 65vw;
     }
 
     div#home_row_left {

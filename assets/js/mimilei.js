@@ -15,9 +15,9 @@ $(".subtitle.work").on("click", function(e){
     }
     console.log(this.id);
     this.style.fontWeight = 600;
-    self.$("scroll").mCustomScrollbar("destroy");
+    $(".scroll_window").mCustomScrollbar("destroy");
     $(".scroll").load("creative/" + this.id + ".html"); 
-    $(".scroll").mCustomScrollbar({
+    $(".scroll_window").mCustomScrollbar({
         axis:"x", // horizontal scrollbar
         scrollInertia: 5
     });

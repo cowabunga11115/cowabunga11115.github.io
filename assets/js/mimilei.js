@@ -1,12 +1,6 @@
-// $(document).ready(function () {
-//     $('.scroll_window').mousewheel(function(e, delta) {
-//         this.scrollLeft -= (delta * 40);
-//         e.preventDefault();
-//     });
-// });
-
 $(".subtitle.work").on("click", function(e){ 
     console.log("Clicked a creative category");
+    $(".scroll_window").mCustomScrollbar("destroy");
     $(".scroll").load("creative/" + this.id + ".html"); 
     console.log("after loading call");
     e.preventDefault(); // cancel the click
@@ -17,6 +11,18 @@ $(".subtitle.work").on("click", function(e){
     }
     console.log(this.id);
     this.style.fontWeight = 600;
+    $(".scroll_window").mCustomScrollbar({
+        axis:"x", // horizontal scrollbar
+        scrollInertia: 5,
+        advanced:{ updateOnContentResize: true },
+        advanced:{ updateOnSelectorChange: "img.u-max-full-width" },
+        advanced:{ updateOnImageLoad: true },
+        callbacks:{
+            onUpdate:function(){
+                console.log("Scrollbars updated");
+            }
+        },
+    });
   });
 
 $(window).on("wheel", function(e){

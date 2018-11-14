@@ -146,7 +146,12 @@
                     scrollInertia: 5,
                     advanced:{ updateOnContentResize: true },
                     advanced:{ updateOnSelectorChange: ".scroll" },
-                    advanced:{ updateOnImageLoad: true }
+                    advanced:{ updateOnImageLoad: true },
+                    callbacks:{
+                        onUpdate:function(){
+                            console.log("Scrollbars updated");
+                        }
+                    },
                 });
             });
             $('.content').mouseover(function() {

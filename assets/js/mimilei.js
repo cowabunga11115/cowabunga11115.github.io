@@ -15,7 +15,12 @@ $(".subtitle.work").on("click", function(e){
     }
     console.log(this.id);
     this.style.fontWeight = 600;
-    $(".mCSB_container .scroll").load("creative/" + this.id + ".html"); 
+    self.$("scroll").mCustomScrollbar("destroy");
+    $(".scroll").load("creative/" + this.id + ".html"); 
+    $(".scroll").mCustomScrollbar({
+        axis:"x", // horizontal scrollbar
+        scrollInertia: 5
+    });
   });
 
 $(window).on("wheel", function(e){

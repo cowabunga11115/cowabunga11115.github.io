@@ -129,10 +129,10 @@
     <script type="text/javascript" src="assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
     <script type="text/javascript" src="assets/js/mimilei.js"></script>
     <script type="text/javascript">
-        // $( document ).ready(function() {
-        //     $("#personal_works")[0].style.fontWeight = 600;
-        //     $(".scroll").load("creative/personal_works.html"); 
-        // });
+        $( document ).ready(function() {
+            $("#personal_works")[0].style.fontWeight = 600;
+            $(".scroll").load("creative/personal_works.html"); 
+        });
         function preventDefault(e) {
             e = e || window.event;
             if (e.preventDefault)
@@ -141,8 +141,6 @@
         }
         (function($){
             $(window).on("load",function(){
-                $("#personal_works")[0].style.fontWeight = 600;
-                $(".scroll").load("creative/personal_works.html"); 
                 $(".scroll_window").mCustomScrollbar({
                     axis:"x", // horizontal scrollbar
                     scrollInertia: 5

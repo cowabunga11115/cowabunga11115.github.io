@@ -15,7 +15,7 @@ $(".subtitle.work").on("click", function(e){
     }
     console.log(this.id);
     this.style.fontWeight = 600;
-    $(".scroll").load("creative/" + this.id + ".html"); 
+    $(".scroll_window .scroll").load("creative/" + this.id + ".html"); 
   });
 
 $(window).on("wheel", function(e){

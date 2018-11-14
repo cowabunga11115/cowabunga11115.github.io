@@ -141,11 +141,11 @@
         }
         (function($){
             $(window).on("load",function(){
-                $(".scroll").mCustomScrollbar({
+                $(".scroll_window").mCustomScrollbar({
                     axis:"x", // horizontal scrollbar
                     scrollInertia: 5,
                     advanced:{ updateOnContentResize: true },
-                    advanced:{ updateOnSelectorChange: ".scroll" },
+                    advanced:{ updateOnSelectorChange: ".u-max-full-width" },
                     advanced:{ updateOnImageLoad: true },
                     callbacks:{
                         onUpdate:function(){

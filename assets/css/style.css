@@ -36,10 +36,6 @@ a {
   overflow: scroll;
   bottom: 0; }
 
-.scroll img {
-  height: 35vw;
-  width: auto; }
-
 .subtitle.work:hover {
   cursor: pointer;
   font-style: italic; }

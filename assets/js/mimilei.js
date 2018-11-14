@@ -15,12 +15,13 @@ $(".subtitle.work").on("click", function(e){
     }
     console.log(this.id);
     this.style.fontWeight = 600;
-    $(".scroll").load("creative/" + this.id + ".html"); 
-    $(".scroll_window").mCustomScrollbar("destroy");
-    $(".scroll_window").mCustomScrollbar({
-        axis:"x", // horizontal scrollbar
-        scrollInertia: 5
-    });
+    $(".scroll").load("creative/" + this.id + ".html", function() {
+        $(".scroll_window").mCustomScrollbar("destroy");
+        $(".scroll_window").mCustomScrollbar({
+            axis:"x", // horizontal scrollbar
+            scrollInertia: 5
+        });
+    }); 
   });
 
 $(window).on("wheel", function(e){

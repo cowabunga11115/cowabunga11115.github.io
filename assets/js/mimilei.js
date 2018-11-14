@@ -7,6 +7,7 @@
 
 $(".subtitle.work").on("click", function(e){ 
     console.log("Clicked a creative category");
+    $(".scroll").load("creative/" + this.id + ".html"); 
     e.preventDefault(); // cancel the click
     var allSubtitles = $(".subtitle.work");
     var i;
@@ -15,7 +16,6 @@ $(".subtitle.work").on("click", function(e){
     }
     console.log(this.id);
     this.style.fontWeight = 600;
-    $(".scroll").load("creative/" + this.id + ".html"); 
   });
 
 $(window).on("wheel", function(e){

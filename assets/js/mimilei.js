@@ -8,6 +8,7 @@
 $(".subtitle.work").on("click", function(e){ 
     console.log("Clicked a creative category");
     $(".scroll").load("creative/" + this.id + ".html"); 
+    console.log("after loading call");
     e.preventDefault(); // cancel the click
     var allSubtitles = $(".subtitle.work");
     var i;

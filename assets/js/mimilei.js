@@ -1,6 +1,6 @@
-$(".subtitle.work").on("click", function(e){ 
+$(".subtitle.work").on("click", function(e){
     console.log("Clicked a creative category");
-    $(".scroll").load("creative/" + this.id + ".html"); 
+    $(".scroll").load("creative/" + this.id + ".html");
     console.log("after loading call");
     e.preventDefault(); // cancel the click
     var allSubtitles = $(".subtitle.work");
@@ -30,8 +30,20 @@ $(".subtitle.work").on("click", function(e){
 $(window).on("wheel", function(e){
     var $div = $('.content');
     // set div scroll top offset to current + extra from this scroll
-    $div.scrollTop($div.scrollTop() 
+    $div.scrollTop($div.scrollTop()
                     - e.originalEvent.wheelDelta);
 
     return false; // prevent body scrolling
+});
+
+// Other project pages: Info on hover
+$(".pj_name").on('mouseenter', function() {
+  // console.log("in");
+  // var pos = e.position();
+  // console.log("top: ");
+  // console.log(pos.top);
+  // console.log("left: ");
+  // console.log(pos.left);
+}).on('mouseleave', function() {
+  // console.log("out");
 });

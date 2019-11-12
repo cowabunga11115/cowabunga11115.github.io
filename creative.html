@@ -124,20 +124,20 @@
         </div>
     </div>
 
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script type="text/javascript" src="assets/js/jquery.mousewheel.min.js"></script>
     <script type="text/javascript" src="assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
     <script type="text/javascript" src="assets/js/mimilei.js"></script>
     <script type="text/javascript">
         $( document ).ready(function() {
             $("#personal_works")[0].style.fontWeight = 600;
-            $(".scroll").load("creative/personal_works.html"); 
+            $(".scroll").load("creative/personal_works.html");
         });
         function preventDefault(e) {
             e = e || window.event;
             if (e.preventDefault)
                 e.preventDefault();
-            e.returnValue = false;  
+            e.returnValue = false;
         }
         (function($){
             $(window).on("load",function(){

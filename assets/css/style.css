@@ -65,8 +65,8 @@ div .frosted_glass::before {
   overflow: hidden;
   position: absolute; }
 
-.pj_name h2, .row.bio h1 {
-  font-size: 2.5rem; }
+/* .pj_name h2, .row.bio h1 {
+  font-size: 2.5rem; } */
 
 .coming_soon p {
   visibility: hidden;

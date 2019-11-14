@@ -322,278 +322,294 @@ div.row.bio {
     border-style: solid;
 }
 
-  @media screen and (max-width: 600px) and (orientation: portrait){
+/* Mobile + Extra small devices (phones, 600px and down) */
+@media screen and (max-width: 600px) and (orientation: portrait){
+  .pj_frame::-webkit-scrollbar {
+    display: none;
+  }
 
-    .pj_frame {
-      left: 40%;
-      top: 10%;
+  .content {
+    overflow-y: scroll;
+  }
+
+  .pj_album_art_mini {
+    height: 70vw;
+    width: 70vw;
+    background-size: contain;
+  }
+
+  .pj_frame {
+    left: 50%;
+    top: 10%;
+    position: absolute;
+    transform: translate(-50%, 0%);
+    width: fit-content;
+    height: 100%;
+    text-align: center;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+  }
+
+  .pj_name h2 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    font-variant-caps: all-small-caps;
+    margin-top: 0.8rem;
+  }
+
+  .pj_name h2:hover {
+    font-weight: 400;
+  }
+
+  div.nav_wrapper {
+      visibility: hidden;
+      display: none;
+  }
+
+  span.small_nav_toggle_button {
+      visibility: visible;
+      // display: block;
+  }
+
+  .nav {
+      display: inline-block;
+      margin: 25px 25px 20px;
+      pointer-events: none;
+      -webkit-transition: 0.5s;
+      transition: 0.5s;
+  }
+
+  // BEGIN SMALL NAV STYLING
+
+  #toggle_nav { // Hide checkbox
       position: absolute;
-      transform: translate(-40%, 0%);
-      height: fit-content;
-      width: fit-content;
-    }
+      left: -100%;
+      top: -100%;
+      display: block;
+  }
 
-    .pj_name h2 {
-      font-size: 2.5rem;
-      font-weight: 300;
-    }
+  .toggle_nav_container {
+      display: block;
+  }
 
-    .pj_name h2:hover {
-      font-weight: 400;
-    }
+  .small_nav_menu {
+      display: block;
+  }
 
-    div.nav_wrapper {
-        visibility: hidden;
-        display: none;
-    }
+  // Styles for open state when toggle checkbox is checked
+  #toggle_nav:checked {
 
-    span.small_nav_toggle_button {
-        visibility: visible;
-        // display: block;
-    }
+      & ~ .content {
+          opacity: 0;
+      }
 
-    .nav {
-        display: inline-block;
-        margin: 25px 25px 20px;
-        pointer-events: none;
-        -webkit-transition: 0.5s;
-        transition: 0.5s;
-    }
+      & ~ .pj_frame {
+        opacity: 0;
+      }
 
-    // BEGIN SMALL NAV STYLING
+      & ~ .toggle_nav_container .small_nav_toggle_button {
+          &:before {
+          transform: translateY(-50%) rotate(45deg) scale(1);
+          }
 
-    #toggle_nav { // Hide checkbox
-        position: absolute;
-        left: -100%;
-        top: -100%;
-        display: block;
-    }
+          &:after {
+          transform: translateY(-50%) rotate(-45deg) scale(1);
+          }
+      }
 
-    .toggle_nav_container {
-        display: block;
-    }
+      // &:focus ~ .toggle_nav_container .small_nav_toggle_button {
+      //     box-shadow: 0 0 0 550px rgba(0, 0, 0, 0.1), inset 0 0 0 20px rgba(0, 0, 0, 0.1), 0 0 0 8px rgba(0, 0, 0, 0.1), inset 0 0 0 20px rgba(0, 0, 0, 0.1);
+      // }
 
-    .small_nav_menu {
-        display: block;
-    }
+      // Open nav
+      & ~ .small_nav_menu {
+          // margin-bottom: 100px;
+          pointer-events: auto;
+          left: 50%;
+          top: 50%;
+          margin: auto;
+          position: absolute;
+          transform: translate(-50%, -50%);
+          z-index: 10;
+          // transform: translate(50px, 20vh);
 
-    // Styles for open state when toggle checkbox is checked
-    #toggle_nav:checked {
+          // Restore navigation items
+          .small_nav_item {
+              color: #000000;
+              letter-spacing: 0;
+              height: 40px;
+              line-height: 40px;
+              margin-top: 2vh;
+              opacity: 1;
+              transform: scaleY(1);
+              transition: $transition-duration, opacity 0.1s;
+              text-decoration: None;
+              display: block;
+              text-align: center;
+              float: unset;
 
-        & ~ .content {
-            opacity: 0;
-        }
+              // Hiding the lines
+              &:before {
+                  // opacity: 0;
+                  content: none;
+              }
 
-        & ~ .toggle_nav_container .small_nav_toggle_button {
-            // box-shadow: 0 0 0 550px rgba(0, 0, 0, 0.1), inset 0 0 0 20px rgba(0, 0, 0, 0.1);
+              // Setting delays for the nav items in open transition
+              @for $i from 1 through $num_nav_items {
+                  &:nth-child(#{$i}) {
+                      $delay: ($num_nav_items - $i) * $transition-delay;
+                      transition-delay: $delay;
+                      &:before {
+                          transition-delay: $delay;
+                      }
+                  }
+              }
+          }
+      }
+  }
 
-            // &:hover {
-            // box-shadow: 0 0 0 550px rgba(0, 0, 0, 0.1), inset 0 0 0 20px rgba(0, 0, 0, 0.1), 0 0 0 8px rgba(0, 0, 0, 0.1), inset 0 0 0 20px rgba(0, 0, 0, 0.1);
-            // }
+  .small_nav_item {
+      position: relative;
+      // display: inline-block;
+      float: left;
+      clear: both;
+      color: transparent;
+      font-size: 20px;
+      letter-spacing: -6.2px;
+      height: 7px;
+      line-height: 7px;
+      text-transform: uppercase;
+      white-space: nowrap;
+      transform: scaleY(0.2);
+      // transition: opacity $transition-duration ease-in,
+      //             transform $transition-duration ease-in;
 
-            &:before {
-            transform: translateY(-50%) rotate(45deg) scale(1);
-            }
+      // Set delays for nav items in close transition
+      // @for $i from 1 through $num_nav_items {
+      //     &:nth-child(#{$i}) {
+      //         $delay: ($num_nav_items - $i) * $transition-delay;
+      //         transition-delay: $delay;
+      //         &:before {
+      //             transition-delay: $delay;
+      //         }
+      //     }
+      // }
 
-            &:after {
-            transform: translateY(-50%) rotate(-45deg) scale(1);
-            }
+      // Adjusting width for the first line
+      &:nth-child(1) {
+          letter-spacing: -10px;
+      }
 
-        }
+      // Adjusting width for the second line
+      &:nth-child(2) {
+          letter-spacing: -11px;
+      }
 
-        // &:focus ~ .toggle_nav_container .small_nav_toggle_button {
-        //     box-shadow: 0 0 0 550px rgba(0, 0, 0, 0.1), inset 0 0 0 20px rgba(0, 0, 0, 0.1), 0 0 0 8px rgba(0, 0, 0, 0.1), inset 0 0 0 20px rgba(0, 0, 0, 0.1);
-        // }
+      // Adjusting width for the third
+      &:nth-child(3) {
+          letter-spacing: -9px;
+      }
 
-        // Open nav
-        & ~ .small_nav_menu {
-            // margin-bottom: 100px;
-            pointer-events: auto;
-            left: 50%;
-            top: 50%;
-            margin: auto;
-            position: absolute;
-            transform: translate(-50%, -50%);
-            z-index: 10;
-            // transform: translate(50px, 20vh);
+      // Adjusting from the fourth element onwards
+      &:nth-child(n + 4) {
+          // letter-spacing: -8px;
+          // margin-top: -7px;
+          opacity: 0;
+      }
 
-            // Restore navigation items
-            .small_nav_item {
-                color: #000000;
-                letter-spacing: 0;
-                height: 40px;
-                line-height: 40px;
-                margin-top: 2vh;
-                opacity: 1;
-                transform: scaleY(1);
-                transition: $transition-duration, opacity 0.1s;
-                text-decoration: None;
-                display: block;
-                text-align: center;
-                float: unset;
-
-                // Hiding the lines
-                &:before {
-                    // opacity: 0;
-                    content: none;
-                }
-
-                // Setting delays for the nav items in open transition
-                @for $i from 1 through $num_nav_items {
-                    &:nth-child(#{$i}) {
-                        $delay: ($num_nav_items - $i) * $transition-delay;
-                        transition-delay: $delay;
-                        &:before {
-                            transition-delay: $delay;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    .small_nav_item {
-        position: relative;
-        // display: inline-block;
-        float: left;
-        clear: both;
-        color: transparent;
-        font-size: 20px;
-        letter-spacing: -6.2px;
-        height: 7px;
-        line-height: 7px;
-        text-transform: uppercase;
-        white-space: nowrap;
-        transform: scaleY(0.2);
-        // transition: opacity $transition-duration ease-in,
-        //             transform $transition-duration ease-in;
-
-        // Set delays for nav items in close transition
-        // @for $i from 1 through $num_nav_items {
-        //     &:nth-child(#{$i}) {
-        //         $delay: ($num_nav_items - $i) * $transition-delay;
-        //         transition-delay: $delay;
-        //         &:before {
-        //             transition-delay: $delay;
-        //         }
-        //     }
-        // }
-
-        // Adjusting width for the first line
-        &:nth-child(1) {
-            letter-spacing: -10px;
-        }
-
-        // Adjusting width for the second line
-        &:nth-child(2) {
-            letter-spacing: -11px;
-        }
-
-        // Adjusting width for the third
-        &:nth-child(3) {
-            letter-spacing: -9px;
-        }
-
-        // Adjusting from the fourth element onwards
-        &:nth-child(n + 4) {
-            // letter-spacing: -8px;
-            // margin-top: -7px;
-            opacity: 0;
-        }
-
-        // Getting the lines for the hamburger menu icon
-        &:before {
-            position: absolute;
-            content: '';
-            top: 50%;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: #000000;
-            transform: translateY(-50%) scaleY(5);
-            // transition: $transition-duration;
-        }
-    }
-
-    // Style mobile view hamburger menu toggle button
-    .small_nav_toggle_button {
-        position: absolute;
-        display: inline-block;
-        width: 20px;
-        height: 20px;
-        margin: 25px;
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-        border-radius: 100%;
-        // transition: $transition-duration + 0.1;
-
-        // Making the "X" icon using `:before` and `:after` pseudo-elements
-        // Initially hidden because `scale(0)` transformation
-
-        &:before, &:after {
+      // Getting the lines for the hamburger menu icon
+      &:before {
           position: absolute;
           content: '';
           top: 50%;
           left: 0;
           width: 100%;
           height: 2px;
-          background-color: rgb(0, 0, 0);
-          border-radius: 5px;
-        //   transition: $transition-duration;
-        }
+          background-color: #000000;
+          transform: translateY(-50%) scaleY(5);
+          // transition: $transition-duration;
+      }
+  }
 
-        &:before {
-          transform: translateY(-50%) rotate(45deg) scale(0);
-        }
+  // Style mobile view hamburger menu toggle button
+  .small_nav_toggle_button {
+      position: absolute;
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      margin: 25px;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      border-radius: 100%;
+      // transition: $transition-duration + 0.1;
 
-        &:after {
-          transform: translateY(-50%) rotate(-45deg) scale(0);
-        }
+      // Making the "X" icon using `:before` and `:after` pseudo-elements
+      // Initially hidden because `scale(0)` transformation
 
-    }
+      &:before, &:after {
+        position: absolute;
+        content: '';
+        top: 50%;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: rgb(0, 0, 0);
+        border-radius: 5px;
+      //   transition: $transition-duration;
+      }
 
-    .small_nav_menu {
-        display: inline-block;
-        margin: 25px 25px 20px;
-        // Don't want pointer-events as menu is closed
-        pointer-events: none;
-        // transition: $transition-duration;
-    }
+      &:before {
+        transform: translateY(-50%) rotate(45deg) scale(0);
+      }
 
-    // END SMALL NAV STYLING
+      &:after {
+        transform: translateY(-50%) rotate(-45deg) scale(0);
+      }
 
-    .content {
-      position:relative;
-        // position:absolute;
-        // top: 50%;
-        // left: 50%;
-        // transform: translate(-50%, -40vh);
-      transition: $transition-duration;
-    }
+  }
 
-    .category {
-      position:relative;
-    }
+  .small_nav_menu {
+      display: inline-block;
+      margin: 25px 25px 20px;
+      // Don't want pointer-events as menu is closed
+      pointer-events: none;
+      // transition: $transition-duration;
+  }
 
-    div#home_row_left, div#home_row_right {
-        float: left;
-        font-size: 3vh;
-        padding: 0.5vh 2vh;
-        /* max-width: 300px; */
-        min-width: 250px;
-        width: 35vw;
-    }
+  // END SMALL NAV STYLING
 
-    .home h1.fancy {
-        font-size: 3.5rem;
-    }
+  .content {
+    position:relative;
+      // position:absolute;
+      // top: 50%;
+      // left: 50%;
+      // transform: translate(-50%, -40vh);
+    transition: $transition-duration;
+  }
 
-    h1.fancy {
-        font-size: 4.0rem;
-    }
+  .category {
+    position:relative;
+  }
+
+  div#home_row_left, div#home_row_right {
+      float: left;
+      font-size: 3vh;
+      padding: 0.5vh 2vh;
+      /* max-width: 300px; */
+      min-width: 250px;
+      width: 35vw;
+  }
+
+  .home h1.fancy {
+      font-size: 3.5rem;
+  }
+
+  h1.fancy {
+      font-size: 5.0rem;
+  }
 }
-
+/* END: Mobile + Extra small devices (phones, 600px and down) */
 html, body {
     height: 100%;
 }
@@ -688,6 +704,7 @@ img #home {
     width: 10vh;
 }
 
+// Desktop + Small to large devices
 @media screen and (min-width: 600px) {
   // h6.label {
   //   font-family: 'Josefin Sans';
@@ -808,6 +825,7 @@ img #home {
       /* max-width: 150px; */
       /* height: 100%; */
   }
+
   div.nav_button_img {
   position: relative;
   }

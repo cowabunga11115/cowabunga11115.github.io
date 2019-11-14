@@ -3,6 +3,7 @@ const album_storment = "Depression visualization";
 const album_lumos = "Hospital ambiance controller";
 const album_cocoon = "Noise pollution awareness for expectant mothers";
 
+var curr_icon;
 // MAIN ======================================================================
 $( document ).ready(function() {
   console.log( "ready!" );
@@ -59,7 +60,8 @@ function setTitleIcon() {
   var title = document.querySelector(".title h1").innerText;
   switch (title) {
     case "wellbeing":
-      icon.classList.add("heart");
+      curr_icon = "heart";
+      icon.classList.add(curr_icon);
       break;
     default:
       // nothing
@@ -67,16 +69,31 @@ function setTitleIcon() {
 }
 
 function adjustTitleStyle() {
-  var title_h1 = $(".title h1");
-  var title = $(".title");
-  if (title_h1.length) {
-    if ($(document).width() > 600) {
-      title.addClass('label');
-      title_h1.removeClass('fancy');
+  console.log("AdjustTitleStyle");
+  var title_h1 = document.querySelector(".category .title h1");
+  var title = document.querySelector(".category .title");
+
+  if (title_h1.innerText.length > 0) {
+    console.log("title length > 0");
+    if (window.innerWidth > 600) {
+      title.classList.add("label");
+      if (title.classList.contains('fancy')) {
+        title.classList.remove('fancy');
+        title_h1.classList.remove('fancy');
+      }
+      // title_h1.addClass('label');
+      // title_h1.classList.removeClass('fancy');
       setTitleIcon();
     } else {
-      title.removeClass('label');
-      title_h1.addClass('fancy');
+      title_h1.classList.add('fancy');
+      title.classList.add('fancy');
+      title.classList.remove('label');
+      // title_h1.classList.removeClass('label');
+      // if (curr_icon != null) {
+      //   var icon = document.querySelector(".category .title .title_icon");
+      //   icon.classList.removeClass(curr_icon);
+      //   curr_icon = null;
+      // }
     }
   }
 }

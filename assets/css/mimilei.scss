@@ -801,8 +801,12 @@ img #home {
       width: 6vh;
   }
 
-  .nav_item img:hover {
-      filter: blur(5px);
+  // .nav_item img:hover {
+    // filter: blur(5px);
+  // }
+
+  .current img {
+    filter: blur(5px);
   }
 
   li.nav_item {

@@ -688,7 +688,7 @@ img #home {
     width: 6vh;
   }
 
-  .nav_item img:hover {
+  .current img {
     filter: blur(5px);
   }
 

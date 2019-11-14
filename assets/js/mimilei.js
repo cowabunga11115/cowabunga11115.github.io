@@ -1,7 +1,7 @@
 // Constants ===================================================================
 const album_storment = "Depression visualization";
 const album_lumos = "Hospital ambiance controller";
-const album_cocoon = "Noise pollution awareness for expecting mothers";
+const album_cocoon = "Noise pollution awareness for expectant mothers";
 
 // MAIN ======================================================================
 $( document ).ready(function() {
@@ -54,15 +54,29 @@ $(window).on("wheel", function(e){
 });
 
 // FUNCTIONS ===================================================================
+function setTitleIcon() {
+  var icon = document.querySelector(".category .title .title_icon");
+  var title = document.querySelector(".title h1").innerText;
+  switch (title) {
+    case "wellbeing":
+      icon.classList.add("heart");
+      break;
+    default:
+      // nothing
+  }
+}
+
 function adjustTitleStyle() {
-  var title = $(".title h1");
-  if (title.length) {
+  var title_h1 = $(".title h1");
+  var title = $(".title");
+  if (title_h1.length) {
     if ($(document).width() > 600) {
       title.addClass('label');
-      title.removeClass('fancy');
+      title_h1.removeClass('fancy');
+      setTitleIcon();
     } else {
       title.removeClass('label');
-      title.addClass('fancy');
+      title_h1.addClass('fancy');
     }
   }
 }

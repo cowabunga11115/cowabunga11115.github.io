@@ -68,6 +68,14 @@ function setTitleIcon() {
   }
 }
 
+function maybeRemoveTitleIcon() {
+  var icon = document.querySelector(".category .title .title_icon");
+  if (curr_icon != null) {
+    icon.classList.remove(curr_icon);
+    curr_icon = null;
+  }
+}
+
 function adjustTitleStyle() {
   console.log("AdjustTitleStyle");
   var title_h1 = document.querySelector(".category .title h1");
@@ -88,6 +96,7 @@ function adjustTitleStyle() {
       title_h1.classList.add('fancy');
       title.classList.add('fancy');
       title.classList.remove('label');
+      maybeRemoveTitleIcon();
       // title_h1.classList.removeClass('label');
       // if (curr_icon != null) {
       //   var icon = document.querySelector(".category .title .title_icon");

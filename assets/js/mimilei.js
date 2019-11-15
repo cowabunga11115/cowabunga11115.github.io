@@ -3,6 +3,8 @@ const album_storment = "Depression visualization";
 const album_lumos = "Hospital ambiance controller";
 const album_cocoon = "Noise pollution awareness for expectant mothers";
 
+const desktop_threshold = 600;
+
 // Keeps track of the current icon type associated with title
 // If null, the user is on mobile, or there is no icon associated.
 var curr_icon;
@@ -10,8 +12,10 @@ var curr_icon;
 // MAIN ======================================================================
 adjustTitleStyle();
 maybeShowPjAlbumArt();
+maybeAddNumbering();
 window.addEventListener('resize', adjustTitleStyle);
 window.addEventListener('resize', maybeShowPjAlbumArt);
+window.addEventListener('resize', maybeAddNumbering);
 
 // JQUERY ======================================================================
 // $(".subtitle.work").on("click", function(e){
@@ -81,7 +85,7 @@ function adjustTitleStyle() {
 
   if (title_h1.innerText.length > 0) {
     console.log("title length > 0");
-    if (window.innerWidth > 600) {
+    if (window.innerWidth > desktop_threshold) {
       title.classList.add("label");
       if (title.classList.contains('fancy')) {
         title.classList.remove('fancy');
@@ -149,7 +153,7 @@ function showMiniAlbumArt() {
 }
 
 function maybeShowPjAlbumArt() {
-  if (window.outerWidth >= 600) {
+  if (window.outerWidth >= desktop_threshold) {
     const projects = document.querySelectorAll(".pj_name h2");
     projects.forEach(function(pj) {
       pj.addEventListener('mouseenter', showPjAlbumArt);
@@ -165,6 +169,29 @@ function maybeShowPjAlbumArt() {
     var mini_album_art = document.querySelectorAll(".pj_album_art_mini");
     if (mini_album_art.length === 0) {
       showMiniAlbumArt();
+    }
+  }
+}
+
+function maybeAddNumbering() {
+  if (window.outerWidth >= desktop_threshold) {
+    var numbers = document.querySelectorAll(".pj_name h6");
+    if (numbers.length === 0) {
+      var pj_titles = document.querySelectorAll(".pj_name h2");
+      var count = 1;
+      pj_titles.forEach(function(title) {
+        var num_text = document.createElement('h6');
+        num_text.innerText = "0" + count;
+        title.parentNode.insertBefore(num_text, title);
+        count += 1;
+      });
+    }
+  } else {
+    var numbers = document.querySelectorAll(".pj_name h6");
+    if (numbers.length > 0) {
+      numbers.forEach(function (num_text) {
+        num_text.parentNode.removeChild(num_text);
+      });
     }
   }
 }

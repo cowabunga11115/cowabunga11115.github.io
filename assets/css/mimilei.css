@@ -614,6 +614,31 @@ img #home {
 }
 
 @media screen and (min-width: 600px) {
+  .row.pj_title {
+    text-align: center;
+  }
+
+  .pj_name h6 {
+    display: inline-block;
+    position: relative;
+    top: -5rem;
+    margin-right: 1.5rem;
+    font-size: 3rem;
+    font-family: "Playfair Display";
+    font-weight: 300;
+    text-align: center;
+    color: rgba(34, 34, 34, 0.6);
+  }
+
+  .pj_list:hover .pj_title .pj_name h6 {
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  .pj_list:hover .pj_title .pj_name:hover h6 {
+    font-style: italic;
+    color: #222222;
+  }
+
   .category .title.label h1 {
     text-align: center;
     display: inline-block;
@@ -632,6 +657,7 @@ img #home {
     font-weight: 400;
     text-align: center;
     color: rgba(34, 34, 34, 0.6);
+    display: inline-block;
   }
 
   .pj_list:hover .pj_title .pj_name h2 {

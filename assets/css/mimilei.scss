@@ -716,6 +716,31 @@ img #home {
   //   margin-right: 2vh;
   // }
 
+  .row.pj_title {
+    text-align: center;
+  }
+
+  .pj_name h6 {
+    display: inline-block;
+    position: relative;
+    top: -5rem;
+    margin-right: 1.5rem;
+    font-size: 3rem;
+    font-family: 'Playfair Display';
+    font-weight: 300;
+    text-align: center;
+    color: $pj_title_color_neutral;
+  }
+
+  .pj_list:hover .pj_title .pj_name h6 {
+    color:$pj_title_color_no_hover;
+  }
+
+  .pj_list:hover .pj_title .pj_name:hover h6 {
+    font-style:italic;
+    color:$pj_title_color_hover;
+  }
+
   .category .title.label h1 {
     text-align: center;
     display: inline-block;
@@ -746,6 +771,7 @@ img #home {
     font-weight: 400;
     text-align: center;
     color: $pj_title_color_neutral;
+    display: inline-block;
   }
 
   .pj_list:hover .pj_title .pj_name h2 {

@@ -618,6 +618,13 @@ img #home {
     text-align: center;
   }
 
+  .pj_name {
+    width: fit-content;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+  }
+
   .pj_name h6 {
     display: inline-block;
     position: relative;
@@ -634,7 +641,7 @@ img #home {
     color: rgba(255, 255, 255, 0.3);
   }
 
-  .pj_list:hover .pj_title .pj_name:hover h6 {
+  .pj_list .pj_title:hover .pj_name h6 {
     font-style: italic;
     color: #222222;
   }
@@ -664,7 +671,7 @@ img #home {
     color: rgba(255, 255, 255, 0.3);
   }
 
-  .pj_list:hover .pj_title .pj_name h2:hover {
+  .pj_list:hover .pj_title:hover .pj_name h2 {
     font-weight: 600;
     font-style: italic;
     cursor: pointer;

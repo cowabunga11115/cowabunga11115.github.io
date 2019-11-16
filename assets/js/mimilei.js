@@ -103,7 +103,7 @@ function adjustTitleStyle() {
 
 function showPjAlbumArt() {
   console.log("in showPjAlbumArt");
-  var pj = document.querySelector(".pj_name h2:hover");
+  var pj = document.querySelector(".pj_title:hover .pj_name h2");
   var frame = document.querySelector(".pj_album_art");
   if (pj !== null) {
     console.log("text: " + pj.innerText);
@@ -141,31 +141,42 @@ function cleanAlbumArt() {
 }
 
 function showMiniAlbumArt() {
-  var projects = document.querySelectorAll(".row.pj_title");
-  projects.forEach(function(pj) {
-    var mini_art = document.createElement('div');
-    mini_art.classList.add('pj_album_art_mini');
-    pj.parentNode.insertBefore(mini_art, pj);
-    var pj_name = pj.innerText.toLowerCase();
-    var img_path = "assets/img/pj_album_art/" + pj_name + ".png";
-    mini_art.style.backgroundImage = "url('" + img_path + "')";
-  });
+  console.log("showing mini art");
+  if (document.querySelectorAll(".pj_album_art_mini").length === 0) {
+    var projects = document.querySelectorAll("a .row.pj_title");
+    projects.forEach(function(pj) {
+      var pj_page_url = pj.parentNode.href;
+
+      var mini_art = document.createElement('div');
+      mini_art.classList.add('pj_album_art_mini');
+      // pj.parentNode.insertBefore(mini_art, pj);
+      var pj_name = pj.querySelector("h2").innerText.toLowerCase();
+      var img_path = "assets/img/pj_album_art/" + pj_name + ".png";
+      mini_art.style.backgroundImage = "url('" + img_path + "')";
+
+      var link = document.createElement('a');
+      link.href = pj_page_url;
+      link.appendChild(mini_art);
+      pj.parentNode.insertBefore(link, pj);
+    });
+  }
 }
 
 function maybeShowPjAlbumArt() {
   if (window.outerWidth >= desktop_threshold) {
-    const projects = document.querySelectorAll(".pj_name h2");
+    const projects = document.querySelectorAll(".pj_title");
     projects.forEach(function(pj) {
       pj.addEventListener('mouseenter', showPjAlbumArt);
       pj.addEventListener('mouseleave', cleanAlbumArt);
       console.log("Added mouseover listener to pj " + pj.innerText);
     });
   } else {
-    var pj_headers = document.querySelectorAll(".pj_name h2");
+    var pj_headers = document.querySelectorAll(".pj_title");
     pj_headers.forEach(function(pj) {
       pj.removeEventListener('mouseenter', showPjAlbumArt);
       pj.removeEventListener('mouseleave', cleanAlbumArt);
     });
+    console.log("Removed mouseenter/leave listeners bc mobile view on");
     var mini_album_art = document.querySelectorAll(".pj_album_art_mini");
     if (mini_album_art.length === 0) {
       showMiniAlbumArt();

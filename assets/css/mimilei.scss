@@ -90,6 +90,7 @@ a {
     // position: fixed;	// All scrollable elements have to be position:fixed
     bottom: 0;	// Make it stick to the bottom (or top)
     // width: 100%;	// I recommend to assign the width in px, prevents preloading issues
+    margin-right: 20vw;
 }
 
 .subtitle.work:hover {
@@ -915,12 +916,15 @@ img #home {
       left: -o-calc(50% + 80px);
       /* Standard */
       left: calc(50% + 80px);
-      transform: translate(-50%, -50%);
+      transform: translate(-40%, -50%);
       min-width: 400px;
-      // width: 60vmax;
       width: fit-content;
       height: fit-content;
       overflow-y: scroll;
+  }
+
+  .content.creative {
+    width: 100%;
   }
 
   div#home_row_left {

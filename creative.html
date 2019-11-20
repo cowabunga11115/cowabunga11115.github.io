@@ -131,46 +131,50 @@
         </div>
     </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script type="text/javascript" src="assets/js/jquery.mousewheel.min.js"></script>
-    <script type="text/javascript" src="assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
-    <script type="text/javascript" src="assets/js/mimilei.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+    <!-- <script type="text/javascript" src="assets/js/jquery.mousewheel.min.js"></script> -->
+    <!-- <script type="text/javascript" src="assets/js/jquery.mCustomScrollbar.concat.min.js"></script> -->
+    <!-- <script type="text/javascript" src="assets/js/mimilei.js"></script> -->
     <script type="text/javascript" src="assets/js/horizontal_gallery.js"></script>
     <script type="text/javascript">
-        $( document ).ready(function() {
-            $("#personal_works")[0].style.fontWeight = 600;
-            $(".scroll").load("creative/personal_works.html");
-        });
-        function preventDefault(e) {
-            e = e || window.event;
-            if (e.preventDefault)
-                e.preventDefault();
-            e.returnValue = false;
-        }
-        (function($){
-            $(window).on("load",function(){
-                $(".scroll_window").mCustomScrollbar({
-                    axis:"x", // horizontal scrollbar
-                    scrollInertia: 5,
-                    advanced:{ updateOnContentResize: true },
-                    advanced:{ updateOnSelectorChange: "img.u-max-full-width" },
-                    advanced:{ updateOnImageLoad: true },
-                    callbacks:{
-                        onUpdate:function(){
-                            console.log("Scrollbars updated");
-                        }
-                    },
-                });
-            });
-            $('.content').mouseover(function() {
-                $('.content').on("wheel", function(){
-                    window.onwheel = preventDefault; // modern standard
-                    window.onmousewheel = document.onmousewheel = preventDefault; // older browsers, IE
-                    window.ontouchmove  = preventDefault; // mobile
-                    return false;
-                });
-            });
-        })(jQuery);
+        // $( document ).ready(function() {
+        //   console.log("doc ready");
+        //     $("#personal_works")[0].style.fontWeight = 600;
+        //     $(".scroll").load("creative/personal_works.html");
+        // });
+        // function preventDefault(e) {
+        //   console.log("preventing default");
+        //     e = e || window.event;
+        //     if (e.preventDefault)
+        //         e.preventDefault();
+        //     e.returnValue = false;
+        // }
+        // (function($){
+        //     $(window).on("load",function(){
+        //         $(".scroll_window").mCustomScrollbar({
+        //             axis:"x", // horizontal scrollbar
+        //             scrollInertia: 5,
+        //             advanced:{ updateOnContentResize: true },
+        //             advanced:{ updateOnSelectorChange: "img.u-max-full-width" },
+        //             advanced:{ updateOnImageLoad: true },
+        //             callbacks:{
+        //                 onUpdate:function(){
+        //                   debugger;
+        //                     console.log("Scrollbars updated");
+        //                 }
+        //             },
+        //         });
+        //     });
+        //     $('.content').mouseover(function() {
+        //         $('.content').on("wheel", function(){
+        //           console.log("on wheel callback");
+        //             window.onwheel = preventDefault; // modern standard
+        //             window.onmousewheel = document.onmousewheel = preventDefault; // older browsers, IE
+        //             window.ontouchmove  = preventDefault; // mobile
+        //             return false;
+        //         });
+        //     });
+        // })(jQuery);
     </script>
 </body>
 </html>

@@ -9,10 +9,11 @@ else {
       var nav_items = document.querySelectorAll(".nav_item");
       nav_items[1].classList.add("tooltip");
       nav_items[1].onmouseenter = function(event) {
-        console.log("hovered");
-        console.log(event);
         event.target.classList.remove("tooltip");
       };
+      document.querySelector("#nav_buttons").onmouseenter = function(event) {
+        nav_items[1].classList.remove("tooltip");
+      }
       window.localStorage.isReturningVisitor = true;
   }
 }

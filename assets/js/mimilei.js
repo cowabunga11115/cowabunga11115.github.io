@@ -2,6 +2,16 @@
 const album_storment = "Depression visualization";
 const album_lumos = "Hospital ambiance controller";
 const album_cocoon = "Noise pollution awareness for expectant mothers";
+const album_braillekey = "Chorded text input device for braille";
+const album_linc = "Live Interactive Numeric Control (LINC) Fabrication Tool";
+const album_compphoto = "Implementation of computational photography algorithms from papers";
+const album_wallsynth = "Magnetic wall synthesizer based on fiducial markers";
+const album_hybridwatches = "";
+const album_uberick = "Blood, sweat, tears...anything to ensure your comfort in transit!";
+const album_icecannon = "A game controller that takes itself literally";
+const album_innod = "Pro bono logos and visual assets from my time with InnoD@Berkeley";
+const album_tokiha = "Branding and visual design for a Japanese summer camp";
+const album_wise = "Branding for UC Berkeley's WiSE theme program";
 
 const desktop_threshold = 600;
 
@@ -69,6 +79,7 @@ function showPjAlbumArt() {
   if (pj !== null) {
     console.log("text: " + pj.innerText);
     var pj_name = pj.innerText.toLowerCase();
+    pj_name = pj_name.replace(/\s+/g, '');
     var img_path = "assets/img/pj_album_art/" + pj_name + ".png";
     frame.style.backgroundImage = "url('" + img_path + "')";
     console.log(frame.style.backgroundImage);
@@ -86,6 +97,36 @@ function showPjAlbumArt() {
       case "cocoon":
         desc_text = album_cocoon;
         break;
+      case "braillekey":
+        desc_text = album_braillekey;
+        break;
+      case "linc":
+          desc_text = album_linc;
+          break;
+      case "compphoto":
+          desc_text = album_compphoto;
+          break;
+      case "wallsynth":
+          desc_text = album_wallsynth;
+          break;
+      case "hybridwatches":
+          desc_text = album_hybridwatches;
+          break;
+      case "uberick":
+          desc_text = album_uberick;
+          break;
+      case "icecannon":
+          desc_text = album_icecannon;
+          break;
+      case "innod":
+          desc_text = album_innod;
+          break;
+      case "tokiha":
+          desc_text = album_tokiha;
+          break;
+      case "wise":
+          desc_text = album_wise;
+          break;
       default:
         // nothing
     }

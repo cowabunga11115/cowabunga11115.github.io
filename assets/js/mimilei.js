@@ -82,8 +82,6 @@ function showPjAlbumArt() {
     pj_name = pj_name.replace(/\s+/g, '');
     var img_path = "assets/img/pj_album_art/" + pj_name + ".webp";
     frame.style.backgroundImage = "url('" + img_path + "')";
-    console.log(frame.style.backgroundImage);
-    console.log(frame.style.visibility);
 
     var pj_desc = document.querySelector(".pj_album_desc");
     var desc_text;

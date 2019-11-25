@@ -151,7 +151,7 @@ function showMiniAlbumArt() {
       mini_art.classList.add('pj_album_art_mini');
       // pj.parentNode.insertBefore(mini_art, pj);
       var pj_name = pj.querySelector("h2").innerText.toLowerCase();
-      var img_path = "assets/img/pj_album_art/" + pj_name + ".webp";
+      var img_path = "assets/img/pj_album_art/" + pj_name + ".jpg";
       mini_art.style.backgroundImage = "url('" + img_path + "')";
 
       var link = document.createElement('a');

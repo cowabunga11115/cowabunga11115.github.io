@@ -4,6 +4,7 @@ var creative_menu = document.querySelectorAll(".subtitle.work");
 creative_menu.forEach(function(item) {
   item.addEventListener("click", onCategoryClicked);
 });
+document.querySelector(".scroll_window").addEventListener('wheel', replaceVerticalScrollWithHorizontal);
 
 // Default
 document.querySelector("#personal_works").style.fontWeight = 600;
@@ -71,4 +72,17 @@ function onCategoryClicked(event) {
   old_category = event.target;
   var url = "creative/" + event.target.id + ".html";
   loadContent(url);
+}
+
+function replaceVerticalScrollWithHorizontal(event) {
+  if (event.deltaY != 0) {
+    // manually scroll horizonally instead
+    var scroll_window = document.querySelector(".scroll_window");
+    var new_pos = scroll_window.scrollLeft + event.deltaY * 3;
+    scroll_window.scrollLeft = new_pos;
+
+    // prevent vertical scroll
+    event.preventDefault();
+  }
+  return;
 }

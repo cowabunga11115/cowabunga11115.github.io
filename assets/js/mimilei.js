@@ -77,10 +77,10 @@ function showPjAlbumArt() {
   var pj = document.querySelector(".pj_title:hover .pj_name h2");
   var frame = document.querySelector(".pj_album_art");
   if (pj !== null) {
-    console.log("text: " + pj.innerText);
+    // console.log("text: " + pj.innerText);
     var pj_name = pj.innerText.toLowerCase();
     pj_name = pj_name.replace(/\s+/g, '');
-    var img_path = "assets/img/pj_album_art/" + pj_name + ".webp";
+    var img_path = "assets/img/pj_album_art/" + pj_name + ".jpg";
     frame.style.backgroundImage = "url('" + img_path + "')";
 
     var pj_desc = document.querySelector(".pj_album_desc");

@@ -341,6 +341,7 @@ div.row.bio {
 
   span.small_nav_toggle_button {
     visibility: visible;
+    z-index: 100;
   }
 
   .nav {

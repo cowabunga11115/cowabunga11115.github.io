@@ -20,6 +20,22 @@
 .heart::after {
   left: .75vh; }
 
+.contact {
+  display: inline;
+  margin: 0 5px; }
+
+.contact:hover {
+  cursor: pointer; }
+
+.row.contact_container {
+  display: block;
+  margin: 0 auto;
+  width: fit-content;
+  position: absolute;
+  top: 90%;
+  left: calc(50% + 80px);
+  left: 47%; }
+
 .title_icon {
   display: inline-block; }
 

@@ -629,6 +629,15 @@ img #home {
 }
 
 @media screen and (min-width: 600px) {
+  h3.comp_photo_title {
+    text-align: center;
+  }
+
+  img.comp_photo_tile {
+    width: 100%;
+    height: 100%;
+  }
+
   .creative .row.creative_projects {
     text-align: center;
     position: absolute;
@@ -831,6 +840,22 @@ img #home {
     width: fit-content;
     height: fit-content;
     overflow-y: scroll;
+  }
+
+  .content.pj_page {
+    top: 50%;
+    left: -moz-calc(50% + 80px);
+    left: -webkit-calc(50% + 80px);
+    left: -o-calc(50% + 80px);
+    left: calc(50% + 80px);
+    transform: translate(-51%, -45%);
+    min-width: 400px;
+    width: 80vw;
+    max-width: 950px;
+    height: 100%;
+    box-sizing: border-box;
+    overflow-y: scroll;
+    padding-bottom: 100px;
   }
 
   .content.creative {

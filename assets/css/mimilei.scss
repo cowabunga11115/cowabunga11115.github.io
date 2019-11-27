@@ -723,6 +723,10 @@ img #home {
 // Desktop + Small to large devices
 @media screen and (min-width: 600px) {
 
+  .pj_frame .content {
+    overflow-y: hidden;
+  }
+
   h3.comp_photo_title {
     text-align: center;
   }

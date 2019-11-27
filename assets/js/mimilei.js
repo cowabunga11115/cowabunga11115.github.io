@@ -54,20 +54,22 @@ function adjustTitleStyle() {
   var title_h1 = document.querySelector(".category .title h1");
   var title = document.querySelector(".category .title");
 
-  if (title_h1.innerText.length > 0) {
-    console.log("title length > 0");
-    if (window.innerWidth > desktop_threshold) {
-      title.classList.add("label");
-      if (title.classList.contains('fancy')) {
-        title.classList.remove('fancy');
-        title_h1.classList.remove('fancy');
+  if (title_h1 != null) {
+    if (title_h1.innerText.length > 0) {
+      console.log("title length > 0");
+      if (window.innerWidth > desktop_threshold) {
+        title.classList.add("label");
+        if (title.classList.contains('fancy')) {
+          title.classList.remove('fancy');
+          title_h1.classList.remove('fancy');
+        }
+        setTitleIcon();
+      } else {
+        title_h1.classList.add('fancy');
+        title.classList.add('fancy');
+        title.classList.remove('label');
+        maybeRemoveTitleIcon();
       }
-      setTitleIcon();
-    } else {
-      title_h1.classList.add('fancy');
-      title.classList.add('fancy');
-      title.classList.remove('label');
-      maybeRemoveTitleIcon();
     }
   }
 }

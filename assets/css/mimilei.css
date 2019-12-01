@@ -618,6 +618,9 @@ img #home {
     font-size: 2.5rem;
     text-align: center; }
 
+  .content.pj_page .title h1 {
+    margin-bottom: 3px; }
+
   .subtitle {
     text-align: center; }
 

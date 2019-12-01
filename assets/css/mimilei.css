@@ -52,7 +52,8 @@ a {
   display: None; }
 
 .content {
-  margin-bottom: 10vh; }
+  margin-bottom: 10vh;
+  scrollbar-width: none; }
 
 .content.home {
   height: unset; }
@@ -115,7 +116,8 @@ a {
   left: calc(50% + 80px);
   transform: translate(-50%, 0);
   bottom: 20px;
-  width: fit-content; }
+  width: fit-content;
+  text-align: center; }
 
 div .tokiha_bg_img {
   overflow: hidden;
@@ -178,7 +180,7 @@ h2, a {
   object-fit: none;
   object-position: center;
   width: 100%;
-  max-height: 500px;
+  max-height: 550px;
   overflow: hidden;
   margin-bottom: 1.5rem; }
 
@@ -530,6 +532,16 @@ img #home {
 
 @media screen and (min-width: 600px) {
   .pj_frame .content {
+    width: 55%; }
+
+  .row.video {
+    background: black; }
+
+  .content iframe {
+    display: block;
+    margin: 0 auto; }
+
+  .pj_frame .content {
     overflow-y: hidden; }
 
   h3.comp_photo_title {
@@ -558,7 +570,7 @@ img #home {
     transform: translate(-50%, 0); }
 
   .pj_name h6 {
-    display: inline-block;
+    display: inline;
     position: relative;
     top: -5vh;
     margin-right: 1.5rem;
@@ -591,7 +603,7 @@ img #home {
     font-weight: 400;
     text-align: center;
     color: rgba(34, 34, 34, 0.6);
-    display: inline-block; }
+    display: inline; }
 
   .pj_list:hover .pj_title .pj_name h2 {
     color: rgba(255, 255, 255, 0.3); }
@@ -603,7 +615,11 @@ img #home {
     color: #222222; }
 
   .title h1 {
-    font-size: 2.5rem; }
+    font-size: 2.5rem;
+    text-align: center; }
+
+  .subtitle {
+    text-align: center; }
 
   .home h1.fancy {
     font-size: 4.0rem; }
@@ -715,13 +731,17 @@ img #home {
     left: -webkit-calc(50% + 80px);
     left: -o-calc(50% + 80px);
     left: calc(50% + 80px);
-    transform: translate(-51%, -45%);
+    transform: translate(-50%, -45%);
     min-width: 400px;
     width: 80vw;
     max-width: 950px;
     height: 100%;
     box-sizing: border-box;
-    overflow-y: scroll;
+    overflow-y: scroll; }
+
+  .content.pj_page::after {
+    content: '';
+    display: block;
     padding-bottom: 100px; }
 
   .content.creative {

@@ -24,9 +24,6 @@
   <link rel="stylesheet" href="../assets/css/skeleton.css">
   <link rel="stylesheet" href="../assets/css/mimilei.css">
 
-  <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-  <script type="text/javascript" src="../assets/js/mimilei.js"></script>
-
   <!-- Favicon
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link rel="icon" type="image/png" href="../assets/favicon.png?">
@@ -98,7 +95,7 @@
 
 <div class="content pj_page">
     <div class="row">
-        <div class="title"><h1 class="fancy"><strong>< > Fiducial Marker Based Synthesizer</strong></h1></div>
+        <div class="title"><h1 class="fancy"><strong>Fiducial Marker Based Wall Synthesizer</strong></h1></div>
     </div>
     <div class="row">
         <p class="subtitle">
@@ -110,13 +107,56 @@
     </div>
     <div class="row">
         <p class="contributors">
-            Michelle Chang & Jenny Li
+            Michelle Chang, Jenny Li
         </p>
     </div>
     <div class="row">
-        <p>More info coming soon! :)</p>
+        <h3>What is it?</h3>
+        <p>
+            The Wall Synth is an interactive music (or perhaps "noise" is a better word) making system that 
+            uses a camera, Fiducial markers, and Max MSP. The markers are magnetic, so users can make music 
+            on any magnetic surface. The interface is divided into columns (each of which is mapped to a 
+            particular instrument or sound). Turning a marker like a knob changes the speed and pitch of the sound, 
+            while moving it up or down like a slider adjusts the volume. Users can also add special effects 
+            to the sounds in each column by placing markers in the bottom row of the interface.
+            This project was developed as part of a course on Sound and Music Computing with CNMAT Technologies.
+        </p>
+    </div>
+    <div class="row">
+        <h3>How does it work?</h3>
+        <p>
+            Fiducial markers can be used to uniquely identify objects via computer vision.
+            We used Max MSP to map individual markers to certain sound files, so users can essentially 
+            treat each marker like a unique sound bite / CD / mp3. The system is programmed to map the 
+            volume of a file to the y-axis, speed and pitch to a marker's angle.
+            (See video for implementation details.)
+        </p>
+    </div>
+    <div class="row">
+        <h3>Ideas for further exploration</h3>
+        <p>
+            <ul>
+                <li>More polished marker pieces (perhaps wood?)</li>
+                <li>Decoupling pitch from speed</li>
+                <li>
+                    Using software to automatically match beats, so the synth sounds good no matter 
+                    what users do
+                </li>
+                <li>
+                    Evaluating applications (A fun toy for kids? Tool for social events?)
+                </li>
+            </ul>
+        </p>
+    </div>
+    <div class="row">
+        <h3>My contributions</h3>
+        <p>
+                All work, from design to conceptualization, to implementation
+                was split equally between the two of us. Go team! :)
+        </p>
     </div>
 </div>
 
+<script type="text/javascript" src="../assets/js/pj_page.js"></script>
 </body>
 </html>

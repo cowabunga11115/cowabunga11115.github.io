@@ -1,3 +1,5 @@
+// Contains js code for project category pages
+
 // Constants ===================================================================
 const album_storment = "Depression visualization";
 const album_lumos = "Hospital ambiance controller";

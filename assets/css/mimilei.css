@@ -187,9 +187,12 @@ h2, a {
 .photo_frame img, .innod_pattern img {
   width: 100%; }
 
-div .six.columns.square {
+.innod_pattern div .six.columns.square {
   width: 28vw;
-  height: 28vw; }
+  height: 28vw;
+  display: block;
+  margin: 0 auto;
+  overflow: hidden; }
 
 .github_link img {
   vertical-align: middle; }
